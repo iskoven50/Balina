@@ -1,6 +1,5 @@
-Balina v8.9.6.1
+Balina v8.9.6.2
 Hotfix:
-- Retter JavaScript-fejlen “overheat is not defined”, som stoppede indlæsning af vejrdata.
-- Ingen ændring af dækkenlogikken i øvrigt.
-- Bevarer den sammenfoldede, frivillige funktion “Tilføj anden vejrdata”.
-- Bevarer markering ved anbefalingen, når ekstra vejrdata er medtaget.
+- Retter “overheatRisk is not defined”.
+- Overophedningsrisiko defineres nu eksplicit ud fra de eksisterende morgen-/solvariable, før Summer Series-reglen evalueres.
+- Ingen øvrige ændringer af dækkenlogik, vejrinput eller layout.

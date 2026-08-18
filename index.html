@@ -432,7 +432,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.9.6.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.9.6.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -1193,6 +1193,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // mesh ventilation + removable waterproof back panel.
   // One clear recommendation is still given even when the two local models disagree.
   const modelWetRisk = !!(modelMeta && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0)) >= 4);
+  const overheatRisk = veryHotMorning || (hotMorning && sunnyMorning);
   const mildWetSummerOption = (tmax <= 22 && (rainTotal >= 3 || sustainedRain || modelWetRisk));
   if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && tmax<=22)) && !overheatRisk){
     recommendation='Rambo Summer Series';
