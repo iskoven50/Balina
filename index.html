@@ -170,6 +170,20 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .manual-badge-dot{
   width:8px;height:8px;border-radius:50%;background:#d690a6;display:inline-block;
 }
+
+.weather-details{
+  margin-top:10px;
+  border-top:1px solid var(--line);
+  padding-top:8px;
+}
+.weather-details summary{
+  cursor:pointer;
+  font-weight:700;
+  font-size:.92rem;
+  color:#7d656c;
+}
+.weather-details[open] summary{margin-bottom:10px}
+#uncertaintyBox,#weatherAttentionBox{display:none !important}
 </style>
 </head>
 <body>
@@ -226,7 +240,8 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <div id="reason" class="muted" style="margin-top:10px"></div>
 <div id="uncertaintyBox"></div>
-<div id="modelCompareBox" class="notice small" style="margin-top:10px"></div>
+<details class="weather-details"><summary>Se hvorfor / sammenlign vejrudsigter</summary><div id="modelCompareBox" class="notice small" style="margin-top:10px"></div>
+</details>
 <details id="manualWeatherDetails" class="manual-weather-compact">
   <summary>+ Tilføj anden vejrdata</summary>
   <div class="manual-weather-panel">
@@ -432,7 +447,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.9.6.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.9.7 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -1078,10 +1093,12 @@ function analyseDualWeather(primary,control,win,sourceLabel){
     if(manualTmax!==null)manualParts.push(`maks. ${manualTmax} °C`);
     if(manualWind!==null)manualParts.push(`vind ${manualWind} m/s`);
 
-    const verdict=majorRainConflict
-      ? '⚠ Stor forskel mellem prognoserne'
-      : rainConflict
-        ? 'Prognoserne er uenige om regnen'
+    const autoDiff=Math.abs(rainA-rainB);
+    const manualDiff=(manualRain!==null)?Math.abs(manualRain-Math.max(rainA,rainB)):0;
+    const verdict=(manualRain!==null && manualDiff>=3)
+      ? `Stor forskel: automatiske prognoser ca. ${Math.max(rainA,rainB).toFixed(1).replace('.',',')} mm · ${manual.source||'ekstra prognose'} ${manualRain.toFixed(1).replace('.',',')} mm`
+      : autoDiff>=3
+        ? 'De automatiske prognoser er uenige om regnen'
         : tempConflict
           ? 'Prognoserne varierer lidt'
           : 'Prognoserne er overordnet enige';
@@ -1215,7 +1232,9 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const externalWetRisk=!!(modelMeta && (modelMeta.wetter||0)>=8);
   if(externalWetRisk && tmax<=22 && !veryHotMorning && !(hotMorning&&sunnyMorning)){
     rec='Rambo Summer Series';
-    reason='Mindst én troværdig prognose viser væsentlig regn. Summer Series vælges som det robuste mellemvalg, fordi den holder ryggen tør og samtidig ventilerer gennem netdelen.';
+    reason=(modelMeta?.manualRain!==null && modelMeta?.manualRain!==undefined)
+      ? `Regnen er usikker: appens prognoser viser ca. ${Math.max(modelMeta.rainA,modelMeta.rainB).toFixed(1).replace('.',',')} mm, mens ${modelMeta.manual.source||'ekstra vejrdata'} viser ${modelMeta.manualRain.toFixed(1).replace('.',',')} mm. Summer Series er det sikre mellemvalg – tør ryg uden unødig varme.`
+      : 'Der ventes væsentlig regn. Summer Series holder ryggen tør og ventilerer samtidig gennem netdelen.';
   }
 let confidence=5;
   if(modelMeta){
@@ -1230,14 +1249,6 @@ let confidence=5;
   confidence=Math.max(1,Math.min(5,confidence));
 
   const fmt=d=>d.toLocaleString('da-DK',{weekday:'short',hour:'2-digit',minute:'2-digit'});
-  if(modelMeta?.manual){
-    const extras=[];
-    if(modelMeta.manualRain!==null)extras.push(`${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn`);
-    if(modelMeta.manualTmin!==null)extras.push(`nat min. ${modelMeta.manualTmin} °C`);
-    if(modelMeta.manualTmax!==null)extras.push(`maks. ${modelMeta.manualTmax} °C`);
-    if(modelMeta.manualWind!==null)extras.push(`vind ${modelMeta.manualWind} m/s`);
-    if(extras.length) reason += ` Ekstra vejrdata (${modelMeta.manual.source}) er medtaget: ${extras.join(' · ')}.`;
-  }
   document.getElementById('recommendation').textContent=rec+neck;
   document.getElementById('reason').textContent=reason;
   document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}`;
