@@ -135,6 +135,41 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
   margin-top:8px;padding:9px 11px;border-radius:12px;
   border:1px solid var(--line);background:#fffafb
 }
+
+.manual-weather-compact{
+  margin-top:10px;
+  border-top:1px solid var(--line);
+  padding-top:8px;
+}
+.manual-weather-compact summary{
+  cursor:pointer;
+  font-weight:700;
+  color:#7d656c;
+  font-size:.92rem;
+}
+.manual-weather-panel{
+  margin-top:8px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fffafb;
+}
+.manual-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f4e8ec;
+  border:1px solid #e9cfd7;
+  font-size:.8rem;
+  font-weight:700;
+  color:#755b63;
+}
+.manual-badge-dot{
+  width:8px;height:8px;border-radius:50%;background:#d690a6;display:inline-block;
+}
 </style>
 </head>
 <body>
@@ -186,15 +221,16 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
   <div class="small muted">ANBEFALING</div>
   <div id="recommendation" class="bigrec">—</div>
   <div id="confidenceBox" style="margin-top:8px"></div>
+  <div id="manualWeatherBadge"></div>
 </div>
 
 <div id="reason" class="muted" style="margin-top:10px"></div>
 <div id="uncertaintyBox"></div>
 <div id="modelCompareBox" class="notice small" style="margin-top:10px"></div>
-<details id="manualWeatherDetails" style="margin-top:10px">
-  <summary>+ Tilføj ekstra vejrdata (valgfrit)</summary>
-  <div class="notice small" style="margin-top:8px">
-    <p style="margin-top:0">Brug kun dette, hvis du ser en tydelig forskel i en anden vejrapp. Udfyld kun de felter, du vil tilføje.</p>
+<details id="manualWeatherDetails" class="manual-weather-compact">
+  <summary>+ Tilføj anden vejrdata</summary>
+  <div class="manual-weather-panel">
+    <p class="small muted" style="margin-top:0">Kun hvis du ser en tydelig forskel i en anden vejrapp. Udfyld kun det, du vil tilføje.</p>
     <div class="formgrid">
       <label>Kilde
         <select id="manualWeatherSource">
@@ -396,7 +432,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.9.4 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.9.6 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -845,6 +881,7 @@ function parseOptionalNumber(id){
 function renderManualWeather(){
   const m=getManualWeather();
   const active=document.getElementById('manualWeatherActive');
+  const badge=document.getElementById('manualWeatherBadge');
   if(!active)return;
 
   const src=document.getElementById('manualWeatherSource');
@@ -856,6 +893,7 @@ function renderManualWeather(){
 
   if(!m){
     active.textContent='Ingen ekstra vejrdata er med i vurderingen.';
+    if(badge)badge.innerHTML='';
     return;
   }
 
@@ -873,8 +911,12 @@ function renderManualWeather(){
   if(m.wind!==null&&m.wind!==undefined)parts.push(`vind ${m.wind} m/s`);
 
   active.innerHTML=parts.length
-    ? `<div class="manual-weather-flag"><strong>Ekstra vejrdata er aktive:</strong> ${m.source} · ${parts.join(' · ')}${m.note?' · '+m.note:''}</div>`
+    ? `<div class="manual-weather-flag"><strong>Aktive ekstra data:</strong> ${m.source} · ${parts.join(' · ')}${m.note?' · '+m.note:''}</div>`
     : 'Ingen ekstra vejrdata er med i vurderingen.';
+
+  if(badge && parts.length){
+    badge.innerHTML=`<span class="manual-badge"><span class="manual-badge-dot"></span>Ekstra vejrdata medtaget · ${m.source}</span>`;
+  }
 }
 function saveManualWeather(){
   const source=document.getElementById('manualWeatherSource')?.value||'Anden prognose';
@@ -893,6 +935,8 @@ function saveManualWeather(){
 
   localStorage.setItem('balinaManualWeatherV894',JSON.stringify({source,rain,tmin,tmax,wind,note,savedAt:Date.now()}));
   renderManualWeather();
+  const details=document.getElementById('manualWeatherDetails');
+  if(details)details.open=false;
   fetchWeather(HILLEROED.lat,HILLEROED.lon,false);
 }
 function clearManualWeather(){
@@ -901,11 +945,13 @@ function clearManualWeather(){
     const el=document.getElementById(id); if(el)el.value='';
   });
   renderManualWeather();
+  const details=document.getElementById('manualWeatherDetails');
+  if(details)details.open=false;
   fetchWeather(HILLEROED.lat,HILLEROED.lon,false);
 }
 
 function analyseDualWeather(primary,control,win,sourceLabel){
-  const inWin=(rows)=>rows.filter(x=>x.date>=win.start&&x.date<=win.end);
+  const inWin=(rows)=>rows.filter(x=>x.date>=win.start&&x.date<win.end);
   const a=inWin(primary), b=inWin(control);
   if(!a.length||!b.length) throw new Error('mangler modeldata i 14→14-vinduet');
 
@@ -922,24 +968,26 @@ function analyseDualWeather(primary,control,win,sourceLabel){
   const gustA=max(a,'gust'), gustB=max(b,'gust');
 
   const manual=getManualWeather();
-
-  // Manual values are OPTIONAL. Null means: do not override that parameter.
   const manualRain=(manual && Number.isFinite(Number(manual.rain)))?Number(manual.rain):null;
   const manualTmin=(manual && Number.isFinite(Number(manual.tmin)))?Number(manual.tmin):null;
   const manualTmax=(manual && Number.isFinite(Number(manual.tmax)))?Number(manual.tmax):null;
   const manualWind=(manual && Number.isFinite(Number(manual.wind)))?Number(manual.wind):null;
 
-  const rainValues=manualRain===null?[rainA,rainB]:[rainA,rainB,manualRain];
+  const rainValues=[rainA,rainB];
+  if(manualRain!==null)rainValues.push(manualRain);
   const wetter=Math.max(...rainValues);
   const drier=Math.min(...rainValues);
   const rainDiff=wetter-drier;
   const rainRatio=wetter/(drier+0.5);
 
-  const rainConflict = rainDiff>=3 || (wetter>=5 && rainRatio>=2);
-  const majorRainConflict = rainDiff>=7 || (wetter>=8 && drier<=2);
+  const rainConflict=rainDiff>=3 || (wetter>=5 && rainRatio>=2);
+  const majorRainConflict=rainDiff>=7 || (wetter>=8 && drier<=2);
 
-  const tminValues=manualTmin===null?[tminA,tminB]:[tminA,tminB,manualTmin];
-  const tmaxValues=manualTmax===null?[tmaxA,tmaxB]:[tmaxA,tmaxB,manualTmax];
+  const tminValues=[tminA,tminB];
+  if(manualTmin!==null)tminValues.push(manualTmin);
+  const tmaxValues=[tmaxA,tmaxB];
+  if(manualTmax!==null)tmaxValues.push(manualTmax);
+
   const tempConflict=(Math.max(...tminValues)-Math.min(...tminValues)>=3) ||
                      (Math.max(...tmaxValues)-Math.min(...tmaxValues)>=3);
 
@@ -950,40 +998,67 @@ function analyseDualWeather(primary,control,win,sourceLabel){
   if(tempConflict) penalty+=1;
   penalty=Math.min(4,penalty);
 
+  // Merge the two automatic hourly forecasts conservatively.
   const mapB=new Map(control.map(x=>[x.date.getTime(),x]));
-  const merged=primary.map(x=>{
+  let merged=primary.map(x=>{
     const y=mapB.get(x.date.getTime())||x;
     const hr=x.date.getHours();
-
-    let mergedTemp=(hr>=7&&hr<=14)?Math.max(x.temp,y.temp):Math.min(x.temp,y.temp);
-    let mergedFeels=Math.min(x.feels,y.feels);
-    let mergedWind=Math.max(x.wind,y.wind);
-    let mergedGust=Math.max(x.gust,y.gust);
-
-    // Optional manual weather only influences fields the user actually entered.
-    if(manualTmin!==null && (hr>=20 || hr<8)){
-      mergedTemp=Math.min(mergedTemp,manualTmin);
-      mergedFeels=Math.min(mergedFeels,manualTmin);
-    }
-    if(manualTmax!==null && hr>=7 && hr<=14){
-      mergedTemp=Math.max(mergedTemp,manualTmax);
-    }
-    if(manualWind!==null){
-      mergedWind=Math.max(mergedWind,manualWind);
-      mergedGust=Math.max(mergedGust,manualWind);
-    }
-
     return {
       date:x.date,
-      temp:mergedTemp,
-      feels:mergedFeels,
-      p:Math.max(x.p,y.p),  // manual rain is risk signal, not invented hourly timing
+      temp:(hr>=7&&hr<14)?Math.max(x.temp,y.temp):Math.min(x.temp,y.temp),
+      feels:Math.min(x.feels,y.feels),
+      p:Math.max(x.p,y.p),
       rain:Math.max(x.rain||0,y.rain||0),
-      wind:mergedWind,
-      gust:mergedGust,
+      wind:Math.max(x.wind,y.wind),
+      gust:Math.max(x.gust,y.gust),
       rad:Math.max(x.rad||0,y.rad||0),
       cloud:Math.min(x.cloud||0,y.cloud||0)
     };
+  });
+
+  // Apply optional manual values to the *decision basis*.
+  // Manual rain is a 24h total, so preserve hourly timing from the automatic models,
+  // but scale the precipitation profile up to the manual total if it is wetter.
+  const mergedWin=merged.filter(x=>x.date>=win.start&&x.date<win.end);
+  const autoMergedRain=sum(mergedWin,'p');
+  if(manualRain!==null && manualRain>autoMergedRain){
+    if(autoMergedRain>0){
+      const factor=manualRain/autoMergedRain;
+      merged=merged.map(x=>{
+        if(x.date>=win.start&&x.date<win.end){
+          return {...x,p:x.p*factor,rain:(x.rain||0)*factor};
+        }
+        return x;
+      });
+    }else{
+      // No automatic rain timing at all: distribute manual total over the coolest 8 hours.
+      const targetHours=[...mergedWin]
+        .sort((x,y)=>x.temp-y.temp)
+        .slice(0,Math.min(8,mergedWin.length))
+        .map(x=>x.date.getTime());
+      const each=targetHours.length?manualRain/targetHours.length:0;
+      const set=new Set(targetHours);
+      merged=merged.map(x=>set.has(x.date.getTime())?{...x,p:each,rain:each}:x);
+    }
+  }
+
+  // Optional manual temperature/wind affect only the relevant dimensions.
+  merged=merged.map(x=>{
+    const hr=x.date.getHours();
+    let temp=x.temp, feels=x.feels, wind=x.wind, gust=x.gust;
+
+    if(manualTmin!==null && (hr>=20 || hr<8)){
+      temp=Math.min(temp,manualTmin);
+      feels=Math.min(feels,manualTmin);
+    }
+    if(manualTmax!==null && hr>=7 && hr<14){
+      temp=Math.max(temp,manualTmax);
+    }
+    if(manualWind!==null){
+      wind=Math.max(wind,manualWind);
+      gust=Math.max(gust,manualWind);
+    }
+    return {...x,temp,feels,wind,gust};
   });
 
   const meta={
@@ -994,8 +1069,15 @@ function analyseDualWeather(primary,control,win,sourceLabel){
 
   analyseWeatherCore(merged,win,sourceLabel,meta);
 
+  // Explicit source comparison
   const box=document.getElementById('modelCompareBox');
   if(box){
+    let manualParts=[];
+    if(manualRain!==null)manualParts.push(`${manualRain.toFixed(1).replace('.',',')} mm regn`);
+    if(manualTmin!==null)manualParts.push(`nat min. ${manualTmin} °C`);
+    if(manualTmax!==null)manualParts.push(`maks. ${manualTmax} °C`);
+    if(manualWind!==null)manualParts.push(`vind ${manualWind} m/s`);
+
     const verdict=majorRainConflict
       ? '⚠ Stor forskel mellem prognoserne'
       : rainConflict
@@ -1004,12 +1086,6 @@ function analyseDualWeather(primary,control,win,sourceLabel){
           ? 'Prognoserne varierer lidt'
           : 'Prognoserne er overordnet enige';
 
-    let manualParts=[];
-    if(manualRain!==null)manualParts.push(`${manualRain.toFixed(1).replace('.',',')} mm regn`);
-    if(manualTmin!==null)manualParts.push(`nat min. ${manualTmin} °C`);
-    if(manualTmax!==null)manualParts.push(`maks. ${manualTmax} °C`);
-    if(manualWind!==null)manualParts.push(`vind ${manualWind} m/s`);
-
     box.innerHTML=
       `<div class="model-agree">${verdict}</div>`+
       `<div class="model-compare-grid">`+
@@ -1017,7 +1093,7 @@ function analyseDualWeather(primary,control,win,sourceLabel){
         `<div class="model-compare-item"><b>Kontrolprognose</b>${rainB.toFixed(1).replace('.',',')} mm · ${wetB} regnt. · ${Math.round(tminB)}–${Math.round(tmaxB)} °C · vind maks ${windB.toFixed(1).replace('.',',')} m/s</div>`+
         `${manualParts.length?`<div class="model-compare-item"><b>${manual.source||'Ekstra prognose'}</b>${manualParts.join(' · ')}${manual.note?' · '+manual.note:''}</div>`:''}`+
       `</div>`+
-      `<div style="margin-top:7px">Ekstra vejrdata er kun et valgfrit korrektiv. Felter du ikke udfylder, påvirker ikke vurderingen.</div>`;
+      `<div style="margin-top:7px">Ekstra vejrdata er frivillige. Hvis de viser mere belastende vejr end de automatiske modeller, indgår de konservativt i den endelige anbefaling.</div>`;
   }
 }
 function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
@@ -1131,7 +1207,16 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }
   }
 
-  let confidence=5;
+  
+  // Final robust-choice override:
+  // if any credible source (including optional manual input) shows substantial rain,
+  // and next-day heat is not a real overheating risk, choose Summer Series.
+  const externalWetRisk=!!(modelMeta && (modelMeta.wetter||0)>=8);
+  if(externalWetRisk && tmax<=22 && !veryHotMorning && !(hotMorning&&sunnyMorning)){
+    rec='Rambo Summer Series';
+    reason='Mindst én troværdig prognose viser væsentlig regn. Summer Series vælges som det robuste mellemvalg, fordi den holder ryggen tør og samtidig ventilerer gennem netdelen.';
+  }
+let confidence=5;
   if(modelMeta){
     confidence-=modelMeta.penalty;
     if(modelMeta.majorRainConflict) confidence=Math.min(confidence,2);
@@ -1144,6 +1229,14 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   confidence=Math.max(1,Math.min(5,confidence));
 
   const fmt=d=>d.toLocaleString('da-DK',{weekday:'short',hour:'2-digit',minute:'2-digit'});
+  if(modelMeta?.manual){
+    const extras=[];
+    if(modelMeta.manualRain!==null)extras.push(`${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn`);
+    if(modelMeta.manualTmin!==null)extras.push(`nat min. ${modelMeta.manualTmin} °C`);
+    if(modelMeta.manualTmax!==null)extras.push(`maks. ${modelMeta.manualTmax} °C`);
+    if(modelMeta.manualWind!==null)extras.push(`vind ${modelMeta.manualWind} m/s`);
+    if(extras.length) reason += ` Ekstra vejrdata (${modelMeta.manual.source}) er medtaget: ${extras.join(' · ')}.`;
+  }
   document.getElementById('recommendation').textContent=rec+neck;
   document.getElementById('reason').textContent=reason;
   document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}`;
@@ -1173,7 +1266,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     `<strong>Det lagde Dækkenvagten vægt på</strong><br>`+
     `${pros.length?pros.join(' · '):'Ingen stor kulde/regn-belastning'}`+
     `${cons.length?`<br><strong>Trækker den anden vej:</strong> ${cons.join(' · ')}`:''}`+
-    `<br><span class="muted">Regnen er timeprognosens nedbør, summeret over præcis 24 timer fra kl. 14→14.</span>`;
+    `<br><span class="muted">Regnen er det samlede beslutningsgrundlag for kl. 14→14. Ekstra vejrdata indgår kun, hvis du selv har tilføjet dem.</span>`;
 }
 function useHilleroed(){fetchWeather(HILLEROED.lat,HILLEROED.lon,false)}
 

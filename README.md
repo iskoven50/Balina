@@ -1,8 +1,8 @@
-Balina v8.9.4
-- Retter JavaScript-fejlen “Cannot access allRain before initialization”.
-- Ekstra vejrdata er helt valgfrit og bruges kun som korrektiv.
-- Man kan udfylde kun regn, kun temperatur, kun vind eller en kombination.
-- Tomme felter påvirker ikke vurderingen.
-- Mulige ekstra felter: regn mm kl. 14→14, natminimum, maks. temperatur frem til kl. 14 og maks. vind m/s.
-- De to automatiske Hillerød-prognoser fungerer fortsat uden noget manuelt input.
-- Manuel prognose vises som tredje kilde kun når mindst ét felt er udfyldt.
+Balina v8.9.6
+- Ekstra vejrdata er et diskret, sammenfoldet tilvalg under “+ Tilføj anden vejrdata”.
+- Appen henter og vurderer automatisk vejret som standard.
+- Når ekstra data er aktive, vises en lille markering direkte under anbefalingen: “Ekstra vejrdata medtaget”.
+- Anbefalingens forklaring nævner også hvilke ekstra data der indgår.
+- Efter gemning foldes inputområdet sammen igen.
+- Tomme/ingen ekstra data påvirker ikke vurderingen.
+- Øvrig v8.9.5-logik er bevaret.
