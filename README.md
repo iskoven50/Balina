@@ -1,7 +1,9 @@
-Balina v8.10.2
-- Kalender & aftaler bruger nu hele sidens bredde.
-- Vejret er opdelt tydeligt i “I nat” og “I morgen”.
-- I nat viser: laveste temperatur, regn mm, maks vind og føles-som.
-- I morgen viser: varmeste temperatur, regn mm, maks vind og sol.
-- Samlet oversigt bevarer: regn i dækkenperioden 14→14, regn næste 24 timer, timer med regn, vindstød og maks vind samlet.
-- Øvrige funktioner fra v8.10.1 er bevaret.
+Balina v8.11.0
+- Gentagne aftaler: hver dag, hver uge eller hver X. uge med slutdato.
+- Egnet til fx ugentlig staldvagt, lørdagsvagt hver 6. uge og daglige kurforløb.
+- Balinas garderobe bruger hele bredden.
+- Garderoben er samlet i Summer Series, Duo 100 g og linere.
+- Fold-ud vejreksempler på dækkenløsningerne.
+- 100 g og 400 g linere er tydeligt samlet.
+- Flere visuelle pejlemærker på centrale sektioner.
+- Kalender, vejr nat/dag, foderredigering og indgræsningsplan er bevaret.

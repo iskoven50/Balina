@@ -218,6 +218,19 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
   .daypart-grid{grid-template-columns:1fr}
   .daypart-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+.wardrobe-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.wardrobe-card{border:1px solid var(--line);border-radius:16px;background:#fffafb;overflow:hidden}
+.wardrobe-card summary{display:flex;gap:10px;align-items:center;padding:14px;cursor:pointer;list-style:none}
+.wardrobe-card summary::-webkit-details-marker{display:none}
+.wardrobe-card summary strong,.wardrobe-card summary small{display:block}
+.wardrobe-card summary small{margin-top:3px;color:var(--muted);font-weight:500}
+.wardrobe-icon{font-size:1.35rem}
+.wardrobe-detail{padding:0 14px 14px}
+.wardrobe-detail h3{font-size:.92rem;margin:12px 0 4px}
+.wardrobe-detail p{font-size:.86rem;margin:0 0 8px}
+.weather-example{padding:10px;border-radius:12px;background:#f8eef1;font-size:.82rem;line-height:1.45}
+@media(max-width:760px){.wardrobe-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -263,7 +276,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <section class="card wide" id="daekken">
 <div id="nextReminder"></div>
-<h2>Dagens dækken</h2>
+<h2>☁️ Dagens dækken</h2>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
 
 <div class="notice" style="margin-top:12px">
@@ -382,21 +395,40 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div style="overflow:auto"><table><thead><tr><th>Dato</th><th>Beskrivelse</th><th>Kategori</th><th class="num">Beløb</th><th></th></tr></thead><tbody id="txTable"></tbody></table></div>
 </section>
 
-<section class="card" id="garderobe">
-<h2>Garderobe</h2>
-<div class="section-list">
-<div class="item"><strong>Rambo Summer Series m. Disc · Navy · str. 155</strong><span class="small muted">Vandtæt/åndbart softshell-ryg · mesh-sider · 600D dråbefang · disc-front · aftagelig hals · 100 g liner.</span></div>
-<div class="item"><strong>Summer Series uden liner</strong><span class="small muted">Regnbeskyttelse over ryggen med god ventilation.</span></div>
-<div class="item"><strong>Summer Series + 100 g liner</strong><span class="small muted">Til køligere/våde perioder.</span></div>
-<div class="item"><strong>Rambo Duo · str. 155</strong><span class="small muted">100 g yderdækken · 100 g hals · 100 g liner + 400 g liner.</span></div>
-<div class="item"><strong>Duo 100 g</strong></div>
-<div class="item"><strong>Duo + 100 g liner = 200 g</strong></div>
-<div class="item"><strong>Duo + 400 g liner = 500 g</strong><span class="small muted">Kun ved reelt behov.</span></div>
+<section class="card wide" id="garderobe">
+<h2>🐴 Balinas garderobe</h2>
+<p class="muted">De dækkener og linere Dækkenvagten kan vælge imellem.</p>
+<div class="wardrobe-grid">
+<details class="wardrobe-card">
+<summary><span class="wardrobe-icon">☔</span><span><strong>Rambo Summer Series</strong><small>Uden liner · eller med 100 g liner</small></span></summary>
+<div class="wardrobe-detail">
+<h3>Summer Series uden liner</h3><p>Vandtæt softshell-ryg og ventilerende mesh-sider. Det lette mellemvalg ved mildt, vådt vejr.</p>
+<div class="weather-example">🌦️ <b>Vejreksempel</b><br>Mild nat, regn over flere timer og ingen sikker adgang til læ – men stadig for varmt til et egentligt 100 g dækken.</div>
+<h3>Summer Series + 100 g liner</h3><p>Til en køligere og vådere periode, hvor Summer Series alene bliver for let.</p>
+<div class="weather-example">🌧️ <b>Vejreksempel</b><br>Køligere nat kombineret med vedvarende regn og/eller vind. Dækkenvagten vurderer altid den samlede belastning.</div>
+</div></details>
+
+<details class="wardrobe-card">
+<summary><span class="wardrobe-icon">🧥</span><span><strong>Rambo Duo 100 g</strong><small>100 g grunddækken · kan bygges op med liner</small></span></summary>
+<div class="wardrobe-detail">
+<h3>Duo 100 g</h3><p>Til egentligt køligere vejr, hvor der er behov for mere varme end Summer Series giver.</p>
+<h3>Duo + 100 g liner = 200 g</h3><p>Til koldere perioder, især når kulde kombineres med vind eller vådt vejr.</p>
+<h3>Duo + 400 g liner = 500 g</h3><p>Kun ved reelt vinterbehov. Dækkenvagten skal være konservativ, så Balina ikke bliver for varm.</p>
+<div class="weather-example">❄️ <b>Vejreksempel</b><br>Temperatur, pels, opstaldning, vind og nedbør vurderes samlet – ikke efter én fast temperaturgrænse.</div>
+</div></details>
+
+<details class="wardrobe-card">
+<summary><span class="wardrobe-icon">➕</span><span><strong>Linere</strong><small>100 g · 400 g</small></span></summary>
+<div class="wardrobe-detail">
+<p><b>100 g liner</b> løfter varmegraden ét trin.</p>
+<p><b>400 g liner</b> er vinterlineren til Duo og giver samlet 500 g.</p>
+<div class="weather-example">💡 Dækkenvagten anbefaler den samlede kombination – ikke lineren alene.</div>
+</div></details>
 </div>
 </section>
 
 <section class="card wide" id="kalender">
-<h2>Kalender & aftaler</h2>
+<h2>📅 Kalender & aftaler</h2>
 
 <div class="calendar-layout">
   <div>
@@ -510,7 +542,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.10.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.11.0 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -676,6 +708,20 @@ function openAppointmentEditor(dateOverride=''){
       </label>
       <label>Dato<input id="apptDate" type="date" value="${d}"></label>
       <label>Tidspunkt<input id="apptTime" type="time"></label>
+      <label>Gentagelse
+        <select id="apptRepeat" onchange="toggleRepeatFields()">
+          <option value="none">Ingen</option>
+          <option value="daily">Hver dag</option>
+          <option value="weekly">Hver uge</option>
+          <option value="customWeeks">Hver X. uge</option>
+        </select>
+      </label>
+      <label id="repeatEveryWrap" style="display:none">Hver hvor mange uger?
+        <input id="apptRepeatEvery" type="number" min="2" max="52" value="6">
+      </label>
+      <label id="repeatEndWrap" style="display:none">Gentag til og med
+        <input id="apptRepeatEnd" type="date">
+      </label>
       <label>Note<input id="apptNote" placeholder="Valgfri"></label>
     </div>
     <div class="actions">
@@ -684,22 +730,36 @@ function openAppointmentEditor(dateOverride=''){
     </div>
   </div>`;
 }
+function toggleRepeatFields(){
+  const r=document.getElementById('apptRepeat')?.value||'none';
+  document.getElementById('repeatEveryWrap').style.display=r==='customWeeks'?'block':'none';
+  document.getElementById('repeatEndWrap').style.display=r==='none'?'none':'block';
+}
 function saveAppointment(){
   const date=document.getElementById('apptDate').value;
   if(!date)return alert('Vælg en dato.');
-  const s=getState();
-  s.appointments=getAppointments();
-  s.appointments.push({
-    id:'appt-'+Date.now(),
-    type:document.getElementById('apptType').value,
-    date,
-    time:document.getElementById('apptTime').value,
-    note:document.getElementById('apptNote').value.trim()
-  });
+  const repeat=document.getElementById('apptRepeat')?.value||'none';
+  const repeatEnd=document.getElementById('apptRepeatEnd')?.value||'';
+  if(repeat!=='none'&&!repeatEnd)return alert('Vælg hvornår gentagelsen skal slutte.');
+  const type=document.getElementById('apptType').value;
+  const time=document.getElementById('apptTime').value;
+  const note=document.getElementById('apptNote').value.trim();
+  const every=Math.max(2,Number(document.getElementById('apptRepeatEvery')?.value||6));
+  const s=getState();s.appointments=getAppointments();
+  const series='series-'+Date.now();
+  const add=d=>s.appointments.push({id:'appt-'+Date.now()+'-'+Math.random(),series,type,date:d,time,note});
+  if(repeat==='none') add(date);
+  else{
+    let d=new Date(date+'T12:00:00'),end=new Date(repeatEnd+'T12:00:00'),guard=0;
+    const step=repeat==='daily'?1:repeat==='weekly'?7:every*7;
+    while(d<=end&&guard<400){
+      add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);
+      d.setDate(d.getDate()+step);guard++;
+    }
+  }
   setState(s);
   document.getElementById('appointmentEditor').innerHTML='';
-  renderCalendar();
-  renderAppointments();
+  renderCalendar();renderAppointments();
 }
 function deleteAppointment(id){
   const s=getState();
