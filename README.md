@@ -1,6 +1,6 @@
-Balina v8.11.1
-- Dækkenlogik rettet: meget let regn over flere timer udløser ikke alene Summer Series.
-- Lørdagsvagt som fast aftaletype og særskilt næste-vagt-visning.
-- Skriv selv valgfrit aftalenavn i stedet for “Andet”.
-- Alle aftaler de næste 72 timer vises som påmindelsesbannere over Dagens dækken.
-- Gentagne aftaler er bevaret.
+Balina v8.11.2
+Hotfix:
+- Retter en ekstra afsluttende JavaScript-klamme i kalender/påmindelser.
+- Fejlen stoppede hele appens JavaScript og gjorde derfor vejr, konto, kalender og smed tomme.
+- JavaScript er syntakskontrolleret med Node før denne version blev pakket.
+- Alle funktioner og data fra v8.11.1 er bevaret.

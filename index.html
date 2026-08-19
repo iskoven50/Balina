@@ -550,7 +550,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.11.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.11.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -868,7 +868,7 @@ function renderAppointments(){
       return `<div class="reminder"><strong>${label}</strong><span>${esc(x.type)}${x.time?' kl. '+x.time:''}${x.note?' · '+esc(x.note):''}</span></div>`;
     }).join('');
   }
-}}
+}
 
 function registerLesson(){
   const date=prompt('Dato for undervisning (ÅÅÅÅ-MM-DD):',today());
