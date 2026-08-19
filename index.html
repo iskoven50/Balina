@@ -161,7 +161,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .reminder strong{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:#84636d}
 .reminder span{display:block;font-weight:800;margin-top:3px}
 
-.calendar-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}
+.calendar-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.8fr);gap:18px;margin-bottom:14px}
 .mini-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;text-transform:capitalize}
 .cal-nav{border:0;background:transparent;font-size:1.5rem;padding:2px 8px;cursor:pointer;color:#715b63}
 .mini-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -177,6 +177,47 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .selected-day-list{margin:10px 0 14px}
 .selected-day-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
 @media(max-width:760px){.calendar-layout{grid-template-columns:1fr}.cal-day{min-height:36px}}
+
+.daypart-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+.daypart-card{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  background:#fffafb;
+}
+.daypart-title{
+  font-size:1.02rem;
+  font-weight:800;
+  margin-bottom:10px;
+}
+.daypart-metrics{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.daypart-metrics>div{
+  padding:10px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+.daypart-metrics span{
+  display:block;
+  font-size:.76rem;
+  color:var(--muted);
+  margin-bottom:3px;
+}
+.daypart-metrics b{font-size:1.02rem}
+.weather-summary-row{margin-top:12px}
+@media(max-width:760px){
+  .daypart-grid{grid-template-columns:1fr}
+  .daypart-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
@@ -237,18 +278,34 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </details>
 
 
-<div class="weather-row">
-  <div class="metric"><span>Nat minimum</span><b id="tmin">—</b></div>
-  <div class="metric"><span>Varmest i morgen</span><b id="tmax">—</b></div>
-  <div class="metric"><span>Regn kl. 14→14</span><b id="rain">—</b></div>
-  <div class="metric"><span>Maks vind</span><b id="wind">—</b></div>
-  <div class="metric"><span>Regn næste 24 timer</span><b id="rain24">—</b></div>
+<div class="daypart-grid">
+  <div class="daypart-card">
+    <div class="daypart-title">I nat</div>
+    <div class="daypart-metrics">
+      <div><span>Lavest</span><b id="tmin">—</b></div>
+      <div><span>Regn</span><b id="nightRain">—</b></div>
+      <div><span>Maks vind</span><b id="nightWind">—</b></div>
+      <div><span>Føles som</span><b id="feelsMin">—</b></div>
+    </div>
+  </div>
+
+  <div class="daypart-card">
+    <div class="daypart-title">I morgen</div>
+    <div class="daypart-metrics">
+      <div><span>Varmest</span><b id="tmax">—</b></div>
+      <div><span>Regn</span><b id="dayRain">—</b></div>
+      <div><span>Maks vind</span><b id="dayWind">—</b></div>
+      <div><span>Sol</span><b id="sunRisk">—</b></div>
+    </div>
+  </div>
 </div>
-<div class="weather-row">
+
+<div class="weather-row weather-summary-row">
+  <div class="metric"><span>Regn i dækkenperioden 14→14</span><b id="rain">—</b></div>
+  <div class="metric"><span>Regn næste 24 timer</span><b id="rain24">—</b></div>
   <div class="metric"><span>Timer med regn</span><b id="wetHours">—</b></div>
-  <div class="metric"><span>Koldest – føles som</span><b id="feelsMin">—</b></div>
   <div class="metric"><span>Maks vindstød</span><b id="gust">—</b></div>
-  <div class="metric"><span>Sol næste formiddag</span><b id="sunRisk">—</b></div>
+  <div class="metric"><span>Maks vind samlet</span><b id="wind">—</b></div>
 </div>
 
 <div id="weatherTimeline" class="notice small"></div>
@@ -338,7 +395,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </div>
 </section>
 
-<section class="card" id="kalender">
+<section class="card wide" id="kalender">
 <h2>Kalender & aftaler</h2>
 
 <div class="calendar-layout">
@@ -453,7 +510,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.10.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.10.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -1067,6 +1124,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const outdoor=reg==='winter'?rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<18}):rows;
   const night=rows.filter(x=>{const h=x.date.getHours();return h>=20||h<8});
   const morning=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<14});
+  const day=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<14});
   const rainRows=reg==='winter'?outdoor:rows;
   const arr=outdoor.length?outdoor:rows;
   const min=(a,k)=>Math.min(...a.map(x=>x[k])), max=(a,k)=>Math.max(...a.map(x=>x[k])), sum=(a,k)=>a.reduce((v,x)=>v+x[k],0);
@@ -1085,6 +1143,10 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     cur=wet?cur+1:0; longest=Math.max(longest,cur);
   });
   const maxWind=max(arr,'wind'), maxGust=max(arr,'gust'); // m/s
+  const nightRain=night.length?sum(night,'p'):0;
+  const dayRain=day.length?sum(day,'p'):0;
+  const nightWind=night.length?max(night,'wind'):maxWind;
+  const dayWind=day.length?max(day,'wind'):maxWind;
   const morningRad=morning.length?max(morning,'rad'):0;
   const sunnyMorning=morningRad>=350, hotMorning=morningMax>=22, veryHotMorning=morningMax>=25;
   const windy=maxWind>=7||maxGust>=12;
@@ -1209,6 +1271,10 @@ let confidence=5;
   document.getElementById('feelsMin').textContent=Math.round(feelsMin)+' °C';
   document.getElementById('gust').textContent=maxGust.toFixed(1).replace('.',',')+' m/s';
   document.getElementById('sunRisk').textContent=sunnyMorning?'Høj':'Lav/moderat';
+  document.getElementById('nightRain').textContent=nightRain.toFixed(1).replace('.',',')+' mm';
+  document.getElementById('dayRain').textContent=dayRain.toFixed(1).replace('.',',')+' mm';
+  document.getElementById('nightWind').textContent=nightWind.toFixed(1).replace('.',',')+' m/s';
+  document.getElementById('dayWind').textContent=dayWind.toFixed(1).replace('.',',')+' m/s';
   document.getElementById('weatherTimeline').innerHTML=
     `<strong>Det lagde Dækkenvagten vægt på</strong><br>`+
     `${pros.length?pros.join(' · '):'Ingen stor kulde/regn-belastning'}`+

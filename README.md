@@ -1,11 +1,7 @@
-Balina v8.10.1
-- Kalender & aftaler er nu en rigtig mini-månedskalender.
-- Dage med aftaler markeres med fed dato og prik.
-- Klik på en dato for at se eller tilføje aftaler.
-- “Næste aftale” er tydeligt fremhævet ved siden af kalenderen.
-- Undervisning, forsikring og tandlæge er fjernet som faste kalenderkort.
-- De kan i stedet oprettes som konkrete aftaler.
-- Smed-nedtælling, sidste smededato og registrering er bevaret separat.
-- Fodereditoren ændrer både produkt, mængde og enhed.
-- Mængder som 3/4 og 1–2 kan skrives direkte.
-- Flere enheder og egen enhed understøttes.
+Balina v8.10.2
+- Kalender & aftaler bruger nu hele sidens bredde.
+- Vejret er opdelt tydeligt i “I nat” og “I morgen”.
+- I nat viser: laveste temperatur, regn mm, maks vind og føles-som.
+- I morgen viser: varmeste temperatur, regn mm, maks vind og sol.
+- Samlet oversigt bevarer: regn i dækkenperioden 14→14, regn næste 24 timer, timer med regn, vindstød og maks vind samlet.
+- Øvrige funktioner fra v8.10.1 er bevaret.
