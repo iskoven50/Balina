@@ -151,6 +151,32 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 }
 .weather-details[open] summary{margin-bottom:10px}
 #uncertaintyBox,#weatherAttentionBox{display:none !important}
+
+.daily-rules h3{margin:14px 0 5px}.daily-rules ul{margin:0 0 12px;padding-left:20px}.daily-rules li{margin:5px 0}
+.subcard,.editor-card{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fffafb}
+.check-row{display:block;padding:8px 4px;border-bottom:1px solid var(--line);font-weight:600}
+.appt-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.appt-row span{display:block;font-size:.84rem;color:var(--muted);margin-top:2px}
+.reminder{margin-bottom:12px;padding:11px 14px;border-radius:15px;background:#f5e8ec;border:1px solid #e9cfd7}
+.reminder strong{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:#84636d}
+.reminder span{display:block;font-weight:800;margin-top:3px}
+
+.calendar-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}
+.mini-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;text-transform:capitalize}
+.cal-nav{border:0;background:transparent;font-size:1.5rem;padding:2px 8px;cursor:pointer;color:#715b63}
+.mini-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{text-align:center;font-size:.68rem;font-weight:700;color:var(--muted);padding:3px 0}
+.cal-empty{min-height:32px}
+.cal-day{position:relative;min-height:34px;border:0;border-radius:9px;background:transparent;cursor:pointer;color:#5f5055}
+.cal-day:hover{background:#fff1f5}
+.cal-day.is-today{background:#f4dbe3;font-weight:800}
+.cal-day.has-appt{font-weight:800}
+.cal-day.has-appt i{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#dc8ba3}
+.next-appt-card{padding:14px;border:1px solid var(--line);border-radius:16px;background:#fffafb;align-self:start}
+.next-appt-main{font-size:1.18rem;font-weight:800;margin:5px 0}
+.selected-day-list{margin:10px 0 14px}
+.selected-day-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+@media(max-width:760px){.calendar-layout{grid-template-columns:1fr}.cal-day{min-height:36px}}
 </style>
 </head>
 <body>
@@ -172,7 +198,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
       </a>
       <a href="#foder" class="home-card tone-sage">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 36h44l-5 14H15l-5-14Zm7-8c6-9 24-9 30 0M24 25c-2-7 4-11 8-11s10 4 8 11M48 18c5 2 7 7 5 12M52 20l6-4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Foderplan</strong><span>Foder og tilskud</span>
+        <strong>Det får Balina</strong><span>Foder og tilskud</span>
       </a>
       <a href="#konto" class="home-card tone-cream">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 18h39a7 7 0 0 1 7 7v25H10V18Zm0 8h46M43 33h13v10H43a5 5 0 0 1 0-10Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -188,13 +214,14 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
       </a>
       <a href="#status" class="home-card tone-beige">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 48c8-3 10-13 11-20 1-8 5-14 12-14 7 0 11 6 12 14 1 7 3 17 11 20M21 32h22M25 39h14" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Balina forhold</strong><span>Fold, boks og pels</span>
+        <strong>Balina lige nu</strong><span>Fold, boks og pels</span>
       </a>
     </section>
 
 <main class="grid">
 
 <section class="card wide" id="daekken">
+<div id="nextReminder"></div>
 <h2>Dagens dækken</h2>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
 
@@ -212,13 +239,14 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <div class="weather-row">
   <div class="metric"><span>Nat minimum</span><b id="tmin">—</b></div>
-  <div class="metric"><span>Maks. frem til kl. 14</span><b id="tmax">—</b></div>
+  <div class="metric"><span>Varmest i morgen</span><b id="tmax">—</b></div>
   <div class="metric"><span>Regn kl. 14→14</span><b id="rain">—</b></div>
   <div class="metric"><span>Maks vind</span><b id="wind">—</b></div>
+  <div class="metric"><span>Regn næste 24 timer</span><b id="rain24">—</b></div>
 </div>
 <div class="weather-row">
-  <div class="metric"><span>Regntimer</span><b id="wetHours">—</b></div>
-  <div class="metric"><span>Føles som min.</span><b id="feelsMin">—</b></div>
+  <div class="metric"><span>Timer med regn</span><b id="wetHours">—</b></div>
+  <div class="metric"><span>Koldest – føles som</span><b id="feelsMin">—</b></div>
   <div class="metric"><span>Maks vindstød</span><b id="gust">—</b></div>
   <div class="metric"><span>Sol næste formiddag</span><b id="sunRisk">—</b></div>
 </div>
@@ -231,24 +259,40 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <p class="small muted">Vejrkilde: to lokale prognosemodeller for Hillerød · appens egen Balina-vurdering · 30 min. cache.</p>
 
 <details>
-  <summary>Balinas faste dækkenforhold</summary>
-  <p class="small muted">Døgnfold nu: ingen sikker adgang til læ; delvist åbent terræn med vildthegn/træer i bunden på den anden side af hegnet. Vinterordning aktiveres først manuelt: fold 08–18 uden læ og boks 18–08 i uisoleret, kold/ventileret men helt tør og trækfri stålhal med 6 heste. Hun står på hamp/spåner på beton; der muges dagligt. Samme dækken skal fungere hele døgnet. Balina er uklippet nu. Hals vurderes især ved meget regn og frost.</p>
+  <summary>Sådan går Balina til daglig</summary>
+  <div class="daily-rules">
+    <h3>Sommer – døgnfold / sommerfold</h3>
+    <ul>
+      <li>Balina går ude hele døgnet.</li>
+      <li>Ingen sikker adgang til læ.</li>
+      <li>Dækken kan som udgangspunkt skiftes én gang om dagen.</li>
+      <li>Summer Series er det fleksible valg ved køligt og vådt sommervejr.</li>
+    </ul>
+    <h3>Vinter – stald / vinterfold</h3>
+    <ul>
+      <li>Fold ca. kl. 08–18.</li>
+      <li>Boks ca. kl. 18–08.</li>
+      <li>Ingen læ på folden; tør og trækfri boks om natten.</li>
+      <li>Dækken kan som udgangspunkt skiftes én gang om dagen.</li>
+    </ul>
+    <p class="small muted">Dækkenvagten bruger disse rammer sammen med vejret og oplysningerne under “Balina lige nu”.</p>
+  </div>
 </details>
 </section>
 
 <section class="card wide" id="status">
-<h2>Balina forhold</h2>
+<h2>Balina lige nu</h2>
 <div class="formgrid">
 <div><label>Aktuel ordning</label>
-<select id="regime">
+<select id="regime" onchange="saveProfile(true)">
 <option value="summer">Døgnfold</option>
 <option value="winter">Vinterordning: fold 08–18 / boks 18–08</option>
 </select></div>
 <div><label>Pels</label>
-<select id="coat"><option value="unclipped">Uklippet</option><option value="clipped">Klippet</option></select></div>
+<select id="coat" onchange="saveProfile(true)"><option value="unclipped">Uklippet</option><option value="clipped">Klippet</option></select></div>
 </div>
 <div class="notice" id="regimeText"></div>
-<div class="actions"><button onclick="saveProfile()">Gem status</button></div>
+<div class="small muted" style="margin-top:10px">Ændringer bruges med det samme i Dækkenvagten.</div>
 <p class="small muted">Skift først til vinterordning, når Balina faktisk kommer på boks. Appen gætter ikke selv ud fra temperaturen.</p>
 </section>
 
@@ -296,19 +340,32 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <section class="card" id="kalender">
 <h2>Kalender & aftaler</h2>
-<div class="section-list">
+
+<div class="calendar-layout">
+  <div>
+    <div class="mini-cal-head">
+      <button class="cal-nav" onclick="changeCalendarMonth(-1)">‹</button>
+      <strong id="calendarMonthTitle">—</strong>
+      <button class="cal-nav" onclick="changeCalendarMonth(1)">›</button>
+    </div>
+    <div id="miniCalendar" class="mini-calendar"></div>
+  </div>
+
+  <div class="next-appt-card">
+    <div class="small muted">NÆSTE AFTALE</div>
+    <div id="nextAppointmentBig" class="next-appt-main">Ingen kommende aftaler</div>
+    <div id="nextAppointmentMeta" class="small muted"></div>
+    <div class="actions"><button class="secondary" onclick="openAppointmentEditor()">+ Ny aftale</button></div>
+  </div>
+</div>
+
+<div id="selectedDayAppointments" class="selected-day-list"></div>
+<div id="appointmentEditor"></div>
+
 <div class="item good">
 <strong>🔨 Tid til smed</strong>
 <span id="farrierCountdown" class="farrier-big">Beregner…</span><span id="farrierDetail" class="farrier-sub"></span>
 <div class="actions"><button class="secondary" onclick="registerFarrier()">Registrér ny smededato</button></div>
-</div>
-<div class="item">
-<strong>Undervisning</strong>
-<span id="lessonStatus" class="small muted">Senest registreret: 17/8/2026 · 150 kr.</span>
-<div class="actions"><button class="secondary" onclick="registerLesson()">Registrér undervisning</button></div>
-</div>
-<div class="item"><strong>Sundhedsforsikring</strong><span class="small muted">1.724,15 kr. kvartalsvis · senest 7/8</span></div>
-<div class="item"><strong>Tandlæge</strong><span class="small muted">Ca. 3.000 kr. omkring årsskiftet</span></div>
 </div>
 </section>
 
@@ -363,9 +420,27 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 <section class="card wide" id="foder">
-<h2>Foderplan</h2>
+<h2>Det får Balina</h2>
 <p class="small muted">Ret mængder eller tilføj nye produkter direkte. Planen viser altid det, der gælder lige nu.</p>
 <div id="feedPlan"></div>
+<div class="subcard">
+  <h3>Grovfoder & græs</h3>
+  <div class="formgrid">
+    <div><label>Græs</label>
+      <select id="grassStatus" onchange="saveGrassStatus()">
+        <option value="none">Intet græs</option>
+        <option value="grazing">Indgræsning</option>
+        <option value="limited">Begrænset græs / stribegræs</option>
+        <option value="summer">Sommergræs</option>
+      </select>
+    </div>
+  </div>
+  <details id="grazingDetails">
+    <summary>Indgræsningsplan</summary>
+    <div id="grazingPlan" style="margin-top:10px"></div>
+  </details>
+</div>
+<div id="feedEditor"></div>
 </section>
 
 <section class="card wide">
@@ -378,7 +453,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.9.8 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.10.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -506,9 +581,9 @@ function init(){
   document.getElementById('regime').value=s.regime||'summer';
   document.getElementById('coat').value=s.coat||'unclipped';
   document.getElementById('txDate').value=today();
-  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderLessonStatus();renderFeedPlan();useHilleroed();
+  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderFeedPlan();renderCalendar();renderAppointments();useHilleroed();
 }
-function saveProfile(){
+function saveProfile(silent=false){
   const s=getState();s.regime=document.getElementById('regime').value;s.coat=document.getElementById('coat').value;setState(s);renderProfile();useHilleroed()
 }
 function renderProfile(){
@@ -524,12 +599,131 @@ function renderProfile(){
 
 
 
-function renderLessonStatus(){
-  const el=document.getElementById('lessonStatus'); if(!el)return;
+let calendarCursor=new Date();
+
+function getAppointments(){
   const s=getState();
-  const last=s.lastLessonDate||'2026-08-17';
-  el.textContent=`Senest registreret: ${new Date(last+'T12:00:00').toLocaleDateString('da-DK')} · 150 kr.`;
+  return Array.isArray(s.appointments)?s.appointments:[];
 }
+function openAppointmentEditor(dateOverride=''){
+  const host=document.getElementById('appointmentEditor');
+  const d=dateOverride||today();
+  host.innerHTML=`<div class="editor-card">
+    <h3>Ny aftale</h3>
+    <div class="formgrid">
+      <label>Type
+        <select id="apptType">
+          <option>Smed</option><option>Undervisning</option><option>Staldvagt</option>
+          <option>Dyrlæge</option><option>Tandlæge</option><option>Vaccination</option><option>Andet</option>
+        </select>
+      </label>
+      <label>Dato<input id="apptDate" type="date" value="${d}"></label>
+      <label>Tidspunkt<input id="apptTime" type="time"></label>
+      <label>Note<input id="apptNote" placeholder="Valgfri"></label>
+    </div>
+    <div class="actions">
+      <button onclick="saveAppointment()">Gem aftale</button>
+      <button class="secondary" onclick="document.getElementById('appointmentEditor').innerHTML=''">Annuller</button>
+    </div>
+  </div>`;
+}
+function saveAppointment(){
+  const date=document.getElementById('apptDate').value;
+  if(!date)return alert('Vælg en dato.');
+  const s=getState();
+  s.appointments=getAppointments();
+  s.appointments.push({
+    id:'appt-'+Date.now(),
+    type:document.getElementById('apptType').value,
+    date,
+    time:document.getElementById('apptTime').value,
+    note:document.getElementById('apptNote').value.trim()
+  });
+  setState(s);
+  document.getElementById('appointmentEditor').innerHTML='';
+  renderCalendar();
+  renderAppointments();
+}
+function deleteAppointment(id){
+  const s=getState();
+  s.appointments=getAppointments().filter(x=>x.id!==id);
+  setState(s);
+  renderCalendar();
+  renderAppointments();
+}
+function changeCalendarMonth(delta){
+  calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+delta,1);
+  renderCalendar();
+}
+function renderCalendar(){
+  const host=document.getElementById('miniCalendar');
+  const title=document.getElementById('calendarMonthTitle');
+  if(!host||!title)return;
+  const y=calendarCursor.getFullYear(),m=calendarCursor.getMonth();
+  title.textContent=new Date(y,m,1).toLocaleDateString('da-DK',{month:'long',year:'numeric'});
+
+  const byDate={};
+  getAppointments().forEach(a=>(byDate[a.date]??=[]).push(a));
+
+  const first=new Date(y,m,1);
+  const start=(first.getDay()+6)%7;
+  const days=new Date(y,m+1,0).getDate();
+  const labels=['MA','TI','ON','TO','FR','LØ','SØ'];
+
+  let out=labels.map(x=>`<div class="cal-dow">${x}</div>`).join('');
+  for(let i=0;i<start;i++)out+='<div class="cal-empty"></div>';
+  for(let d=1;d<=days;d++){
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const has=!!byDate[ds]?.length;
+    const isToday=ds===today();
+    out+=`<button class="cal-day ${has?'has-appt':''} ${isToday?'is-today':''}" onclick="selectCalendarDay('${ds}')">
+      <span>${d}</span>${has?'<i></i>':''}
+    </button>`;
+  }
+  host.innerHTML=out;
+}
+function selectCalendarDay(date){
+  const host=document.getElementById('selectedDayAppointments');
+  if(!host)return;
+  const list=getAppointments().filter(x=>x.date===date).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+  const label=new Date(date+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});
+  host.innerHTML=`<div class="selected-day-head"><strong>${label}</strong><button class="secondary" onclick="openAppointmentEditor('${date}')">+ Tilføj</button></div>`+
+    (list.length?list.map(x=>`<div class="appt-row"><div><strong>${esc(x.type)}</strong><span>${x.time?'kl. '+x.time+' · ':''}${x.note?esc(x.note):''}</span></div><button class="secondary" onclick="deleteAppointment('${x.id}')">Slet</button></div>`).join('')
+    :'<div class="small muted">Ingen aftaler denne dag.</div>');
+}
+function renderAppointments(){
+  const items=getAppointments().filter(x=>x.date>=today()).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+  const big=document.getElementById('nextAppointmentBig');
+  const meta=document.getElementById('nextAppointmentMeta');
+  const reminder=document.getElementById('nextReminder');
+
+  if(big&&meta){
+    if(items.length){
+      const n=items[0],d=new Date(n.date+'T12:00:00');
+      big.textContent=`${n.type}${n.time?' · kl. '+n.time:''}`;
+      meta.textContent=`${d.toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'})}${n.note?' · '+n.note:''}`;
+    }else{
+      big.textContent='Ingen kommende aftaler';
+      meta.textContent='';
+    }
+  }
+
+  if(reminder){
+    const now=new Date();
+    const soon=items.find(x=>{
+      const d=new Date(x.date+'T12:00:00');
+      return (d-now)/86400000<=2.5;
+    });
+    if(soon){
+      const d=new Date(soon.date+'T12:00:00');
+      const base=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);
+      const days=Math.round((d-base)/86400000);
+      const when=days<=0?'I dag':days===1?'I morgen':`Om ${days} dage`;
+      reminder.innerHTML=`<div class="reminder"><strong>${when}</strong><span>${esc(soon.type)}${soon.time?' kl. '+soon.time:''}${soon.note?' · '+esc(soon.note):''}</span></div>`;
+    }else reminder.innerHTML='';
+  }
+}
+
 function registerLesson(){
   const date=prompt('Dato for undervisning (ÅÅÅÅ-MM-DD):',today());
   if(!date)return;
@@ -844,7 +1038,12 @@ function analyseDualWeather(primary,control,win,sourceLabel){
       wind:Math.max(x.wind,y.wind),gust:Math.max(x.gust,y.gust),
       rad:Math.max(x.rad||0,y.rad||0),cloud:Math.min(x.cloud||0,y.cloud||0)};
   });
-  const meta={rainA,rainB,tminA,tminB,tmaxA,tmaxB,wetA,wetB,windA,windB,gustA,gustB,
+  const now=new Date();
+  const next24End=new Date(now.getTime()+24*60*60*1000);
+  const p24=primary.filter(x=>x.date>=now&&x.date<next24End);
+  const c24=control.filter(x=>x.date>=now&&x.date<next24End);
+  const rain24=Math.max(sum(p24,'p'),sum(c24,'p'));
+  const meta={rain24,rainA,rainB,tminA,tminB,tmaxA,tmaxB,wetA,wetB,windA,windB,gustA,gustB,
     rainConflict,majorRainConflict,tempConflict,penalty,wetter,drier};
   analyseWeatherCore(merged,win,sourceLabel,meta);
 
@@ -901,7 +1100,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   if(feelsMin<=10+clipAdj)exposure+=1;
   if(feelsMin<=6+clipAdj)exposure+=2;
   if(reg==='summer'){exposure+=1;pros.push('ingen sikker adgang til læ')}
-  if(clipped)exposure+=1;
+  if(clipped){exposure+=2;pros.push('klippet pels')}
 
   if(morningMax>=18){heat+=1;cons.push(`${Math.round(morningMax)} °C næste formiddag`)}
   if(morningMax>=21)heat+=2;
@@ -959,7 +1158,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const overheatRisk = veryHotMorning || (hotMorning && sunnyMorning);
   const mildWetSummerOption = (tmax <= 22 && (rainTotal >= 3 || sustainedRain || modelWetRisk));
   if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && tmax<=22)) && !overheatRisk){
-    recommendation='Rambo Summer Series';
+    rec='Rambo Summer Series';
     if(modelMeta?.manualRain!==null && modelMeta.manualRain!==undefined && modelMeta.manualRain>=8 && modelMeta.majorRainConflict){
       attention=`${modelMeta.manual.source} viser ${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn, markant mere end de automatiske prognoser. Dækkenvagten tager det med og vælger Summer Series som det robuste mellemvalg: vandtæt ryg, ventilerende net og en tør Balina til ridning.`;
     }else if(modelMeta?.majorRainConflict){
@@ -1004,6 +1203,7 @@ let confidence=5;
   document.getElementById('tmin').textContent=Math.round(nightMin)+' °C';
   document.getElementById('tmax').textContent=Math.round(tmax)+' °C';
   document.getElementById('rain').textContent=rainTotal.toFixed(1).replace('.',',')+' mm';
+  document.getElementById('rain24').textContent=(modelMeta?.rain24??rainTotal).toFixed(1).replace('.',',')+' mm';
   document.getElementById('wind').textContent=maxWind.toFixed(1).replace('.',',')+' m/s';
   document.getElementById('wetHours').textContent=wetHours+' t';
   document.getElementById('feelsMin').textContent=Math.round(feelsMin)+' °C';
@@ -1042,29 +1242,90 @@ function renderFeedPlan(){
       <div class="item feed-row">
         <div><strong>${esc(x.name)}</strong><span class="small muted">${esc(x.amount)}</span></div>
         <div class="feed-actions">
-          <button class="secondary" onclick="editFeed('${x.id}')">Ændr</button>
+          <button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}','${x.id}')">Ændr</button>
           <button class="secondary" onclick="deleteFeed('${x.id}')">Slet</button>
         </div>
       </div>`).join('');
     return `<h3>${group}</h3><div class="section-list">${items||'<div class="small muted">Ingen poster.</div>'}</div>
-      <div class="actions"><button class="secondary" onclick="addFeed('${group.replace(/'/g,"\\'")}')">+ Tilføj</button></div>`;
+      <div class="actions"><button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}')">+ Tilføj</button></div>`;
   }).join('');
+  renderGrass();
 }
-function editFeed(id){
-  const s=getState(); s.feedPlan=getFeed();
-  const item=s.feedPlan.find(x=>x.id===id); if(!item)return;
-  const name=prompt('Produkt/tilskud:',item.name); if(name===null)return;
-  const amount=prompt('Mængde:',item.amount); if(amount===null)return;
-  item.name=name.trim()||item.name; item.amount=amount.trim()||item.amount;
-  setState(s);renderFeedPlan();
+function splitAmount(amount=''){
+  const units=['mål','g','kg','ml','håndfuld','håndfulde','ske','skeer','bolsje','bolsjer','skive','net'];
+  const text=String(amount||'').trim();
+  const found=units.find(u=>text.toLowerCase().endsWith(u));
+  if(!found)return {qty:text,unit:'andet',custom:''};
+  return {qty:text.slice(0,-found.length).trim(),unit:found,custom:''};
 }
-function addFeed(group){
-  const name=prompt('Produkt eller tilskud:'); if(!name)return;
-  const amount=prompt('Mængde:',''); if(amount===null)return;
-  const s=getState(); s.feedPlan=getFeed();
-  s.feedPlan.push({id:'feed-'+Date.now()+Math.random(),group,name:name.trim(),amount:amount.trim()});
-  setState(s);renderFeedPlan();
+function openFeedEditor(group,id=''){
+  const feed=getFeed(),item=id?feed.find(x=>x.id===id):null;
+  const a=splitAmount(item?.amount||'');
+  const host=document.getElementById('feedEditor');
+  host.innerHTML=`<div class="editor-card"><h3>${item?'Ændr':'Tilføj'} foder eller tilskud</h3>
+    <label>Produkt<input id="feedEditName" value="${esc(item?.name||'')}"></label>
+    <div class="formgrid">
+      <label>Mængde<input id="feedEditQty" value="${esc(a.qty)}" placeholder="Fx 3/4 eller 1–2"></label>
+      <label>Enhed
+        <select id="feedEditUnit" onchange="toggleCustomFeedUnit()">
+          ${['mål','g','kg','ml','håndfuld','håndfulde','ske','skeer','bolsje','bolsjer','skive','net','andet'].map(u=>`<option value="${u}" ${a.unit===u?'selected':''}>${u}</option>`).join('')}
+        </select>
+      </label>
+    </div>
+    <label id="customFeedUnitWrap" style="${a.unit==='andet'?'':'display:none'}">Egen enhed<input id="feedEditCustomUnit" placeholder="Fx bæger"></label>
+    <div class="actions">
+      <button onclick="saveFeedEditor('${group.replace(/'/g,"\\'")}','${id}')">Gem</button>
+      <button class="secondary" onclick="document.getElementById('feedEditor').innerHTML=''">Annuller</button>
+    </div>
+  </div>`;
 }
+function toggleCustomFeedUnit(){
+  const u=document.getElementById('feedEditUnit').value;
+  document.getElementById('customFeedUnitWrap').style.display=u==='andet'?'block':'none';
+}
+function saveFeedEditor(group,id){
+  const name=document.getElementById('feedEditName').value.trim();
+  const qty=document.getElementById('feedEditQty').value.trim();
+  let unit=document.getElementById('feedEditUnit').value;
+  if(unit==='andet')unit=document.getElementById('feedEditCustomUnit').value.trim();
+  if(!name)return alert('Skriv et produktnavn.');
+  if(!qty)return alert('Skriv en mængde.');
+  if(!unit)return alert('Vælg eller skriv en enhed.');
+  const amount=`${qty} ${unit}`.trim();
+
+  const s=getState();s.feedPlan=getFeed();
+  if(id){
+    const item=s.feedPlan.find(x=>x.id===id);
+    if(item){item.name=name;item.amount=amount}
+  }else{
+    s.feedPlan.push({id:'feed-'+Date.now()+Math.random(),group,name,amount});
+  }
+  setState(s);
+  document.getElementById('feedEditor').innerHTML='';
+  renderFeedPlan();
+}
+function saveGrassStatus(){
+  const s=getState();s.grassStatus=document.getElementById('grassStatus').value;setState(s);renderGrass();
+}
+function renderGrass(){
+  const s=getState(),el=document.getElementById('grassStatus');if(!el)return;
+  el.value=s.grassStatus||'summer';
+  const d=document.getElementById('grazingDetails');if(d)d.style.display=el.value==='grazing'?'block':'none';
+  renderGrazingPlan();
+}
+function renderGrazingPlan(){
+  const host=document.getElementById('grazingPlan');if(!host)return;
+  const s=getState(),done=s.grazingDone||[];
+  const mins=Array.from({length:12},(_,i)=>(i+1)*5);
+  const next=mins.findIndex((_,i)=>!done.includes(i));
+  host.innerHTML=`<div class="notice small"><strong>${next<0?'Klar til fælles indgræsning':'Næste trin: '+mins[next]+' min.'}</strong><br>Gå først videre, når det foregående trin er gennemført.</div>`+
+    mins.map((m,i)=>`<label class="check-row"><input type="checkbox" ${done.includes(i)?'checked':''} onchange="toggleGrazing(${i},this.checked)"> Trin ${i+1} · ${m} min.</label>`).join('');
+}
+function toggleGrazing(i,checked){
+  const s=getState();let d=s.grazingDone||[];
+  d=checked?[...new Set([...d,i])]:d.filter(x=>x!==i);s.grazingDone=d;setState(s);renderGrazingPlan();
+}
+
 function deleteFeed(id){
   if(!confirm('Fjern denne post fra den aktuelle foderplan?'))return;
   const s=getState(); s.feedPlan=getFeed().filter(x=>x.id!==id); setState(s);renderFeedPlan();

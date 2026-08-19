@@ -1,6 +1,11 @@
-Balina v8.9.8
-- Manuel/ekstra vejrprognose er fjernet.
-- Kun to automatiske lokale Hillerød-prognoser bruges.
-- Timefordelingen bevares: tidspunktet for regn indgår i dækkenvalget.
-- Standardvisning: klar anbefaling, sikkerhed, kort begrundelse og vejrkort.
-- Prognoser kan foldes ud under “Se hvorfor / sammenlign vejrudsigter”.
+Balina v8.10.1
+- Kalender & aftaler er nu en rigtig mini-månedskalender.
+- Dage med aftaler markeres med fed dato og prik.
+- Klik på en dato for at se eller tilføje aftaler.
+- “Næste aftale” er tydeligt fremhævet ved siden af kalenderen.
+- Undervisning, forsikring og tandlæge er fjernet som faste kalenderkort.
+- De kan i stedet oprettes som konkrete aftaler.
+- Smed-nedtælling, sidste smededato og registrering er bevaret separat.
+- Fodereditoren ændrer både produkt, mængde og enhed.
+- Mængder som 3/4 og 1–2 kan skrives direkte.
+- Flere enheder og egen enhed understøttes.
