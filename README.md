@@ -1,9 +1,6 @@
-Balina v8.11.0
-- Gentagne aftaler: hver dag, hver uge eller hver X. uge med slutdato.
-- Egnet til fx ugentlig staldvagt, lørdagsvagt hver 6. uge og daglige kurforløb.
-- Balinas garderobe bruger hele bredden.
-- Garderoben er samlet i Summer Series, Duo 100 g og linere.
-- Fold-ud vejreksempler på dækkenløsningerne.
-- 100 g og 400 g linere er tydeligt samlet.
-- Flere visuelle pejlemærker på centrale sektioner.
-- Kalender, vejr nat/dag, foderredigering og indgræsningsplan er bevaret.
+Balina v8.11.1
+- Dækkenlogik rettet: meget let regn over flere timer udløser ikke alene Summer Series.
+- Lørdagsvagt som fast aftaletype og særskilt næste-vagt-visning.
+- Skriv selv valgfrit aftalenavn i stedet for “Andet”.
+- Alle aftaler de næste 72 timer vises som påmindelsesbannere over Dagens dækken.
+- Gentagne aftaler er bevaret.

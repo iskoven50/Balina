@@ -231,6 +231,9 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .wardrobe-detail p{font-size:.86rem;margin:0 0 8px}
 .weather-example{padding:10px;border-radius:12px;background:#f8eef1;font-size:.82rem;line-height:1.45}
 @media(max-width:760px){.wardrobe-grid{grid-template-columns:1fr}}
+
+.saturday-duty{margin-top:10px;background:#fff8ed}
+#nextReminder .reminder{margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -456,6 +459,11 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <span id="farrierCountdown" class="farrier-big">Beregner…</span><span id="farrierDetail" class="farrier-sub"></span>
 <div class="actions"><button class="secondary" onclick="registerFarrier()">Registrér ny smededato</button></div>
 </div>
+<div class="item saturday-duty">
+<strong>🧹 Næste lørdagsvagt</strong>
+<span id="saturdayCountdown" class="farrier-big">Ingen planlagt</span><span id="saturdayDate" class="farrier-sub">Opret en Lørdagsvagt i kalenderen.</span>
+<div class="actions"><button class="secondary" onclick="openAppointmentEditor()">+ Opret lørdagsvagt</button></div>
+</div>
 </section>
 
 <section class="card wide" id="sundhed">
@@ -542,7 +550,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.11.0 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.11.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -701,11 +709,12 @@ function openAppointmentEditor(dateOverride=''){
     <h3>Ny aftale</h3>
     <div class="formgrid">
       <label>Type
-        <select id="apptType">
-          <option>Smed</option><option>Undervisning</option><option>Staldvagt</option>
-          <option>Dyrlæge</option><option>Tandlæge</option><option>Vaccination</option><option>Andet</option>
+        <select id="apptType" onchange="toggleCustomAppointmentType()">
+          <option>Smed</option><option>Undervisning</option><option>Staldvagt</option><option>Lørdagsvagt</option>
+          <option>Dyrlæge</option><option>Tandlæge</option><option>Vaccination</option><option value="custom">Skriv selv…</option>
         </select>
       </label>
+      <label id="customTypeWrap" style="display:none">Hvad skal aftalen hedde?<input id="apptCustomType" placeholder="Fx Loppeskalfrø"></label>
       <label>Dato<input id="apptDate" type="date" value="${d}"></label>
       <label>Tidspunkt<input id="apptTime" type="time"></label>
       <label>Gentagelse
@@ -730,6 +739,10 @@ function openAppointmentEditor(dateOverride=''){
     </div>
   </div>`;
 }
+function toggleCustomAppointmentType(){
+  const wrap=document.getElementById('customTypeWrap');
+  if(wrap)wrap.style.display=document.getElementById('apptType')?.value==='custom'?'block':'none';
+}
 function toggleRepeatFields(){
   const r=document.getElementById('apptRepeat')?.value||'none';
   document.getElementById('repeatEveryWrap').style.display=r==='customWeeks'?'block':'none';
@@ -741,7 +754,11 @@ function saveAppointment(){
   const repeat=document.getElementById('apptRepeat')?.value||'none';
   const repeatEnd=document.getElementById('apptRepeatEnd')?.value||'';
   if(repeat!=='none'&&!repeatEnd)return alert('Vælg hvornår gentagelsen skal slutte.');
-  const type=document.getElementById('apptType').value;
+  let type=document.getElementById('apptType').value;
+  if(type==='custom'){
+    type=(document.getElementById('apptCustomType')?.value||'').trim();
+    if(!type)return alert('Skriv hvad aftalen skal hedde.');
+  }
   const time=document.getElementById('apptTime').value;
   const note=document.getElementById('apptNote').value.trim();
   const every=Math.max(2,Number(document.getElementById('apptRepeatEvery')?.value||6));
@@ -808,7 +825,18 @@ function selectCalendarDay(date){
     (list.length?list.map(x=>`<div class="appt-row"><div><strong>${esc(x.type)}</strong><span>${x.time?'kl. '+x.time+' · ':''}${x.note?esc(x.note):''}</span></div><button class="secondary" onclick="deleteAppointment('${x.id}')">Slet</button></div>`).join('')
     :'<div class="small muted">Ingen aftaler denne dag.</div>');
 }
+function renderSaturdayDuty(){
+  const b=document.getElementById('saturdayCountdown'),m=document.getElementById('saturdayDate');
+  if(!b||!m)return;
+  const x=getAppointments().filter(a=>a.type==='Lørdagsvagt'&&a.date>=today()).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  if(!x){b.textContent='Ingen planlagt';m.textContent='Opret en Lørdagsvagt i kalenderen.';return;}
+  const d=new Date(x.date+'T12:00:00'),n=new Date(),base=new Date(n.getFullYear(),n.getMonth(),n.getDate(),12);
+  const days=Math.max(0,Math.round((d-base)/86400000));
+  b.textContent=days===0?'I dag':days===1?'I morgen':`Om ${days} dage`;
+  m.textContent=d.toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(x.time?' · kl. '+x.time:'');
+}
 function renderAppointments(){
+  renderSaturdayDuty();
   const items=getAppointments().filter(x=>x.date>=today()).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
   const big=document.getElementById('nextAppointmentBig');
   const meta=document.getElementById('nextAppointmentMeta');
@@ -826,20 +854,21 @@ function renderAppointments(){
   }
 
   if(reminder){
-    const now=new Date();
-    const soon=items.find(x=>{
-      const d=new Date(x.date+'T12:00:00');
-      return (d-now)/86400000<=2.5;
+    const now=new Date(), horizon=new Date(now.getTime()+72*60*60*1000);
+    const upcoming72=items.filter(x=>{
+      const d=new Date(x.date+'T'+(x.time||'12:00')+':00');
+      return d>=now&&d<=horizon;
     });
-    if(soon){
-      const d=new Date(soon.date+'T12:00:00');
-      const base=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);
-      const days=Math.round((d-base)/86400000);
-      const when=days<=0?'I dag':days===1?'I morgen':`Om ${days} dage`;
-      reminder.innerHTML=`<div class="reminder"><strong>${when}</strong><span>${esc(soon.type)}${soon.time?' kl. '+soon.time:''}${soon.note?' · '+esc(soon.note):''}</span></div>`;
-    }else reminder.innerHTML='';
+    reminder.innerHTML=upcoming72.map(x=>{
+      const d=new Date(x.date+'T'+(x.time||'12:00')+':00');
+      const base=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+      const day=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+      const days=Math.round((day-base)/86400000);
+      const label=days===0?'I dag':days===1?'I morgen':days===2?'Om 2 dage':'Om 3 dage';
+      return `<div class="reminder"><strong>${label}</strong><span>${esc(x.type)}${x.time?' kl. '+x.time:''}${x.note?' · '+esc(x.note):''}</span></div>`;
+    }).join('');
   }
-}
+}}
 
 function registerLesson(){
   const date=prompt('Dato for undervisning (ÅÅÅÅ-MM-DD):',today());
@@ -1278,7 +1307,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // One clear recommendation is still given even when the two local models disagree.
   const modelWetRisk = !!(modelMeta && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0)) >= 4);
   const overheatRisk = veryHotMorning || (hotMorning && sunnyMorning);
-  const mildWetSummerOption = (tmax <= 22 && (rainTotal >= 3 || sustainedRain || modelWetRisk));
+  const mildWetSummerOption = (tmax <= 22 && (rainTotal >= 3 || (sustainedRain && rainTotal >= 2) || modelWetRisk));
   if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && tmax<=22)) && !overheatRisk){
     rec='Rambo Summer Series';
     if(modelMeta?.manualRain!==null && modelMeta.manualRain!==undefined && modelMeta.manualRain>=8 && modelMeta.majorRainConflict){
