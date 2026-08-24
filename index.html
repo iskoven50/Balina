@@ -285,6 +285,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div class="notice" style="margin-top:12px">
   <div class="small muted">ANBEFALING</div>
   <div id="recommendation" class="bigrec">—</div>
+  <div id="recommendationPeriod" class="small" style="margin-top:5px;font-weight:700">—</div>
   <div id="confidenceBox" style="margin-top:8px"></div>
 </div>
 
@@ -317,7 +318,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </div>
 
 <div class="weather-row weather-summary-row">
-  <div class="metric"><span>Regn i dækkenperioden 14→14</span><b id="rain">—</b></div>
+  <div class="metric"><span>Regn i anbefalingsperioden</span><b id="rain">—</b></div>
   <div class="metric"><span>Regn næste 24 timer</span><b id="rain24">—</b></div>
   <div class="metric"><span>Timer med regn</span><b id="wetHours">—</b></div>
   <div class="metric"><span>Maks vindstød</span><b id="gust">—</b></div>
@@ -540,6 +541,16 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div id="feedEditor"></div>
 </section>
 
+<section class="card wide" id="stoerrelser">
+<details>
+<summary>📏 Balinas størrelser</summary>
+<p class="small muted">Alle mål og størrelser samlet ét sted. Ret eksisterende rækker eller tilføj nye efter behov.</p>
+<div id="sizePlan"></div>
+<div class="actions"><button class="secondary" onclick="openSizeEditor()">+ Tilføj størrelse / mål</button></div>
+<div id="sizeEditor"></div>
+</details>
+</section>
+
 <section class="card wide">
 <h2>💾 Backup / flyt til ny telefon</h2>
 <div class="actions">
@@ -550,7 +561,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v8.11.2 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.12.0 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
@@ -678,7 +689,7 @@ function init(){
   document.getElementById('regime').value=s.regime||'summer';
   document.getElementById('coat').value=s.coat||'unclipped';
   document.getElementById('txDate').value=today();
-  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderFeedPlan();renderCalendar();renderAppointments();useHilleroed();
+  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();useHilleroed();
 }
 function saveProfile(silent=false){
   const s=getState();s.regime=document.getElementById('regime').value;s.coat=document.getElementById('coat').value;setState(s);renderProfile();useHilleroed()
@@ -702,21 +713,21 @@ function getAppointments(){
   const s=getState();
   return Array.isArray(s.appointments)?s.appointments:[];
 }
-function openAppointmentEditor(dateOverride=''){
+function openAppointmentEditor(dateOverride='',editId=''){
   const host=document.getElementById('appointmentEditor');
-  const d=dateOverride||today();
+  const existing=editId?getAppointments().find(x=>x.id===editId):null;
+  const d=existing?.date||dateOverride||today();
   host.innerHTML=`<div class="editor-card">
-    <h3>Ny aftale</h3>
+    <h3>${existing?'Redigér aftale':'Ny aftale'}</h3>
     <div class="formgrid">
       <label>Type
         <select id="apptType" onchange="toggleCustomAppointmentType()">
-          <option>Smed</option><option>Undervisning</option><option>Staldvagt</option><option>Lørdagsvagt</option>
-          <option>Dyrlæge</option><option>Tandlæge</option><option>Vaccination</option><option value="custom">Skriv selv…</option>
+          ${['Smed','Undervisning','Staldvagt','Lørdagsvagt','Dyrlæge','Tandlæge','Vaccination'].map(t=>`<option ${existing?.type===t?'selected':''}>${t}</option>`).join('')}<option value="custom" ${existing&&!(['Smed','Undervisning','Staldvagt','Lørdagsvagt','Dyrlæge','Tandlæge','Vaccination'].includes(existing.type))?'selected':''}>Skriv selv…</option>
         </select>
       </label>
-      <label id="customTypeWrap" style="display:none">Hvad skal aftalen hedde?<input id="apptCustomType" placeholder="Fx Loppeskalfrø"></label>
+      <label id="customTypeWrap" style="${existing&&!(['Smed','Undervisning','Staldvagt','Lørdagsvagt','Dyrlæge','Tandlæge','Vaccination'].includes(existing.type))?'':'display:none'}">Hvad skal aftalen hedde?<input id="apptCustomType" value="${existing&&!(['Smed','Undervisning','Staldvagt','Lørdagsvagt','Dyrlæge','Tandlæge','Vaccination'].includes(existing.type))?esc(existing.type):''}" placeholder="Fx Loppeskalfrø"></label>
       <label>Dato<input id="apptDate" type="date" value="${d}"></label>
-      <label>Tidspunkt<input id="apptTime" type="time"></label>
+      <label>Tidspunkt<input id="apptTime" type="time" value="${esc(existing?.time||'')}"></label>
       <label>Gentagelse
         <select id="apptRepeat" onchange="toggleRepeatFields()">
           <option value="none">Ingen</option>
@@ -731,10 +742,10 @@ function openAppointmentEditor(dateOverride=''){
       <label id="repeatEndWrap" style="display:none">Gentag til og med
         <input id="apptRepeatEnd" type="date">
       </label>
-      <label>Note<input id="apptNote" placeholder="Valgfri"></label>
+      <label>Note<input id="apptNote" value="${esc(existing?.note||'')}" placeholder="Valgfri"></label>
     </div>
     <div class="actions">
-      <button onclick="saveAppointment()">Gem aftale</button>
+      <button onclick="saveAppointment('${editId}')">Gem aftale</button>
       <button class="secondary" onclick="document.getElementById('appointmentEditor').innerHTML=''">Annuller</button>
     </div>
   </div>`;
@@ -748,7 +759,7 @@ function toggleRepeatFields(){
   document.getElementById('repeatEveryWrap').style.display=r==='customWeeks'?'block':'none';
   document.getElementById('repeatEndWrap').style.display=r==='none'?'none':'block';
 }
-function saveAppointment(){
+function saveAppointment(editId=''){
   const date=document.getElementById('apptDate').value;
   if(!date)return alert('Vælg en dato.');
   const repeat=document.getElementById('apptRepeat')?.value||'none';
@@ -763,6 +774,10 @@ function saveAppointment(){
   const note=document.getElementById('apptNote').value.trim();
   const every=Math.max(2,Number(document.getElementById('apptRepeatEvery')?.value||6));
   const s=getState();s.appointments=getAppointments();
+  if(editId){
+    const item=s.appointments.find(x=>x.id===editId);
+    if(item){item.type=type;item.date=date;item.time=time;item.note=note;setState(s);document.getElementById('appointmentEditor').innerHTML='';renderCalendar();renderAppointments();selectCalendarDay(date);return;}
+  }
   const series='series-'+Date.now();
   const add=d=>s.appointments.push({id:'appt-'+Date.now()+'-'+Math.random(),series,type,date:d,time,note});
   if(repeat==='none') add(date);
@@ -822,7 +837,7 @@ function selectCalendarDay(date){
   const list=getAppointments().filter(x=>x.date===date).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const label=new Date(date+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});
   host.innerHTML=`<div class="selected-day-head"><strong>${label}</strong><button class="secondary" onclick="openAppointmentEditor('${date}')">+ Tilføj</button></div>`+
-    (list.length?list.map(x=>`<div class="appt-row"><div><strong>${esc(x.type)}</strong><span>${x.time?'kl. '+x.time+' · ':''}${x.note?esc(x.note):''}</span></div><button class="secondary" onclick="deleteAppointment('${x.id}')">Slet</button></div>`).join('')
+    (list.length?list.map(x=>`<div class="appt-row"><div><strong>${esc(x.type)}</strong><span>${x.time?'kl. '+x.time+' · ':''}${x.note?esc(x.note):''}</span></div><div class="feed-actions"><button class="secondary" onclick="openAppointmentEditor('${date}','${x.id}')">Redigér</button><button class="secondary" onclick="deleteAppointment('${x.id}')">Slet</button></div></div>`).join('')
     :'<div class="small muted">Ingen aftaler denne dag.</div>');
 }
 function renderSaturdayDuty(){
@@ -1138,11 +1153,11 @@ async function fetchWeather(lat,lon,force=false){
   }
 }
 function decisionWindow(){
-  const now=new Date(), start=new Date(now);
-  start.setHours(14,0,0,0);
-  // If it is after 14, "today 14 -> tomorrow 14" is still the current wearing window.
-  // If before 14, it is the upcoming window starting today at 14.
-  const end=new Date(start.getTime()+24*3600000);
+  const start=new Date();
+  start.setMinutes(0,0,0); // anbefalingen starter nu (afrundet til indeværende time)
+  const end=new Date(start);
+  end.setDate(end.getDate()+1);
+  end.setHours(14,0,0,0); // næste realistiske standardskift
   return {start,end};
 }
 function confidenceHtml(score){
@@ -1156,7 +1171,7 @@ function confidenceHtml(score){
 function analyseDualWeather(primary,control,win,sourceLabel){
   const inWin=(rows)=>rows.filter(x=>x.date>=win.start&&x.date<win.end);
   const a=inWin(primary), b=inWin(control);
-  if(!a.length||!b.length) throw new Error('mangler modeldata i 14→14-vinduet');
+  if(!a.length||!b.length) throw new Error('mangler modeldata i anbefalingsperioden');
   const sum=(arr,k)=>arr.reduce((s,x)=>s+(Number(x[k])||0),0);
   const max=(arr,k)=>Math.max(...arr.map(x=>Number(x[k])||0));
   const min=(arr,k)=>Math.min(...arr.map(x=>Number(x[k])||0));
@@ -1268,15 +1283,15 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
       attention=rainTotal>=2?'Der kommer også regn, men den varme/solrige formiddag gør heldagsdækken risikabelt.':'';
       conflict=rainTotal>=2||exposure>=4;
     }else if(exposure>=7&&heat>=4){
-      rec='Ingen god 24-timers løsning';
-      reason='Natten taler for vejrbeskyttelse, men næste formiddag trækker tydeligt mod mindre eller intet dækken.';
-      attention='Bedste løsning er et ekstra dækkenskift, hvis det overhovedet er muligt.';
+      rec='Summer Series – UDEN liner';
+      reason='Som ét samlet valg for hele perioden er Summer Series uden liner det bedste kompromis mellem vejrbeskyttelse og risiko for varme.';
+      attention='Der er modsatrettede forhold i perioden. Se bemærkningen om et muligt ekstra dækkenskift, hvis tidspunktet passer.';
       conflict=true;
     }else if(exposure>=8&&feelsMin<=5+clipAdj&&heat<=2){
-      rec='Summer Series + 100 g liner';
+      rec='Summer Series – MED 100 g rygliner';
       reason='Langvarig våd/kold belastning, vind og manglende læ giver behov for lidt isolering.';
     }else if(exposure>=4&&(rainTotal>=2||sustainedRain)){
-      rec='Rambo Summer Series';
+      rec='Summer Series – UDEN liner';
       reason='Det vigtigste er at holde ryggen tør gennem en våd/blæsende periode uden at pakke Balina for varmt ind.';
     }else{
       rec='Intet dækken';
@@ -1288,7 +1303,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }else if(exposure>=8&&feelsMin<=4+clipAdj&&heat<=2){
       rec='Rambo Duo 100 g';reason='Foldtimerne er samlet set kolde, våde og/eller blæsende nok til 100 g.';
     }else if(exposure>=4&&(rainTotal>=2||sustainedRain)){
-      rec='Rambo Summer Series';reason='Foldtimerne kræver regnbeskyttelse, men boksen om natten taler imod for meget isolering.';
+      rec='Summer Series – UDEN liner';reason='Foldtimerne kræver regnbeskyttelse, men boksen om natten taler imod for meget isolering.';
     }else{
       rec='Intet dækken';reason='Foldperioden giver ikke nok samlet vejreksponering til dækken, og natten foregår i læ.';
     }
@@ -1309,7 +1324,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const overheatRisk = veryHotMorning || (hotMorning && sunnyMorning);
   const mildWetSummerOption = (tmax <= 22 && (rainTotal >= 3 || (sustainedRain && rainTotal >= 2) || modelWetRisk));
   if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && tmax<=22)) && !overheatRisk){
-    rec='Rambo Summer Series';
+    rec='Summer Series – UDEN liner';
     if(modelMeta?.manualRain!==null && modelMeta.manualRain!==undefined && modelMeta.manualRain>=8 && modelMeta.majorRainConflict){
       attention=`${modelMeta.manual.source} viser ${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn, markant mere end de automatiske prognoser. Dækkenvagten tager det med og vælger Summer Series som det robuste mellemvalg: vandtæt ryg, ventilerende net og en tør Balina til ridning.`;
     }else if(modelMeta?.majorRainConflict){
@@ -1321,7 +1336,19 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }
   }
 
-let confidence=5;
+// Sekundær bemærkning: hovedanbefalingen dækker hele perioden. Vis kun et ekstra skift som mulighed.
+  const wetSeq=rainRows.filter(x=>x.p>=wetThreshold);
+  if(rec.includes('Summer Series') && wetSeq.length){
+    const firstWet=wetSeq[0].date;
+    const hoursUntil=(firstWet-win.start)/3600000;
+    if(hoursUntil>=3){
+      const rainTime=firstWet.toLocaleString('da-DK',{weekday:'long',hour:'2-digit',minute:'2-digit'}).replace('.',':');
+      const alt=`Hvis du kan komme før regnen ${rainTime}: Lad Balina gå uden dækken nu og giv ${rec}${neck} på dér.`;
+      attention=attention ? attention+' '+alt : alt;
+    }
+  }
+
+  let confidence=5;
   if(modelMeta){
     confidence-=modelMeta.penalty;
     if(modelMeta.majorRainConflict) confidence=Math.min(confidence,2);
@@ -1330,11 +1357,12 @@ let confidence=5;
   if(conflict)confidence-=2;
   if(rainSpread>=5)confidence-=1;
   if(Math.abs(exposure-heat)<=1)confidence-=1;
-  if(rec==='Ingen god 24-timers løsning')confidence=2;
   confidence=Math.max(1,Math.min(5,confidence));
 
   const fmt=d=>d.toLocaleString('da-DK',{weekday:'short',hour:'2-digit',minute:'2-digit'});
+  const periodFmt=d=>d.toLocaleString('da-DK',{weekday:'long',hour:'2-digit',minute:'2-digit'}).replace('.',':');
   document.getElementById('recommendation').textContent=rec+neck;
+  document.getElementById('recommendationPeriod').textContent=`Gælder: ${periodFmt(win.start)} → ${periodFmt(win.end)}`;
   document.getElementById('reason').textContent=reason;
   document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}`;
 
@@ -1485,6 +1513,19 @@ function deleteFeed(id){
   if(!confirm('Fjern denne post fra den aktuelle foderplan?'))return;
   const s=getState(); s.feedPlan=getFeed().filter(x=>x.id!==id); setState(s);renderFeedPlan();
 }
+
+const DEFAULT_SIZES=[
+  {id:'blanket',name:'Dækken',value:'Rambo Disc: 155 · Amigo ca. 150',note:'155 Duo kan blive for langt'},
+  {id:'girth-jump',name:'Springgjord',value:'140 cm',note:''},
+  {id:'stirrup',name:'Stigremme',value:'Måles / bekræftes',note:''},
+  {id:'bit',name:'Bid',value:'Måles',note:''},
+  {id:'boots',name:'Boots / gamacher',value:'Måles',note:'Notér for- og bagben separat hvis nødvendigt'}
+];
+function getSizes(){const s=getState();if(!Array.isArray(s.sizes)){s.sizes=DEFAULT_SIZES;setState(s)}return s.sizes;}
+function renderSizes(){const host=document.getElementById('sizePlan');if(!host)return;host.innerHTML=getSizes().map(x=>`<div class="item feed-row"><div><strong>${esc(x.name)}</strong><span class="small muted">${esc(x.value)}${x.note?' · '+esc(x.note):''}</span></div><div class="feed-actions"><button class="secondary" onclick="openSizeEditor('${x.id}')">Ændr</button><button class="secondary" onclick="deleteSize('${x.id}')">Slet</button></div></div>`).join('')||'<div class="small muted">Ingen størrelser endnu.</div>';}
+function openSizeEditor(id=''){const item=id?getSizes().find(x=>x.id===id):null;document.getElementById('sizeEditor').innerHTML=`<div class="editor-card"><h3>${item?'Ændr':'Tilføj'} størrelse / mål</h3><div class="formgrid"><label>Udstyr / mål<input id="sizeName" value="${esc(item?.name||'')}" placeholder="Fx bid, klokker eller sadel"></label><label>Størrelse / mål<input id="sizeValue" value="${esc(item?.value||'')}" placeholder="Fx Full, 13,5 cm eller 140 cm"></label></div><label>Note<input id="sizeNote" value="${esc(item?.note||'')}" placeholder="Valgfri"></label><div class="actions"><button onclick="saveSize('${id}')">Gem</button><button class="secondary" onclick="document.getElementById('sizeEditor').innerHTML=''">Annuller</button></div></div>`;}
+function saveSize(id=''){const name=document.getElementById('sizeName').value.trim(),value=document.getElementById('sizeValue').value.trim(),note=document.getElementById('sizeNote').value.trim();if(!name||!value)return alert('Skriv både navn og størrelse/mål.');const s=getState();s.sizes=getSizes();if(id){const x=s.sizes.find(x=>x.id===id);if(x){x.name=name;x.value=value;x.note=note}}else s.sizes.push({id:'size-'+Date.now()+Math.random(),name,value,note});setState(s);document.getElementById('sizeEditor').innerHTML='';renderSizes();}
+function deleteSize(id){if(!confirm('Slet denne størrelse / dette mål?'))return;const s=getState();s.sizes=getSizes().filter(x=>x.id!==id);setState(s);renderSizes();}
 
 function exportData(){
   const blob=new Blob([JSON.stringify(getState(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='balina-hq-backup.json';a.click();URL.revokeObjectURL(a.href)
