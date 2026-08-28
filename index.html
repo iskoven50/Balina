@@ -234,6 +234,14 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 .saturday-duty{margin-top:10px;background:#fff8ed}
 #nextReminder .reminder{margin-bottom:8px}
+.fold-section{border:0;padding:0;margin:0}
+.fold-section>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:1.18rem;font-weight:700;color:var(--ink);cursor:pointer;padding:0 30px 2px 0}
+.fold-section>summary::-webkit-details-marker{display:none}
+.fold-section>summary:after{content:"＋";font-size:1.25rem;font-weight:400;color:#a37b87}
+.fold-section[open]>summary:after{content:"−"}
+.fold-section>.fold-body{padding-top:8px}
+.fold-hint{display:block;font-size:.78rem;color:var(--muted);font-weight:500;margin-top:2px}
+
 </style>
 </head>
 <body>
@@ -355,7 +363,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 <section class="card wide" id="status">
-<h2>Balina lige nu</h2>
+<details class="fold-section"><summary>Balina lige nu<span class="fold-hint">Fold, boks og pels</span></summary><div class="fold-body">
 <div class="formgrid">
 <div><label>Aktuel ordning</label>
 <select id="regime" onchange="saveProfile(true)">
@@ -368,12 +376,14 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div class="notice" id="regimeText"></div>
 <div class="small muted" style="margin-top:10px">Ændringer bruges med det samme i Dækkenvagten.</div>
 <p class="small muted">Skift først til vinterordning, når Balina faktisk kommer på boks. Appen gætter ikke selv ud fra temperaturen.</p>
+
+</div></details>
 </section>
 
 
 
 <section class="card wide" id="konto">
-<h2>Balinas hestekonto</h2>
+<details class="fold-section"><summary>Balinas hestekonto<span class="fold-hint">Saldo, køb og rådighedsbeløb</span></summary><div class="fold-body">
 <div class="weather-row account-summary">
 <div class="metric"><span>Aktuel saldo</span><b id="currentBalance" class="money">—</b></div>
 <div class="metric"><span>Øremærket nu</span><b id="reservedNow" class="money">—</b></div>
@@ -397,10 +407,12 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <h3>Seneste poster</h3>
 <div style="overflow:auto"><table><thead><tr><th>Dato</th><th>Beskrivelse</th><th>Kategori</th><th class="num">Beløb</th><th></th></tr></thead><tbody id="txTable"></tbody></table></div>
+
+</div></details>
 </section>
 
 <section class="card wide" id="garderobe">
-<h2>🐴 Balinas garderobe</h2>
+<details class="fold-section"><summary>🐴 Balinas garderobe<span class="fold-hint">Dækkener og linere</span></summary><div class="fold-body">
 <p class="muted">De dækkener og linere Dækkenvagten kan vælge imellem.</p>
 <div class="wardrobe-grid">
 <details class="wardrobe-card">
@@ -429,6 +441,8 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div class="weather-example">💡 Dækkenvagten anbefaler den samlede kombination – ikke lineren alene.</div>
 </div></details>
 </div>
+
+</div></details>
 </section>
 
 <section class="card wide" id="kalender">
@@ -468,7 +482,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 <section class="card wide" id="sundhed">
-<h2>Sundhed & behandling</h2>
+<details class="fold-section"><summary>Sundhed & behandling<span class="fold-hint">Pleje, guide og medicinskab</span></summary><div class="fold-body">
 <p class="small muted">Vælg det, I ser. Guiden bruger kun produkter, som findes i Balinas eget skab.</p>
 
 <div class="formgrid">
@@ -515,10 +529,12 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </div>
 </details>
 <p class="small muted">Guiden er beslutningsstøtte og erstatter ikke dyrlægevurdering.</p>
+
+</div></details>
 </section>
 
 <section class="card wide" id="foder">
-<h2>Det får Balina</h2>
+<details class="fold-section"><summary>Det får Balina<span class="fold-hint">Foder, tilskud og grovfoder</span></summary><div class="fold-body">
 <p class="small muted">Ret mængder eller tilføj nye produkter direkte. Planen viser altid det, der gælder lige nu.</p>
 <div id="feedPlan"></div>
 <div class="subcard">
@@ -539,11 +555,13 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
   </details>
 </div>
 <div id="feedEditor"></div>
+
+</div></details>
 </section>
 
 <section class="card wide" id="stoerrelser">
 <details>
-<summary>📏 Balinas størrelser</summary>
+<summary>📏 Balinas størrelser <span class="fold-hint">Mål og udstyrsstørrelser</span></summary>
 <p class="small muted">Alle mål og størrelser samlet ét sted. Ret eksisterende rækker eller tilføj nye efter behov.</p>
 <div id="sizePlan"></div>
 <div class="actions"><button class="secondary" onclick="openSizeEditor()">+ Tilføj størrelse / mål</button></div>
@@ -552,19 +570,29 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 <section class="card wide">
-<h2>💾 Backup / flyt til ny telefon</h2>
+<details class="fold-section"><summary>💾 Backup / flyt til ny telefon<span class="fold-hint">Eksport og import af data</span></summary><div class="fold-body">
 <div class="actions">
 <button class="secondary" onclick="exportData()">Eksportér data</button>
 <label style="margin:0"><input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)"><span class="pill" style="cursor:pointer">Importér data</span></label>
 </div>
 <p class="small muted">V4 gemmer stadig lokalt på enheden. Eksport/import gør det muligt at tage backup eller flytte data. Fælles live-synkronisering mellem dig og Lærke kræver cloud-lagring i næste trin.</p>
+</div></details>
 </section>
 
 </main>
-<footer>Balina v8.12.0 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
+<footer>Balina v8.12.1 · Balinas planner ♡ dækken · sundhed · foder · kalender · konto.</footer>
 </div>
 
 <script>
+
+function openHashSection(){
+  const id=location.hash.slice(1); if(!id)return;
+  const section=document.getElementById(id); if(!section)return;
+  const d=section.querySelector(':scope > details.fold-section'); if(d)d.open=true;
+}
+window.addEventListener('hashchange',()=>setTimeout(openHashSection,0));
+window.addEventListener('DOMContentLoaded',openHashSection);
+
 const HILLEROED={lat:55.9279,lon:12.3008};
 const START_BAL=1197.53;
 const fmt=v=>new Intl.NumberFormat('da-DK',{style:'currency',currency:'DKK'}).format(v);
