@@ -245,6 +245,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 /* v9.0 */
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
+.input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -266,7 +267,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
       </a>
       <a href="#foder" class="home-card tone-sage">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 36h44l-5 14H15l-5-14Zm7-8c6-9 24-9 30 0M24 25c-2-7 4-11 8-11s10 4 8 11M48 18c5 2 7 7 5 12M52 20l6-4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Det får Balina</strong><span>Foder og tilskud</span>
+        <strong>Foderplan</strong><span>Manuel oversigt over foder og tilskud</span>
       </a>
       <a href="#konto" class="home-card tone-cream">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 18h39a7 7 0 0 1 7 7v25H10V18Zm0 8h46M43 33h13v10H43a5 5 0 0 1 0-10Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -274,7 +275,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
       </a>
       <a href="#sundhed" class="home-card tone-peach">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M19 12h18v40H19V12Zm9 9v12m-6-6h12M40 35h14v17H40V35Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Pleje & medicinskab</strong><span>Sår, muk og UV</span>
+        <strong>Sundhed & behandling</strong><span>Balina Premium · sår, muk og observation</span>
       </a>
       <a href="#kalender" class="home-card tone-lilac">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 31c7-12 31-12 38 0-7 12-31 12-38 0Zm12 0h14M32 20v22M17 45l-5 7M47 45l5 7" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -286,13 +287,20 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
       </a>
     </section>
 
-<div class="app-disclaimer"><strong>Vejledende hestehjælp.</strong> Balina – Hestelogbog er udviklet af hesteejere til hesteelskere. Anbefalinger bygger på de oplysninger, der er registreret, og skal altid vurderes mod hestens faktiske tilstand. Appen erstatter ikke dyrlæge, foderrådgiver, beslagsmed eller anden fagperson. Undlad at registrere personfølsomme oplysninger om mennesker i noter, fritekst eller billeder.</div>
+<div class="app-disclaimer"><strong>Vejledende hestehjælp.</strong> Balina – Hestelogbog er udviklet af hesteejere til hesteelskere. Anbefalinger bygger på de oplysninger, der er registreret, og skal altid vurderes mod hestens faktiske tilstand. Appen erstatter ikke dyrlæge, foderrådgiver, beslagsmed eller anden fagperson. Undlad at registrere personoplysninger om mennesker i noter, fritekst eller billeder.</div>
 <main class="grid">
 
 <section class="card wide" id="daekken">
 <div id="nextReminder"></div>
 <h2>☁️ Dagens dækken</h2>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
+<div class="period-controls">
+  <label>Anbefaling frem til næste dag
+    <input id="periodEndTime" type="time" value="15:00" onchange="savePeriodEnd()">
+    <span class="input-help">Standard er kl. 15. Ændr fx til 08:00 eller 20:00, hvis næste dækkenskift ligger tidligere eller senere.</span>
+  </label>
+  <button class="secondary" type="button" onclick="resetPeriodEnd()">Brug standard kl. 15</button>
+</div>
 
 <div class="notice" style="margin-top:12px">
   <div class="small muted">ANBEFALING</div>
@@ -347,34 +355,26 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <details>
   <summary>Sådan går Balina til daglig</summary>
   <div class="daily-rules">
-    <h3>Sommer – døgnfold / sommerfold</h3>
-    <ul>
-      <li>Balina går ude hele døgnet.</li>
-      <li>Ingen sikker adgang til læ.</li>
-      <li>Dækken kan som udgangspunkt skiftes én gang om dagen.</li>
-      <li>Summer Series er et fleksibelt specialvalg ved mildt vejr, men fravælges ved kraftig regn/skybrud og problematisk vind.</li>
-    </ul>
-    <h3>Vinter – stald / vinterfold</h3>
-    <ul>
-      <li>Fold ca. kl. 08–18.</li>
-      <li>Boks ca. kl. 18–08.</li>
-      <li>Ingen læ på folden; tør og trækfri boks om natten.</li>
-      <li>Dækken kan som udgangspunkt skiftes én gang om dagen.</li>
-    </ul>
-    <p class="small muted">Dækkenvagten bruger disse rammer sammen med vejret og oplysningerne under “Balina lige nu”.</p>
+    <p class="small muted">Dette er de aktuelle forhold, Dækkenguiden bruger sammen med vejret. De kan ændres under “Balina lige nu”.</p>
+    <div id="dailySmartSummary" class="smart-summary"></div>
+    <div class="actions"><a class="pill" href="#status" onclick="openHashSection()">Redigér forhold</a></div>
   </div>
 </details>
 </section>
 
-<section class="card wide" id="status"><details class="fold-section"><summary>Balina lige nu<span class="fold-hint">Opstaldning, huld, type og klipning</span></summary><div class="fold-body">
+<section class="card wide" id="status"><details class="fold-section"><summary>Balina lige nu<span class="fold-hint">De forhold, der justerer Balinas guldlogik</span></summary><div class="fold-body">
 <div class="profile-grid">
-<div><label>Aktuel ordning</label><select id="regime" onchange="saveProfile(true)"><option value="summer">Døgnfold</option><option value="winter">Fold 08–18 / boks 18–08</option></select></div>
-<div><label>Hestetype</label><select id="horseType" onchange="saveProfile(true)"><option value="warmblood">Varmblod / sportshest</option><option value="coldblood">Koldblod / kraftig type</option><option value="pony">Pony / islænder-type</option></select></div>
-<div><label>Senior</label><select id="senior" onchange="saveProfile(true)"><option value="no">Nej</option><option value="yes">Ja</option></select></div>
-<div><label>Huld (1–9)</label><select id="bcs" onchange="saveProfile(true)"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></div>
-<div><label>Pels</label><select id="coat" onchange="saveProfile(true)"><option value="unclipped">Uklippet</option><option value="clipped">Klippet</option></select></div>
-<div><label>Kliptype</label><select id="clipType" onchange="saveProfile(true)"><option value="unclipped">Uklippet</option><option value="bib">Bib Clip</option><option value="irish">Irish Clip</option><option value="trace">Trace Clip</option><option value="chaser">Hunter/Chaser Clip</option><option value="blanket">Blanket Clip</option><option value="hunter">Hunter Clip</option><option value="full">Full Clip</option></select></div></div><div id="clipVisualChoices" class="visual-choice-grid"></div><div class="profile-grid">
-</div><div class="notice" id="regimeText"></div><div class="module-note" style="margin-top:10px"><strong>Balinas guldprofil:</strong> Valgene ovenfor justerer Balinas eksisterende specialkalibrerede dækkenlogik. De erstatter den ikke med en generel “uklippet varmblod”-regel.</div><details style="margin-top:12px"><summary>Se klippetyper</summary><img class="clip-guide" src="illustrations/Guide til hestens klippemønstre.png" alt="Illustration af klippetyper"><p class="small muted">Klipning er et støtteparameter i dækkenmotoren – ikke hele motoren.</p></details></div></details></section>
+<div><label>Aktuel ordning</label><select id="regime" onchange="saveProfile(true)"><option value="summer">Døgnfold</option><option value="winter">Fold 08–18 / boks 18–08</option></select><span class="input-help">Bruges til at afgøre, hvornår Balina er udsat for regn, vind og kulde.</span></div>
+<div><label>Adgang til læ på fold</label><select id="shelter" onchange="saveProfile(true)"><option value="none">Ingen sikker adgang til læ</option><option value="partial">Delvis / usikker adgang</option><option value="yes">Ja, sikker adgang til læ</option></select><span class="input-help">Påvirker hvor tungt vind og regn vægtes.</span></div>
+<div><label>Huld</label><select id="bcs" onchange="saveProfile(true)"><option value="under">Under ideal</option><option value="ideal">Ideelt</option><option value="over">Over ideal</option></select><span class="input-help">Under ideal giver lidt mindre kuldereserve; over ideal lidt mere.</span></div>
+<div><label>Pelsmængde</label><select id="coat" onchange="saveProfile(true)"><option value="thin">Tynd pels</option><option value="normal">Normal pels</option><option value="thick">Kraftig pels</option></select><span class="input-help">Bruges som støtteparameter for hestens egen isolering.</span></div>
+<div><label>Kliptype</label><select id="clipType" onchange="saveProfile(true)"><option value="unclipped">Uklippet</option><option value="bib">Bib Clip</option><option value="irish">Irish Clip</option><option value="trace">Trace Clip</option><option value="chaser">Hunter/Chaser Clip</option><option value="blanket">Blanket Clip</option><option value="hunter">Hunter Clip</option><option value="full">Full Clip</option></select><span class="input-help">Klipning reducerer egen isolering i forskellig grad og påvirker derfor anbefalingen.</span></div>
+</div>
+<div id="clipVisualChoices" class="visual-choice-grid"></div>
+<div class="notice" id="regimeText"></div>
+<div class="module-note" style="margin-top:10px"><strong>Balinas guldprofil:</strong> Disse valg justerer Balinas eksisterende specialkalibrerede dækkenlogik. De erstatter den ikke med en generel regel for varmblod eller klippet hest.</div>
+<details style="margin-top:12px"><summary>Se kliptype-guide</summary><img class="clip-guide" src="illustrations/clip-guide.png" alt="Guide til klippetyper"><p class="small muted">Brun = uklippet pels · pastel = klippet område. Vælg den illustration, der ligger tættest på hestens klipning.</p></details>
+</div></details></section>
 
 <section class="card wide" id="konto">
 <details class="fold-section"><summary>🔒 Balinas hestekonto<span class="fold-hint">Privat ejerområde · saldo, køb og rådighedsbeløb</span></summary><div class="fold-body"><div class="module-note"><strong>Privat modul.</strong> I en delt profil skal økonomi som standard være skjult og kun kunne åbnes, hvis profilens ejer aktivt giver adgang. Denne lokale Balina-version har endnu ikke rigtig brugerlogin/adgangskontrol.</div>
@@ -386,7 +386,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <div class="notice small">
 <strong>Automatiske poster</strong><br>
-5.500 kr. ind pr. måned fra september · opstaldning 2.900 kr. i september og 3.100 kr. fra oktober · sundhedsforsikring 1.724,15 kr. kvartalsvis · ansvar 608,42 kr. årligt. Smed og undervisning registreres manuelt.
+5.500 kr. ind pr. måned · opstaldning 3.200 kr. pr. måned · sundhedsforsikring 1.724,15 kr. kvartalsvis · ansvar 608,42 kr. årligt. Smed og undervisning registreres manuelt. Dækkener fra Store Hestedag: 1.600 kr. er medtaget.
 </div>
 <div id="disposableExplain" class="small muted"></div>
 <h3>Registrér køb eller indbetaling</h3>
@@ -438,11 +438,11 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div id="selectedDayAppointments" class="selected-day-list"></div>
 <div id="appointmentEditor"></div>
 
-<div class="item good">
+<div class="item maintenance-farrier">
 <strong>🔨 Tid til smed</strong>
 <span id="farrierCountdown" class="farrier-big">Beregner…</span><span id="farrierDetail" class="farrier-sub"></span>
 <div class="actions"><button class="secondary" onclick="registerFarrier()">Registrér ny smededato</button></div>
-</div><div class="item good"><strong>🧼 Sadelpudsning</strong><span id="saddleCountdown" class="farrier-big">Beregner…</span><span id="saddleDetail" class="farrier-sub"></span><div class="actions"><button class="secondary" onclick="registerSaddleCleaning(true)">Pudset i dag</button><button class="secondary" onclick="registerSaddleCleaning(false)">Indtast dato</button></div></div>
+</div><div class="item maintenance-saddle"><strong>🧼 Sadelpudsning</strong><span id="saddleCountdown" class="farrier-big">Beregner…</span><span id="saddleDetail" class="farrier-sub"></span><div class="actions"><button class="secondary" onclick="registerSaddleCleaning(true)">Pudset i dag</button><button class="secondary" onclick="registerSaddleCleaning(false)">Indtast dato</button></div></div>
 <div class="item saturday-duty">
 <strong>🧹 Næste lørdagsvagt</strong>
 <span id="saturdayCountdown" class="farrier-big">Ingen planlagt</span><span id="saturdayDate" class="farrier-sub">Opret en Lørdagsvagt i kalenderen.</span>
@@ -452,7 +452,8 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 
 <section class="card wide" id="sundhed">
 <details class="fold-section"><summary>Sundhed & behandling<span class="fold-hint">Pleje, guide og medicinskab</span></summary><div class="fold-body">
-<p class="small muted">Guiden arbejder i tre niveauer: egen pleje/observation, behandl og følg tæt, eller kontakt dyrlæge. Den er vejledende og kan ikke stille diagnose.</p><div class="subcard"><h3>📷 Foto til historik</h3><input id="healthPhoto" type="file" accept="image/*" capture="environment" onchange="previewHealthPhoto(event)"><img id="healthPhotoPreview" class="photo-preview" alt="Forhåndsvisning"><p class="small muted">Fotoet forhåndsvises kun lokalt i denne version. Undlad billeder med personoplysninger.</p></div>
+<div class="premium-lock"><strong>⭐ Balina Premium</strong><br><span class="small muted">Behandlingsvejledning og billedfunktion er foreløbig kun en del af Balinas ejer-version. Vurderingen er vejledende og erstatter ikke dyrlæge.</span></div>
+<p class="small muted">Guiden arbejder i tre niveauer: egen pleje/observation, behandl og følg tæt, eller kontakt dyrlæge. Den kan ikke stille diagnose.</p><div class="subcard"><h3>📷 Tag billede af området</h3><label class="camera-label">📷 Tag billede / vælg foto<input id="healthPhoto" type="file" accept="image/*" capture="environment" onchange="previewHealthPhoto(event)"></label><img id="healthPhotoPreview" class="photo-preview" alt="Forhåndsvisning af foto"><p class="small muted">På telefon åbner knappen som udgangspunkt kameraet. Fotoet forhåndsvises kun lokalt i denne version og gemmes ikke som historik endnu. Undlad billeder med personoplysninger om mennesker.</p></div>
 
 <div class="formgrid">
 <div>
@@ -503,27 +504,10 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 <section class="card wide" id="foder">
-<details class="fold-section"><summary>Det får Balina<span class="fold-hint">Foder, tilskud og grovfoder</span></summary><div class="fold-body">
-<p class="small muted">Planen viser den aktuelle dosering og en vejledende vurdering. Fodervurderingen erstatter ikke grovfoderanalyse, produktets doseringsvejledning eller professionel foderrådgivning.</p><div class="subcard"><h3>Fodervurdering</h3><div class="feed-smart-grid"><div><label>Huld (1–9)</label><select id="feedBcs" onchange="saveFeedContext()"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></div><div><label>Græs</label><select id="feedGrass" onchange="saveFeedContext()"><option value="none">Intet</option><option value="nibble">Meget sparsomt / nip</option><option value="limited">Begrænset</option><option value="medium">Middel</option><option value="rich">Rigeligt</option></select></div><div><label>Grovfoderadgang</label><select id="forageAccess" onchange="saveFeedContext()"><option value="secure">Afmålt – sikker</option><option value="uncertain">Afmålt – usikkert indtag</option><option value="competition">Konkurrence i flokken</option><option value="free">Fri adgang</option></select></div><div><label>Arbejde</label><select id="workLevel" onchange="saveFeedContext()"><option value="maintenance">Vedligehold</option><option value="light" selected>Let arbejde</option><option value="moderate">Moderat</option><option value="hard">Hårdt</option></select></div></div><div id="feedAssessment" class="notice small"></div></div><div id="feedPlan"></div>
-<div class="subcard">
-  <h3>Grovfoder & græs</h3>
-  <div class="formgrid">
-    <div><label>Græs</label>
-      <select id="grassStatus" onchange="saveGrassStatus()">
-        <option value="none">Intet græs</option>
-        <option value="grazing">Indgræsning</option>
-        <option value="limited">Begrænset græs / stribegræs</option>
-        <option value="summer">Sommergræs</option>
-      </select>
-    </div>
-  </div>
-  <details id="grazingDetails">
-    <summary>Indgræsningsplan</summary>
-    <div id="grazingPlan" style="margin-top:10px"></div>
-  </details>
-</div>
+<details class="fold-section"><summary>Foderplan<span class="fold-hint">Manuel oversigt over det Balina får</span></summary><div class="fold-body">
+<p class="small muted">Foderplanen er en praktisk, manuel oversigt. Den beregner eller anbefaler ikke foder. Tilføj, ændr eller slet produkter, mængder og noter efter behov.</p>
+<div id="feedPlan"></div>
 <div id="feedEditor"></div>
-
 </div></details>
 </section>
 
@@ -548,7 +532,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.0.0 · Hestelogbog ♡ dækkenguide · foder · sundhed · kalender · historik.</footer>
+<footer>Balina v9.0.1 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -712,45 +696,71 @@ function runHealthGuide(){
 
 function init(){
   const s=getState();
-  document.getElementById('regime').value=s.regime||'summer';
-  document.getElementById('coat').value=s.coat||'unclipped';
-  document.getElementById('horseType').value=s.horseType||'warmblood';
-  document.getElementById('senior').value=s.senior||'no';
-  document.getElementById('bcs').value=String(s.bcs||5);
-  document.getElementById('clipType').value=s.clipType||'unclipped';
+  migrateV901();
+  const st=getState();
+  document.getElementById('regime').value=st.regime||'summer';
+  document.getElementById('shelter').value=st.shelter||'none';
+  document.getElementById('coat').value=st.coat||'normal';
+  document.getElementById('bcs').value=st.bcs||'ideal';
+  document.getElementById('clipType').value=st.clipType||'unclipped';
+  const pet=document.getElementById('periodEndTime'); if(pet)pet.value=st.periodEndTime||'15:00';
   document.getElementById('txDate').value=today();
-  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderFeedContext();renderSizes();renderCalendar();renderAppointments();useHilleroed();
+  ensureAutomaticExpenses();renderProfile();renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();useHilleroed();
+}
+function migrateV901(){
+  const s=getState();
+  if(typeof s.bcs==='number') s.bcs=s.bcs<=4?'under':s.bcs>=7?'over':'ideal';
+  if(s.coat==='unclipped'||s.coat==='clipped') s.coat='normal';
+  if(!s.shelter) s.shelter='none';
+  if(!s.periodEndTime) s.periodEndTime='15:00';
+  if(Array.isArray(s.transactions)){
+    s.transactions.forEach(t=>{if(/^stable-/.test(t.autoKey||'')){t.amount=3200;t.desc='Opstaldning';}});
+  }
+  if(Array.isArray(s.feedPlan)){
+    s.feedPlan=s.feedPlan.filter(x=>x.id!=='straw');
+    const optimal=s.feedPlan.find(x=>x.id==='optimal'); if(optimal){optimal.amount='3/4 mål';optimal.note='Gives én gang dagligt mens Balina går på døgnfold.';}
+    const wrap=s.feedPlan.find(x=>x.id==='wrap'); if(wrap){wrap.group='Grovfoder';wrap.amount='Morgen + eftermiddag';wrap.note='Lægges i bunker på jorden. Andre heste kan tage det fra Balina, så faktisk indtag kan være usikkert.';}
+    s.feedPlan.forEach(x=>{if(x.note===undefined)x.note='';});
+  }
+  if(Array.isArray(s.sizes)){
+    const blanket=s.sizes.find(x=>x.id==='blanket'); if(blanket){blanket.value='Amigo 145 · Summer Series 155 tilpasset';blanket.note='Balinas dækkenmål ca. 194 cm. Nye Amigo med halvhøj hals sidder bedst; Rambo Duo 155 udgår.';}
+  }
+  setState(s);
 }
 function saveProfile(silent=false){
   const s=getState();
   s.regime=document.getElementById('regime').value;
+  s.shelter=document.getElementById('shelter').value;
   s.coat=document.getElementById('coat').value;
-  s.horseType=document.getElementById('horseType').value;
-  s.senior=document.getElementById('senior').value;
-  s.bcs=Number(document.getElementById('bcs').value||5);
+  s.bcs=document.getElementById('bcs').value;
   s.clipType=document.getElementById('clipType').value;
-  if(s.clipType!=='unclipped')s.coat='clipped';
-  if(s.clipType==='unclipped')s.coat='unclipped';
   setState(s);renderProfile();useHilleroed();
 }
+function savePeriodEnd(){const s=getState();s.periodEndTime=document.getElementById('periodEndTime').value||'15:00';setState(s);renderProfile();useHilleroed();}
+function resetPeriodEnd(){document.getElementById('periodEndTime').value='15:00';savePeriodEnd();}
 function renderProfile(){
   const s=getState(),reg=s.regime||'summer',clip=s.clipType||'unclipped';
-  const labels={unclipped:'Uklippet',bib:'Bib Clip',irish:'Irish Clip',trace:'Trace Clip',chaser:'Hunter/Chaser',blanket:'Blanket Clip',hunter:'Hunter Clip',full:'Full Clip'};
-  const pills=[reg==='summer'?'Døgnfold':'Fold 08–18 / boks 18–08',labels[clip]||'Uklippet',`Huld ${s.bcs||5}/9`];
-  if(reg==='summer') pills.push('Ingen sikker adgang til læ'); else pills.push('Fold uden læ · tør/trækfri boks');
+  const clipLabels={unclipped:'Uklippet',bib:'Bib Clip',irish:'Irish Clip',trace:'Trace Clip',chaser:'Hunter/Chaser',blanket:'Blanket Clip',hunter:'Hunter Clip',full:'Full Clip'};
+  const bcsLabels={under:'Huld under ideal',ideal:'Huld ideelt',over:'Huld over ideal'};
+  const coatLabels={thin:'Tynd pels',normal:'Normal pels',thick:'Kraftig pels'};
+  const shelterLabels={none:'Ingen sikker adgang til læ',partial:'Delvis/usikker adgang til læ',yes:'Sikker adgang til læ'};
+  const regimeLabels={summer:'Døgnfold',winter:'Fold 08–18 / boks 18–08'};
+  const pills=[regimeLabels[reg],clipLabels[clip],bcsLabels[s.bcs||'ideal'],coatLabels[s.coat||'normal'],shelterLabels[s.shelter||'none']];
   document.getElementById('statusPills').innerHTML=pills.map(x=>`<span class="pill">${x}</span>`).join('');
-  document.getElementById('regimeText').textContent=reg==='summer'?'Aktuelt: døgnfold. Ingen sikker adgang til læ. Appen vurderer hele perioden frem til kl. 15 næste dag.':'Aktuelt: fold 08–18 uden læ og tør/trækfri boks 18–08. Samme dækken skal som udgangspunkt fungere hele døgnet.';
+  const period=s.periodEndTime||'15:00';
+  document.getElementById('regimeText').textContent=`Aktuelt: ${regimeLabels[reg]}. ${shelterLabels[s.shelter||'none']}. Dækkenguiden vurderer perioden frem til kl. ${period} næste dag.`;
+  const sum=document.getElementById('dailySmartSummary'); if(sum)sum.innerHTML=`<div><strong>Opstaldning:</strong> ${regimeLabels[reg]}</div><div><strong>Læ:</strong> ${shelterLabels[s.shelter||'none']}</div><div><strong>Pels/klip:</strong> ${coatLabels[s.coat||'normal']} · ${clipLabels[clip]}</div><div><strong>Huld:</strong> ${bcsLabels[s.bcs||'ideal']}</div><div><strong>Anbefalingsperiode:</strong> frem til kl. ${period} næste dag</div>`;
   renderClipChoices();
 }
 function renderClipChoices(){
   const host=document.getElementById('clipVisualChoices');if(!host)return;
   const current=getState().clipType||'unclipped';
   const items=[
-    ['unclipped','Uklippet','balina-bw.jpg'],['bib','Bib Clip','illustrations/clips/bib.png'],['irish','Irish Clip','illustrations/clips/irish.png'],['trace','Trace Clip','illustrations/clips/trace.png'],['chaser','Hunter/Chaser','illustrations/clips/chaser.png'],['blanket','Blanket Clip','illustrations/clips/blanket.png'],['hunter','Hunter Clip','illustrations/clips/hunter.png'],['full','Full Clip','illustrations/clips/full.png']
+    ['unclipped','Uklippet','','Ingen pels fjernet.'],['bib','Bib Clip','illustrations/clips/bib.png','Kun underside af hals og bringe.'],['irish','Irish Clip','illustrations/clips/irish.png','Diagonal klipning fra hals mod lyske.'],['trace','Trace Clip','illustrations/clips/trace.png','Nederste del af hals og krop klippet.'],['chaser','Hunter/Chaser','illustrations/clips/chaser.png','Nederste halvdel klippet, ryggen bevares.'],['blanket','Blanket Clip','illustrations/clips/blanket.png','Tæppeformet pelsfelt bevares over ryggen.'],['hunter','Hunter Clip','illustrations/clips/hunter.png','Krop klippet; ben og sadelfelt bevares.'],['full','Full Clip','illustrations/clips/full.png','Næsten hele hesten klippet.']
   ];
-  host.innerHTML=items.map(([v,n,img])=>`<button type="button" class="visual-choice ${current===v?'active':''}" onclick="chooseClip('${v}')"><img src="${img}" alt="${n}"><strong>${n}</strong></button>`).join('');
+  host.innerHTML=items.map(([v,n,img,desc])=>`<button type="button" class="visual-choice ${current===v?'active':''}" onclick="chooseClip('${v}')">${img?`<img src="${img}" alt="${n}">`:`<div style="height:120px;display:grid;place-items:center;border-radius:10px;background:#f8eeee;font-size:4.2rem" aria-label="Illustration af uklippet hest">🐎</div>`}<strong>${n}</strong><span class="clip-caption">${desc}</span></button>`).join('');
 }
-function chooseClip(v){document.getElementById('clipType').value=v;document.getElementById('coat').value=v==='unclipped'?'unclipped':'clipped';saveProfile(true);}
+function chooseClip(v){document.getElementById('clipType').value=v;saveProfile(true);}
 
 
 
@@ -974,9 +984,11 @@ function ensureAutomaticExpenses(){
   while(d<=now){
     const y=d.getFullYear(),m=d.getMonth()+1,ds=`${y}-${String(m).padStart(2,'0')}-01`;
     add(ds,5500,'Indbetaling','Månedlig indbetaling (5.000 + 500 kr.)',`income-${y}-${m}`,'income');
-    add(ds,(y===2026&&m===9)?2900:3100,'Opstaldning','Opstaldning',`stable-${y}-${m}`);
+    add(ds,3200,'Opstaldning','Opstaldning',`stable-${y}-${m}`);
     d.setMonth(d.getMonth()+1);
   }
+
+  add('2026-09-05',1600,'Dækken','Dækkener – Store Hestedag','store-hestedag-2026');
 
   d=new Date('2026-08-31T00:00:00');
   while(d<=now){
@@ -1026,8 +1038,8 @@ function renderDisposableAmount(currentBalance){
   const lastFarrier=new Date((s.lastFarrierDate||'2026-07-29')+'T12:00:00');
   const farrierDue=new Date(lastFarrier); farrierDue.setDate(farrierDue.getDate()+42);
   if((farrierDue-now)/86400000 <= 30){
-    reserved+=600;
-    parts.push('næste smed 600 kr.');
+    reserved+=1100;
+    parts.push('næste smed 1.100 kr.');
   }
 
   const healthLast=new Date('2026-08-07T12:00:00');
@@ -1052,7 +1064,7 @@ function renderDisposableAmount(currentBalance){
   let d=new Date(now.getFullYear(),now.getMonth()+1,1,12);
   while(d<=end){
     futureIncome+=5500;
-    futureExpenses+=(d.getFullYear()===2026&&d.getMonth()===8)?2900:3100;
+    futureExpenses+=3200;
     d.setMonth(d.getMonth()+1);
   }
 
@@ -1062,7 +1074,7 @@ function renderDisposableAmount(currentBalance){
   d=new Date(lastFarrier); d.setDate(d.getDate()+46);
   while(d<=now)d.setDate(d.getDate()+46);
   while(d<=end){
-    futureExpenses+=600;
+    futureExpenses+=1100;
     d.setDate(d.getDate()+46);
   }
 
@@ -1176,10 +1188,11 @@ async function fetchWeather(lat,lon,force=false){
 }
 function decisionWindow(){
   const start=new Date();
-  start.setMinutes(0,0,0); // anbefalingen starter nu (afrundet til indeværende time)
+  start.setMinutes(0,0,0);
   const end=new Date(start);
   end.setDate(end.getDate()+1);
-  end.setHours(15,0,0,0); // næste realistiske standardskift
+  const s=getState(), parts=String(s.periodEndTime||'15:00').split(':');
+  end.setHours(Number(parts[0]||15),Number(parts[1]||0),0,0);
   return {start,end};
 }
 function confidenceHtml(score){
@@ -1246,17 +1259,17 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   rows=rows.filter(x=>x.date>=win.start&&x.date<win.end);
   if(!rows.length)throw new Error('ingen DMI-timer i perioden nu→15');
 
-  const s=getState(),reg=s.regime||'summer',clipped=(s.coat||'unclipped')==='clipped',clipType=s.clipType||'unclipped';
+  const s=getState(),reg=s.regime||'summer',clipType=s.clipType||'unclipped',coat=s.coat||'normal',shelter=s.shelter||'none';
   const outdoor=reg==='winter'?rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<18}):rows;
   const night=rows.filter(x=>{const h=x.date.getHours();return h>=20||h<8});
-  const morning=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<14});
-  const day=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<14});
+  const daylight=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<20});
+  const day=daylight;
   const rainRows=reg==='winter'?outdoor:rows;
   const arr=outdoor.length?outdoor:rows;
   const min=(a,k)=>Math.min(...a.map(x=>x[k])), max=(a,k)=>Math.max(...a.map(x=>x[k])), sum=(a,k)=>a.reduce((v,x)=>v+x[k],0);
 
   const nightMin=night.length?min(night,'temp'):min(rows,'temp');
-  const tmax=max(rows,'temp'), morningMax=morning.length?max(morning,'temp'):tmax;
+  const tmax=max(rows,'temp'), warmMax=daylight.length?max(daylight,'temp'):tmax;
   const feelsMin=min(arr,'feels');
   const rainReliable=true;
   const rainTotal=sum(rainRows,'p');
@@ -1273,16 +1286,18 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const dayRain=day.length?sum(day,'p'):0;
   const nightWind=night.length?max(night,'wind'):maxWind;
   const dayWind=day.length?max(day,'wind'):maxWind;
-  const morningRad=morning.length?max(morning,'rad'):0;
-  const sunnyMorning=morningRad>=350, hotMorning=morningMax>=22, veryHotMorning=morningMax>=25;
+  const daylightRad=daylight.length?max(daylight,'rad'):0;
+  const sunnyPeriod=daylightRad>=350, hotPeriod=warmMax>=22, veryHotPeriod=warmMax>=25;
   const windy=maxWind>=7||maxGust>=12;
   const sustainedRain=wetHours>=4||longest>=3;
-  const veryWet=rainReliable ? (rainTotal>=8||wetHours>=7||longest>=6) : (wetHours>=7||longest>=6);
+  const maxHourlyRain=rainRows.length?max(rainRows,'p'):0;
+  const heavyRain=maxHourlyRain>=4;
+  const veryWet=rainReliable ? (rainTotal>=8||wetHours>=7||longest>=6||heavyRain) : (wetHours>=7||longest>=6||heavyRain);
   const clipMap={unclipped:0,bib:0.5,irish:1,trace:1.5,chaser:1.5,blanket:2,hunter:2.5,full:3};
-  const clipAdj=clipMap[clipType]??(clipped?2:0);
-  const bcsAdj=Number(s.bcs||5)<=4?1:Number(s.bcs||5)>=7?-0.5:0;
-  const seniorAdj=(s.senior||'no')==='yes'?0.5:0;
-  const horseAdj=clipAdj+bcsAdj+seniorAdj;
+  const clipAdj=clipMap[clipType]??0;
+  const bcsAdj=(s.bcs||'ideal')==='under'?1:(s.bcs||'ideal')==='over'?-0.5:0;
+  const coatAdj=coat==='thin'?0.75:coat==='thick'?-0.75:0;
+  const horseAdj=clipAdj+bcsAdj+coatAdj;
 
   let exposure=0,heat=0,pros=[],cons=[];
   if(rainTotal>=2){exposure+=2;pros.push(`${rainTotal.toFixed(1).replace('.',',')} mm regn`)}
@@ -1291,21 +1306,26 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   if(windy){exposure+=2;pros.push(`vind op til ${maxWind.toFixed(1).replace('.',',')} m/s`)}
   if(feelsMin<=10+horseAdj)exposure+=1;
   if(feelsMin<=6+horseAdj)exposure+=2;
-  if(reg==='summer'){exposure+=1;pros.push('ingen sikker adgang til læ')}
-  if(clipped){exposure+=2;pros.push('klipning: '+clipType)}
+  if(shelter==='none'){exposure+=1;pros.push('ingen sikker adgang til læ')}
+  else if(shelter==='partial'){exposure+=0.5;pros.push('kun delvis/usikker adgang til læ')}
+  if(clipType!=='unclipped'){exposure+=Math.min(2.5,clipAdj);pros.push('klipning: '+clipType)}
+  if(coat==='thin'){exposure+=0.75;pros.push('tynd pels')}
+  if(coat==='thick'){heat+=0.5;cons.push('kraftig pels')}
+  if((s.bcs||'ideal')==='under'){exposure+=0.75;pros.push('huld under ideal')}
+  if((s.bcs||'ideal')==='over'){heat+=0.25;cons.push('huld over ideal')}
 
-  if(morningMax>=18){heat+=1;cons.push(`${Math.round(morningMax)} °C næste formiddag`)}
-  if(morningMax>=21)heat+=2;
-  if(hotMorning)heat+=2;
-  if(veryHotMorning)heat+=3;
-  if(sunnyMorning){heat+=2;cons.push('meget sol næste formiddag')}
+  if(warmMax>=18){heat+=1;cons.push(`${Math.round(warmMax)} °C i den varme del af perioden`)}
+  if(warmMax>=21)heat+=2;
+  if(hotPeriod)heat+=2;
+  if(veryHotPeriod)heat+=3;
+  if(sunnyPeriod){heat+=2;cons.push('meget sol i dagslysperioden')}
   if(rainTotal<1)heat+=1;
 
   let rec='Intet dækken',reason='',attention='',conflict=false;
   if(reg==='summer'){
-    if(veryHotMorning||(hotMorning&&sunnyMorning)){
+    if(veryHotPeriod||(hotPeriod&&sunnyPeriod)){
       rec='Intet dækken';
-      reason='Risikoen for overophedning frem mod næste kl. 15 vejer tungere end nattens behov.';
+      reason='Risikoen for overophedning senere i den valgte periode vejer tungere end nattens behov.';
       attention=rainTotal>=2?'Der kommer også regn, men den varme/solrige formiddag gør heldagsdækken risikabelt.':'';
       conflict=rainTotal>=2||exposure>=4;
     }else if(exposure>=7&&heat>=4){
@@ -1324,8 +1344,8 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
       reason='Den samlede regn-, vind- og kuldebelastning er ikke stor nok til at opveje risikoen for varme.';
     }
   }else{
-    if(veryHotMorning||(hotMorning&&sunnyMorning)){
-      rec='Intet dækken';reason='Foldtiden næste formiddag bliver varm/solrig, mens natten er tør og trækfri i boksen.';
+    if(veryHotPeriod||(hotPeriod&&sunnyPeriod)){
+      rec='Intet dækken';reason='Den varme del af foldperioden bliver varm/solrig, mens natten er tør og trækfri i boksen.';
     }else if(exposure>=10&&feelsMin<=-3+horseAdj&&heat<=2){rec='Amigo 400 g vinterdækken';reason='Reel vinterkulde kombineret med Balinas samlede eksponering gør 400 g relevant.';
     }else if(exposure>=8&&feelsMin<=6+horseAdj&&heat<=2){
       rec='Amigo 250 g med halvhøj hals';reason='Foldtimerne er samlet set kolde, våde og/eller blæsende nok til det nye 250 g, som prioriteres pga. pasformen.';
@@ -1337,7 +1357,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   }
 
   let neck='';
-  if(rec.includes('Summer Series')&&((longest>=6&&maxWind>=5.5&&morningMax<18)||(feelsMin<=3&&sustainedRain))){
+  if(rec.includes('Summer Series')&&((longest>=6&&maxWind>=5.5&&warmMax<18)||(feelsMin<=3&&sustainedRain))){
     neck=' + hals'; reason+=' Hals vælges pga. langvarig regn kombineret med vind/kulde.';
   }
 
@@ -1348,10 +1368,10 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // mesh ventilation + removable waterproof back panel.
   // One clear recommendation is still given even when the two local models disagree.
   const modelWetRisk = !!(modelMeta && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0)) >= 4);
-  const overheatRisk = veryHotMorning || (hotMorning && sunnyMorning);
-  const summerSeriesUnsafe = veryWet || (sustainedRain && windy) || maxGust>=14;
-  const mildWetSummerOption = (!summerSeriesUnsafe && tmax <= 22 && (rainTotal >= 2 || modelWetRisk));
-  if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && tmax<=22)) && !overheatRisk){
+  const overheatRisk = veryHotPeriod || (hotPeriod && sunnyPeriod);
+  const summerSeriesUnsafe = heavyRain || veryWet || (sustainedRain && windy) || maxGust>=14;
+  const mildWetSummerOption = (!summerSeriesUnsafe && warmMax <= 22 && (rainTotal >= 2 || modelWetRisk));
+  if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && warmMax<=22)) && !overheatRisk){
     rec='Summer Series – UDEN liner';
     if(modelMeta?.manualRain!==null && modelMeta.manualRain!==undefined && modelMeta.manualRain>=8 && modelMeta.majorRainConflict){
       attention=`${modelMeta.manual.source} viser ${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn, markant mere end de automatiske prognoser. Dækkenvagten tager det med og vælger Summer Series som det robuste mellemvalg: vandtæt ryg, ventilerende net og en tør Balina til ridning.`;
@@ -1365,19 +1385,19 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   }
   // Læring fra skybrud: Summer Series må ikke være hovedvalg ved kraftig/vedvarende regn + vind.
   if(summerSeriesUnsafe){
-    if(tmax>=20 && feelsMin>9+horseAdj){rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind diskvalificerer Summer Series. 50 g giver lukket beskyttelse med mindst mulig ekstra varme.';}
+    if(warmMax>=20 && feelsMin>9+horseAdj){rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind diskvalificerer Summer Series. 50 g giver lukket beskyttelse med mindst mulig ekstra varme.';}
     else if(feelsMin<=3+horseAdj && heat<=2){rec='Amigo 250 g med halvhøj hals';reason='Kraftig regn/vind kombineret med kulde kræver lukket beskyttelse og mere isolering; det nye 250 g prioriteres.';}
     else if(feelsMin<=8+horseAdj){rec='Amigo 100 g med aftagelig hals';reason='Kraftig regn/vind gør mesh-sider uegnede, og temperaturen taler for et lukket 100 g dækken.';}
     else {rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind gør Summer Series uegnet; det nye 50 g giver den letteste lukkede beskyttelse.';}
-    attention='Summer Series er fravalgt pga. regnintensitet/vind og erfaringen fra skybrud, hvor rygdelen og mesh-siderne ikke gav tilstrækkelig beskyttelse.';
+    attention=`Summer Series er fravalgt pga. regnintensitet/vind. Maksimal beregnet regnintensitet er ${maxHourlyRain.toFixed(1).replace('.',',')} mm/time, og erfaringen fra skybrud viser, at rygdelen og mesh-siderne ikke giver tilstrækkelig beskyttelse.`;
   }
   // Individuel Balina-læring: kølig nat + lun dag kan passe til rygvarme og ventilerende sider.
-  if(reg==='summer' && !summerSeriesUnsafe && rainTotal<2 && nightMin<=12+horseAdj && morningMax>=17 && morningMax<=21 && !veryHotMorning){
+  if(reg==='summer' && !summerSeriesUnsafe && rainTotal<2 && nightMin<=12+horseAdj && warmMax>=17 && warmMax<=21 && !veryHotPeriod){
     rec='Summer Series – UDEN liner';
     reason='Balinas individuelle kompromis ved kølig nat og lun dag: lidt beskyttelse/rygvarme om natten, men mesh-sider når temperaturen stiger.';
   }
   // Ved moderat vind og køligt vådt vejr foretrækkes den lukkede nye 50 g frem for mesh.
-  if(rec.includes('Summer Series') && maxWind>=7 && morningMax<18 && rainTotal>=2){
+  if(rec.includes('Summer Series') && maxWind>=7 && warmMax<18 && rainTotal>=2){
     rec='Amigo 50 g med halvhøj hals';
     reason='Vind og køligt vådt vejr gør den lukkede 50 g løsning mere robust end mesh-siderne, og den nye pasform prioriteres.';
   }
@@ -1433,31 +1453,40 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   document.getElementById('wetHours').textContent=wetHours+' t';
   document.getElementById('feelsMin').textContent=Math.round(feelsMin)+' °C';
   document.getElementById('gust').textContent=maxGust.toFixed(1).replace('.',',')+' m/s';
-  document.getElementById('sunRisk').textContent=sunnyMorning?'Høj':'Lav/moderat';
+  document.getElementById('sunRisk').textContent=sunnyPeriod?'Høj':'Lav/moderat';
   document.getElementById('nightRain').textContent=nightRain.toFixed(1).replace('.',',')+' mm';
   document.getElementById('dayRain').textContent=dayRain.toFixed(1).replace('.',',')+' mm';
   document.getElementById('nightWind').textContent=nightWind.toFixed(1).replace('.',',')+' m/s';
   document.getElementById('dayWind').textContent=dayWind.toFixed(1).replace('.',',')+' m/s';
+  const profileWhy=[];
+  const regimeLabel=reg==='summer'?'døgnfold':'fold om dagen og boks om natten';
+  profileWhy.push(`Balina står på ${regimeLabel}`);
+  profileWhy.push(shelter==='none'?'ingen sikker adgang til læ':shelter==='partial'?'delvis/usikker adgang til læ':'sikker adgang til læ');
+  profileWhy.push(clipType==='unclipped'?'uklippet':`klippet: ${clipType}`);
+  profileWhy.push(coat==='thin'?'tynd pels':coat==='thick'?'kraftig pels':'normal pels');
+  profileWhy.push((s.bcs||'ideal')==='under'?'huld under ideal':(s.bcs||'ideal')==='over'?'huld over ideal':'ideelt huld');
+  let indoorNote='';
+  if(reg==='winter'&&nightRain>0) indoorNote=`<br><strong>Regn mens Balina er i boks:</strong> ${nightRain.toFixed(1).replace('.',',')} mm er synligt i prognosen, men vægtes ikke som udendørs regnbelastning.`;
   document.getElementById('weatherTimeline').innerHTML=
     `<strong>Det lagde Dækkenvagten vægt på</strong><br>`+
-    `${pros.length?pros.join(' · '):'Ingen stor kulde/regn-belastning'}`+
-    `${cons.length?`<br><strong>Trækker den anden vej:</strong> ${cons.join(' · ')}`:''}`+
-    `<br><span class="muted">Regn, vind, temperaturforløb, pels/klipning og Balinas konkrete dækkener indgår samlet frem til kl. 15 næste dag. Ekstra vejrdata indgår kun, hvis du selv har tilføjet dem.</span>`;
+    `<strong>Balinas aktuelle forhold:</strong> ${profileWhy.join(' · ')}<br>`+
+    `<strong>Vejret i perioden:</strong> ${pros.length?pros.join(' · '):'Ingen stor kulde/regn-belastning'} · maks regnintensitet ${maxHourlyRain.toFixed(1).replace('.',',')} mm/time`+
+    `${cons.length?`<br><strong>Trækker den anden vej:</strong> ${cons.join(' · ')}`:''}`+indoorNote+
+    `<br><span class="muted">Disse input justerer Balinas specialkalibrerede guldlogik. Dækkenguiden vurderer hele den valgte periode og matcher derefter mod Balinas konkrete garderobe.</span>`;
 }
 function useHilleroed(){fetchWeather(HILLEROED.lat,HILLEROED.lon,false)}
 
 const DEFAULT_FEED=[
-  {id:'mash',group:'Mash & tilskud',name:'Mash',amount:'2 skeer'},
-  {id:'monk',group:'Mash & tilskud',name:'Munkepeber',amount:'1 mål'},
-  {id:'mag',group:'Mash & tilskud',name:'Magnesium',amount:'1/2 mål'},
-  {id:'optimal',group:'Krybbefoder',name:'Optimal',amount:'3/4 mål'},
-  {id:'lucerne',group:'Krybbefoder',name:'Lucerne',amount:'1–2 håndfulde'},
-  {id:'beet',group:'Krybbefoder',name:'Roepiller',amount:'0 g tørvægt'},
-  {id:'vit',group:'Vitamin',name:'Vitamin',amount:'4–6 bolsjer'},
-  {id:'wrap',group:'Natfoder',name:'Wrap',amount:'3/4 skive'},
-  {id:'straw',group:'Natfoder',name:'Halmnet',amount:'1 stk.'}
+  {id:'mash',group:'Mash & tilskud',name:'Mash',amount:'2 skeer',note:''},
+  {id:'monk',group:'Mash & tilskud',name:'Munkepeber',amount:'1 mål',note:''},
+  {id:'mag',group:'Mash & tilskud',name:'Magnesium',amount:'1/2 mål',note:''},
+  {id:'optimal',group:'Krybbefoder',name:'Optimal',amount:'3/4 mål',note:'Gives én gang dagligt mens Balina går på døgnfold.'},
+  {id:'lucerne',group:'Krybbefoder',name:'Lucerne',amount:'1–2 håndfulde',note:''},
+  {id:'beet',group:'Krybbefoder',name:'Roepiller',amount:'0 g tørvægt',note:''},
+  {id:'vit',group:'Vitamin',name:'Vitamin',amount:'4–6 bolsjer',note:''},
+  {id:'wrap',group:'Grovfoder',name:'Wrap',amount:'Morgen + eftermiddag',note:'Lægges i bunker på jorden. Andre heste kan tage det fra Balina, så faktisk indtag kan være usikkert.'}
 ];
-const FEED_GROUPS=['Mash & tilskud','Krybbefoder','Vitamin','Natfoder'];
+const FEED_GROUPS=['Mash & tilskud','Krybbefoder','Vitamin','Grovfoder','Andet'];
 function getFeed(){
   const s=getState();
   if(!Array.isArray(s.feedPlan)){s.feedPlan=DEFAULT_FEED;setState(s)}
@@ -1469,99 +1498,37 @@ function renderFeedPlan(){
   host.innerHTML=FEED_GROUPS.map(group=>{
     const items=feed.filter(x=>x.group===group).map(x=>`
       <div class="item feed-row">
-        <div><strong>${esc(x.name)}</strong><span class="small muted">${esc(x.amount)}</span></div>
-        <div class="feed-actions">
-          <button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}','${x.id}')">Ændr</button>
-          <button class="secondary" onclick="deleteFeed('${x.id}')">Slet</button>
-        </div>
+        <div><strong>${esc(x.name)}</strong><span class="small muted">${esc(x.amount||'')}</span>${x.note?`<span class="small muted"><em>Note: ${esc(x.note)}</em></span>`:''}</div>
+        <div class="feed-actions"><button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}','${x.id}')">Ændr</button><button class="secondary" onclick="deleteFeed('${x.id}')">Slet</button></div>
       </div>`).join('');
-    return `<h3>${group}</h3><div class="section-list">${items||'<div class="small muted">Ingen poster.</div>'}</div>
-      <div class="actions"><button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}')">+ Tilføj</button></div>`;
+    return `<h3>${group}</h3><div class="section-list">${items||'<div class="small muted">Ingen poster.</div>'}</div><div class="actions"><button class="secondary" onclick="openFeedEditor('${group.replace(/'/g,"\\'")}')">+ Tilføj</button></div>`;
   }).join('');
-  renderGrass();
-}
-function splitAmount(amount=''){
-  const units=['mål','g','kg','ml','håndfuld','håndfulde','ske','skeer','bolsje','bolsjer','skive','net'];
-  const text=String(amount||'').trim();
-  const found=units.find(u=>text.toLowerCase().endsWith(u));
-  if(!found)return {qty:text,unit:'andet',custom:''};
-  return {qty:text.slice(0,-found.length).trim(),unit:found,custom:''};
 }
 function openFeedEditor(group,id=''){
   const feed=getFeed(),item=id?feed.find(x=>x.id===id):null;
-  const a=splitAmount(item?.amount||'');
   const host=document.getElementById('feedEditor');
-  host.innerHTML=`<div class="editor-card"><h3>${item?'Ændr':'Tilføj'} foder eller tilskud</h3>
-    <label>Produkt<input id="feedEditName" value="${esc(item?.name||'')}"></label>
-    <div class="formgrid">
-      <label>Mængde<input id="feedEditQty" value="${esc(a.qty)}" placeholder="Fx 3/4 eller 1–2"></label>
-      <label>Enhed
-        <select id="feedEditUnit" onchange="toggleCustomFeedUnit()">
-          ${['mål','g','kg','ml','håndfuld','håndfulde','ske','skeer','bolsje','bolsjer','skive','net','andet'].map(u=>`<option value="${u}" ${a.unit===u?'selected':''}>${u}</option>`).join('')}
-        </select>
-      </label>
-    </div>
-    <label id="customFeedUnitWrap" style="${a.unit==='andet'?'':'display:none'}">Egen enhed<input id="feedEditCustomUnit" placeholder="Fx bæger"></label>
-    <div class="actions">
-      <button onclick="saveFeedEditor('${group.replace(/'/g,"\\'")}','${id}')">Gem</button>
-      <button class="secondary" onclick="document.getElementById('feedEditor').innerHTML=''">Annuller</button>
-    </div>
+  host.innerHTML=`<div class="editor-card"><h3>${item?'Ændr':'Tilføj'} i foderplan</h3>
+    <label>Produkt / foder<input id="feedEditName" value="${esc(item?.name||'')}" placeholder="Fx Optimal, wrap eller magnesium"></label>
+    <label>Mængde / hvornår<input id="feedEditAmount" value="${esc(item?.amount||'')}" placeholder="Fx 3/4 mål, 7 kg eller morgen + eftermiddag"></label>
+    <label>Note<input id="feedEditNote" value="${esc(item?.note||'')}" placeholder="Fx brug den lyserøde måleske"></label>
+    <div class="actions"><button onclick="saveFeedEditor('${group.replace(/'/g,"\\'")}','${id}')">Gem</button><button class="secondary" onclick="document.getElementById('feedEditor').innerHTML=''">Annuller</button></div>
   </div>`;
 }
-function toggleCustomFeedUnit(){
-  const u=document.getElementById('feedEditUnit').value;
-  document.getElementById('customFeedUnitWrap').style.display=u==='andet'?'block':'none';
-}
 function saveFeedEditor(group,id){
-  const name=document.getElementById('feedEditName').value.trim();
-  const qty=document.getElementById('feedEditQty').value.trim();
-  let unit=document.getElementById('feedEditUnit').value;
-  if(unit==='andet')unit=document.getElementById('feedEditCustomUnit').value.trim();
-  if(!name)return alert('Skriv et produktnavn.');
-  if(!qty)return alert('Skriv en mængde.');
-  if(!unit)return alert('Vælg eller skriv en enhed.');
-  const amount=`${qty} ${unit}`.trim();
-
+  const name=document.getElementById('feedEditName').value.trim(),amount=document.getElementById('feedEditAmount').value.trim(),note=document.getElementById('feedEditNote').value.trim();
+  if(!name)return alert('Skriv et produkt eller fodertype.');
   const s=getState();s.feedPlan=getFeed();
-  if(id){
-    const item=s.feedPlan.find(x=>x.id===id);
-    if(item){item.name=name;item.amount=amount}
-  }else{
-    s.feedPlan.push({id:'feed-'+Date.now()+Math.random(),group,name,amount});
-  }
-  setState(s);
-  document.getElementById('feedEditor').innerHTML='';
-  renderFeedPlan();
+  if(id){const item=s.feedPlan.find(x=>x.id===id);if(item){item.name=name;item.amount=amount;item.note=note}}
+  else s.feedPlan.push({id:'feed-'+Date.now()+Math.random(),group,name,amount,note});
+  setState(s);document.getElementById('feedEditor').innerHTML='';renderFeedPlan();
 }
-function saveGrassStatus(){
-  const s=getState();s.grassStatus=document.getElementById('grassStatus').value;setState(s);renderGrass();
-}
-function renderGrass(){
-  const s=getState(),el=document.getElementById('grassStatus');if(!el)return;
-  el.value=s.grassStatus||'summer';
-  const d=document.getElementById('grazingDetails');if(d)d.style.display=el.value==='grazing'?'block':'none';
-  renderGrazingPlan();
-}
-function renderGrazingPlan(){
-  const host=document.getElementById('grazingPlan');if(!host)return;
-  const s=getState(),done=s.grazingDone||[];
-  const mins=Array.from({length:12},(_,i)=>(i+1)*5);
-  const next=mins.findIndex((_,i)=>!done.includes(i));
-  host.innerHTML=`<div class="notice small"><strong>${next<0?'Klar til fælles indgræsning':'Næste trin: '+mins[next]+' min.'}</strong><br>Gå først videre, når det foregående trin er gennemført.</div>`+
-    mins.map((m,i)=>`<label class="check-row"><input type="checkbox" ${done.includes(i)?'checked':''} onchange="toggleGrazing(${i},this.checked)"> Trin ${i+1} · ${m} min.</label>`).join('');
-}
-function toggleGrazing(i,checked){
-  const s=getState();let d=s.grazingDone||[];
-  d=checked?[...new Set([...d,i])]:d.filter(x=>x!==i);s.grazingDone=d;setState(s);renderGrazingPlan();
-}
-
 function deleteFeed(id){
   if(!confirm('Fjern denne post fra den aktuelle foderplan?'))return;
   const s=getState(); s.feedPlan=getFeed().filter(x=>x.id!==id); setState(s);renderFeedPlan();
 }
 
 const DEFAULT_SIZES=[
-  {id:'blanket',name:'Dækken',value:'Rambo Disc: 155 · Amigo ca. 150',note:'155 Duo kan blive for langt'},
+  {id:'blanket',name:'Dækken',value:'Amigo 145 · Summer Series 155 tilpasset',note:'Balinas dækkenmål ca. 194 cm. Nye Amigo med halvhøj hals sidder bedst; Rambo Duo 155 udgår.'},
   {id:'girth-jump',name:'Springgjord',value:'140 cm',note:''},
   {id:'stirrup',name:'Stigremme',value:'Måles / bekræftes',note:''},
   {id:'bit',name:'Bid',value:'Måles',note:''},
@@ -1591,8 +1558,6 @@ function renderSaddleCountdown(){
 }
 function registerSaddleCleaning(useToday){const date=useToday?today():prompt('Dato for sadelpudsning (ÅÅÅÅ-MM-DD):',today());if(!date)return;const s=getState();s.lastSaddleCleaning=date;setState(s);renderSaddleCountdown();}
 function previewHealthPhoto(ev){const f=ev.target.files?.[0],img=document.getElementById('healthPhotoPreview');if(!f||!img)return;img.src=URL.createObjectURL(f);img.style.display='block';}
-function saveFeedContext(){const s=getState();s.feedContext={bcs:Number(document.getElementById('feedBcs').value||5),grass:document.getElementById('feedGrass').value,forage:document.getElementById('forageAccess').value,work:document.getElementById('workLevel').value};setState(s);renderFeedContext();}
-function renderFeedContext(){const s=getState(),c=s.feedContext||{bcs:s.bcs||5,grass:'nibble',forage:'competition',work:'light'};const ids={feedBcs:c.bcs,feedGrass:c.grass,forageAccess:c.forage,workLevel:c.work};Object.entries(ids).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=String(v)});const box=document.getElementById('feedAssessment');if(!box)return;let msg=[];if(c.bcs<=4)msg.push('Huld er lavt: følg vægt/huld tæt og prioritér sikker adgang til tilstrækkeligt grovfoder.');else if(c.bcs>=7)msg.push('Huld er højt: undgå at øge energitæt krybbefoder uden en samlet vurdering.');else msg.push('Huld ligger omkring det ønskede midterområde.');if(c.forage==='uncertain'||c.forage==='competition')msg.push('Grovfoderindtaget er usikkert – tilbudt mængde er ikke det samme som faktisk indtag. Sikr separate bunker/adgang og følg udviklingen.');if(c.grass==='none'||c.grass==='nibble')msg.push('Græs bidrager kun lidt eller slet ikke, så grovfoderet bærer hoveddelen af fiberindtaget.');box.innerHTML='<strong>Vejledende vurdering</strong><br>'+msg.join(' ');}
 
 window.addEventListener('error', e=>{
   const w=document.getElementById('weatherStatus');
