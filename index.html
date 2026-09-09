@@ -247,7 +247,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
 .input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 
-/* v9.0.2 */
+/* v9.1.0 */
 .recommendation-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-top:12px}
 .need-card{border:1px solid #d9ddeb;background:#f8f9ff;border-radius:16px;padding:14px}
 .need-card .need-title{font-size:1.15rem;font-weight:800;margin-top:4px;color:#4f5266}
@@ -401,7 +401,9 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 <div><label>Aktuel ordning</label><select id="regime" onchange="saveProfile(true)"><option value="summer">Døgnfold</option><option value="winter">Fold 08–18 / boks 18–08</option></select><span class="input-help">Bruges til at afgøre, hvornår Balina er udsat for regn, vind og kulde.</span></div>
 <div><label>Adgang til læ på fold</label><select id="shelter" onchange="saveProfile(true)"><option value="none">Ingen sikker adgang til læ</option><option value="partial">Delvis / usikker adgang</option><option value="yes">Ja, sikker adgang til læ</option></select><span class="input-help">Påvirker hvor tungt vind og regn vægtes.</span></div>
 <div><label>Huld</label><select id="bcs" onchange="saveProfile(true)"><option value="under">Under ideal</option><option value="ideal">Ideelt</option><option value="over">Over ideal</option></select><span class="input-help">Under ideal giver lidt mindre kuldereserve; over ideal lidt mere.</span></div>
-<div><label>Pelsmængde</label><select id="coat" onchange="saveProfile(true)"><option value="thin">Tynd pels</option><option value="normal">Normal pels</option><option value="thick">Kraftig pels</option></select><span class="input-help">Bruges som støtteparameter for hestens egen isolering.</span></div>
+<div><label>Aktuel sæsonpels</label><select id="coatSeason" onchange="saveProfile(true)"><option value="summer">Sommerpels</option><option value="early_transition">Tidlig overgangspels</option><option value="transition">Overgangspels</option><option value="winter">Fuld vinterpels</option></select><span class="input-help">Viser hvor langt Balina er i pelsskiftet. Sommer- og tidlig overgangspels beskytter mindre i langvarig regn end fuld vinterpels.</span></div>
+<div><label>Pelsfylde</label><select id="coat" onchange="saveProfile(true)"><option value="thin">Tynd pels</option><option value="normal">Normal pels</option><option value="thick">Tyk pels</option></select><span class="input-help">Finjusterer isoleringen inden for den valgte sæsonpels.</span></div>
+<div><label>Reaktion på regn</label><select id="rainSensitivity" onchange="saveProfile(true)"><option value="normal">Normal</option><option value="sensitive">Regnfølsom</option><option value="very_sensitive">Meget regnfølsom</option></select><span class="input-help">Balina står som regnfølsom efter observeret ubehag i kraftig regn. Det vægtes sammen med regnens varighed, intensitet og adgang til læ.</span></div>
 <div><label>Kliptype</label><select id="clipType" onchange="saveProfile(true)"><option value="unclipped">Uklippet</option><option value="bib">Bib Clip</option><option value="irish">Irish Clip</option><option value="trace">Trace Clip</option><option value="chaser">Hunter/Chaser Clip</option><option value="blanket">Blanket Clip</option><option value="hunter">Hunter Clip</option><option value="full">Full Clip</option></select><span class="input-help">Klipning reducerer egen isolering i forskellig grad og påvirker derfor anbefalingen.</span></div>
 </div>
 <div id="clipVisualChoices" class="visual-choice-grid"></div>
@@ -564,7 +566,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.0.2 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.1.0 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -733,10 +735,13 @@ function runHealthGuide(){
 function init(){
   migrateV901();
   migrateV902();
+  migrateV910();
   const st=getState();
   document.getElementById('regime').value=st.regime||'summer';
   document.getElementById('shelter').value=st.shelter||'none';
   document.getElementById('coat').value=st.coat||'normal';
+  document.getElementById('coatSeason').value=st.coatSeason||'early_transition';
+  document.getElementById('rainSensitivity').value=st.rainSensitivity||'sensitive';
   document.getElementById('bcs').value=st.bcs||'ideal';
   document.getElementById('clipType').value=st.clipType||'unclipped';
   const pet=document.getElementById('periodEndTime'); if(pet)pet.value=st.periodEndTime||'15:00';
@@ -774,11 +779,24 @@ function migrateV902(){
     setState(s);
   }
 }
+function migrateV910(){
+  const s=getState();
+  if(!s.migrations)s.migrations={};
+  if(!s.migrations.v910){
+    // Balinas aktuelle status ved lancering: tidlig overgangspels, normal pelsfylde og kendt regnfølsomhed.
+    if(!s.coatSeason) s.coatSeason='early_transition';
+    if(!s.rainSensitivity) s.rainSensitivity='sensitive';
+    s.migrations.v910=true;
+    setState(s);
+  }
+}
 function saveProfile(silent=false){
   const s=getState();
   s.regime=document.getElementById('regime').value;
   s.shelter=document.getElementById('shelter').value;
   s.coat=document.getElementById('coat').value;
+  s.coatSeason=document.getElementById('coatSeason').value;
+  s.rainSensitivity=document.getElementById('rainSensitivity').value;
   s.bcs=document.getElementById('bcs').value;
   s.clipType=document.getElementById('clipType').value;
   setState(s);renderProfile();useHilleroed();
@@ -789,15 +807,17 @@ function renderProfile(){
   const s=getState(),reg=s.regime||'summer',clip=s.clipType||'unclipped';
   const clipLabels={unclipped:'Uklippet',bib:'Bib Clip',irish:'Irish Clip',trace:'Trace Clip',chaser:'Hunter/Chaser',blanket:'Blanket Clip',hunter:'Hunter Clip',full:'Full Clip'};
   const bcsLabels={under:'Huld under ideal',ideal:'Huld ideelt',over:'Huld over ideal'};
-  const coatLabels={thin:'Tynd pels',normal:'Normal pels',thick:'Kraftig pels'};
+  const coatLabels={thin:'Tynd pels',normal:'Normal pelsfylde',thick:'Tyk pels'};
+  const coatSeasonLabels={summer:'Sommerpels',early_transition:'Tidlig overgangspels',transition:'Overgangspels',winter:'Fuld vinterpels'};
+  const rainSensitivityLabels={normal:'Normal reaktion på regn',sensitive:'Regnfølsom',very_sensitive:'Meget regnfølsom'};
   const shelterLabels={none:'Ingen sikker adgang til læ',partial:'Delvis/usikker adgang til læ',yes:'Sikker adgang til læ'};
   const regimeLabels={summer:'Døgnfold',winter:'Fold 08–18 / boks 18–08'};
-  const pills=[regimeLabels[reg],clipLabels[clip],bcsLabels[s.bcs||'ideal'],coatLabels[s.coat||'normal'],shelterLabels[s.shelter||'none']];
+  const pills=[regimeLabels[reg],clipLabels[clip],coatSeasonLabels[s.coatSeason||'early_transition'],coatLabels[s.coat||'normal'],rainSensitivityLabels[s.rainSensitivity||'sensitive'],bcsLabels[s.bcs||'ideal'],shelterLabels[s.shelter||'none']];
   document.getElementById('statusPills').innerHTML=pills.map(x=>`<span class="pill">${x}</span>`).join('');
   const period=s.periodEndTime||'15:00';
   document.getElementById('regimeText').textContent=`Aktuelt: ${regimeLabels[reg]}. ${shelterLabels[s.shelter||'none']}. Dækkenguiden vurderer perioden frem til kl. ${period} næste dag.`;
-  const sum=document.getElementById('dailySmartSummary'); if(sum)sum.innerHTML=`<div><strong>Opstaldning:</strong> ${regimeLabels[reg]}</div><div><strong>Læ:</strong> ${shelterLabels[s.shelter||'none']}</div><div><strong>Pels/klip:</strong> ${coatLabels[s.coat||'normal']} · ${clipLabels[clip]}</div><div><strong>Huld:</strong> ${bcsLabels[s.bcs||'ideal']}</div><div><strong>Anbefalingsperiode:</strong> frem til kl. ${period} næste dag</div>`;
-  const q=document.getElementById('currentFactorsQuick'); if(q)q.innerHTML=`<span class="small muted"><strong>Beregnet ud fra:</strong></span><span class="factor">${regimeLabels[reg]}</span><span class="factor">${shelterLabels[s.shelter||'none']}</span><span class="factor">${coatLabels[s.coat||'normal']}</span><span class="factor">${clipLabels[clip]}</span><span class="factor">${bcsLabels[s.bcs||'ideal']}</span><a class="pill edit-link" href="#status" onclick="openHashSection()">Redigér forhold</a>`;
+  const sum=document.getElementById('dailySmartSummary'); if(sum)sum.innerHTML=`<div><strong>Opstaldning:</strong> ${regimeLabels[reg]}</div><div><strong>Læ:</strong> ${shelterLabels[s.shelter||'none']}</div><div><strong>Pels/klip:</strong> ${coatSeasonLabels[s.coatSeason||'early_transition']} · ${coatLabels[s.coat||'normal']} · ${clipLabels[clip]}</div><div><strong>Regn:</strong> ${rainSensitivityLabels[s.rainSensitivity||'sensitive']}</div><div><strong>Huld:</strong> ${bcsLabels[s.bcs||'ideal']}</div><div><strong>Anbefalingsperiode:</strong> frem til kl. ${period} næste dag</div>`;
+  const q=document.getElementById('currentFactorsQuick'); if(q)q.innerHTML=`<span class="small muted"><strong>Beregnet ud fra:</strong></span><span class="factor">${regimeLabels[reg]}</span><span class="factor">${shelterLabels[s.shelter||'none']}</span><span class="factor">${coatSeasonLabels[s.coatSeason||'early_transition']}</span><span class="factor">${coatLabels[s.coat||'normal']}</span><span class="factor">${rainSensitivityLabels[s.rainSensitivity||'sensitive']}</span><span class="factor">${clipLabels[clip]}</span><span class="factor">${bcsLabels[s.bcs||'ideal']}</span><a class="pill edit-link" href="#status" onclick="openHashSection()">Redigér forhold</a>`;
   renderClipChoices();
 }
 function renderClipChoices(){
@@ -1395,7 +1415,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   rows=rows.filter(x=>x.date>=win.start&&x.date<win.end);
   if(!rows.length)throw new Error('ingen DMI-timer i perioden nu→15');
 
-  const s=getState(),reg=s.regime||'summer',clipType=s.clipType||'unclipped',coat=s.coat||'normal',shelter=s.shelter||'none';
+  const s=getState(),reg=s.regime||'summer',clipType=s.clipType||'unclipped',coat=s.coat||'normal',coatSeason=s.coatSeason||'early_transition',rainSensitivity=s.rainSensitivity||'sensitive',shelter=s.shelter||'none';
   const outdoor=reg==='winter'?rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<18}):rows;
   const night=rows.filter(x=>{const h=x.date.getHours();return h>=20||h<8});
   const daylight=rows.filter(x=>{const h=x.date.getHours();return h>=8&&h<20});
@@ -1412,6 +1432,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const rainP90=rainTotal;
   const wetThreshold=.1;
   const wetHours=rainRows.filter(x=>x.p>=wetThreshold).length;
+  const nightWetHours=night.filter(x=>x.p>=wetThreshold).length;
   let longest=0,cur=0;
   rainRows.forEach(x=>{
     const wet=x.p>=wetThreshold;
@@ -1428,12 +1449,14 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const sustainedRain=wetHours>=4||longest>=3;
   const maxHourlyRain=rainRows.length?max(rainRows,'p'):0;
   const heavyRain=maxHourlyRain>=4;
-  const veryWet=rainReliable ? (rainTotal>=8||wetHours>=7||longest>=6||heavyRain) : (wetHours>=7||longest>=6||heavyRain);
+  const veryWet=rainReliable ? (rainTotal>=8||(longest>=6&&rainTotal>=4)||heavyRain) : ((longest>=6&&rainTotal>=4)||heavyRain);
   const clipMap={unclipped:0,bib:0.5,irish:1,trace:1.5,chaser:1.5,blanket:2,hunter:2.5,full:3};
   const clipAdj=clipMap[clipType]??0;
   const bcsAdj=(s.bcs||'ideal')==='under'?1:(s.bcs||'ideal')==='over'?-0.5:0;
   const coatAdj=coat==='thin'?0.75:coat==='thick'?-0.75:0;
-  const horseAdj=clipAdj+bcsAdj+coatAdj;
+  const coatSeasonAdj=coatSeason==='summer'?1:coatSeason==='early_transition'?0.75:coatSeason==='transition'?0.4:-0.5;
+  const rainSensitivityAdj=rainSensitivity==='very_sensitive'?1.25:rainSensitivity==='sensitive'?0.75:0;
+  const horseAdj=clipAdj+bcsAdj+coatAdj+coatSeasonAdj;
 
   let exposure=0,heat=0,pros=[],cons=[];
   if(rainTotal>=2){exposure+=2;pros.push(`${rainTotal.toFixed(1).replace('.',',')} mm regn`)}
@@ -1446,7 +1469,15 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   else if(shelter==='partial'){exposure+=0.5;pros.push('kun delvis/usikker adgang til læ')}
   if(clipType!=='unclipped'){exposure+=Math.min(2.5,clipAdj);pros.push('klipning: '+clipType)}
   if(coat==='thin'){exposure+=0.75;pros.push('tynd pels')}
-  if(coat==='thick'){heat+=0.5;cons.push('kraftig pels')}
+  if(coat==='thick'){heat+=0.5;cons.push('tyk pels')}
+  if(sustainedRain && coatSeason!=='winter'){
+    exposure+=coatSeasonAdj;
+    pros.push(coatSeason==='summer'?'sommerpels':coatSeason==='early_transition'?'tidlig overgangspels':'overgangspels');
+  }
+  if(sustainedRain && shelter!=='yes' && rainSensitivity!=='normal'){
+    exposure+=rainSensitivityAdj;
+    pros.push(rainSensitivity==='very_sensitive'?'meget regnfølsom':'Balinas regnfølsomhed');
+  }
   if((s.bcs||'ideal')==='under'){exposure+=0.75;pros.push('huld under ideal')}
   if((s.bcs||'ideal')==='over'){heat+=0.25;cons.push('huld over ideal')}
 
@@ -1505,7 +1536,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // One clear recommendation is still given even when the two local models disagree.
   const modelWetRisk = !!(modelMeta && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0)) >= 4);
   const overheatRisk = veryHotPeriod || (hotPeriod && sunnyPeriod);
-  const summerSeriesUnsafe = heavyRain || veryWet || (sustainedRain && windy) || maxGust>=14;
+  const summerSeriesUnsafe = heavyRain || rainTotal>=8 || (longest>=6&&rainTotal>=4) || (sustainedRain && windy) || maxGust>=14;
   const mildWetSummerOption = (!summerSeriesUnsafe && warmMax <= 22 && (rainTotal >= 2 || modelWetRisk));
   if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && warmMax<=22)) && !overheatRisk){
     rec='Summer Series – UDEN liner';
@@ -1518,6 +1549,16 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }else if(!attention){
       attention='Mildt og vådt vejr: Summer Series beskytter ryggen mod regn og ventilerer gennem netdelen.';
     }
+  }
+  // Balinas egen erfaring: mange regntimer om natten uden læ kræver lukket, let beskyttelse,
+  // især mens hun kun har sommer-/overgangspels. Totalmængden må ikke være en hård 2 mm-grænse.
+  const balinaWetProtection = reg==='summer' && rainSensitivity!=='normal' && shelter==='none' &&
+    coatSeason!=='winter' && sustainedRain && (nightWetHours>=4||longest>=4) &&
+    (nightRain>=0.5||rainTotal>=1) && warmMax<=20 && !overheatRisk;
+  if(balinaWetProtection && !summerSeriesUnsafe){
+    rec='Amigo 50 g med halvhøj hals';
+    reason='Mange regntimer, ingen sikker adgang til læ og Balinas aktuelle pels/regnfølsomhed taler for den letteste lukkede, vandtætte beskyttelse.';
+    if(sunnyPeriod&&warmMax>=17) attention=`Regnen taler for 50 g, mens meget sol og ${Math.round(warmMax)} °C senere i perioden trækker mod intet dækken. Anbefalingen er derfor et bevidst kompromis.`;
   }
   // Læring fra skybrud: Summer Series må ikke være hovedvalg ved kraftig/vedvarende regn + vind.
   if(summerSeriesUnsafe){
@@ -1559,6 +1600,12 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   if(conflict)confidence-=2;
   if(rainSpread>=5)confidence-=1;
   if(Math.abs(exposure-heat)<=1)confidence-=1;
+  // Sikkerheden beskriver også hvor entydigt dækkenvalget er – ikke kun om prognoserne er enige.
+  if(balinaWetProtection && sunnyPeriod && warmMax>=17){
+    confidence=Math.min(confidence,rainTotal<2?3:4);
+  }else if(rec.includes('50 g') && sunnyPeriod && warmMax>=18){
+    confidence=Math.min(confidence,4);
+  }
   confidence=Math.max(1,Math.min(5,confidence));
 
   const fmt=d=>d.toLocaleString('da-DK',{weekday:'short',hour:'2-digit',minute:'2-digit'});
@@ -1589,7 +1636,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     confidence=Math.min(confidence,2);
   }
   document.getElementById('recommendationPeriod').textContent=`Gælder: ${periodFmt(win.start)} → ${periodFmt(win.end)}`;
-  document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}`;
+  document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}<div class="small muted">Skalaen viser både prognosernes sikkerhed og hvor tydeligt valget er mellem mere eller mindre dækken.</div>`;
 
   let extra='';
   if(confidence<=3){
@@ -1622,7 +1669,9 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   profileWhy.push(`Balina står på ${regimeLabel}`);
   profileWhy.push(shelter==='none'?'ingen sikker adgang til læ':shelter==='partial'?'delvis/usikker adgang til læ':'sikker adgang til læ');
   profileWhy.push(clipType==='unclipped'?'uklippet':`klippet: ${clipType}`);
-  profileWhy.push(coat==='thin'?'tynd pels':coat==='thick'?'kraftig pels':'normal pels');
+  profileWhy.push(coatSeason==='summer'?'sommerpels':coatSeason==='early_transition'?'tidlig overgangspels':coatSeason==='transition'?'overgangspels':'fuld vinterpels');
+  profileWhy.push(coat==='thin'?'tynd pels':coat==='thick'?'tyk pels':'normal pelsfylde');
+  profileWhy.push(rainSensitivity==='normal'?'normal reaktion på regn':rainSensitivity==='very_sensitive'?'meget regnfølsom':'regnfølsom');
   profileWhy.push((s.bcs||'ideal')==='under'?'huld under ideal':(s.bcs||'ideal')==='over'?'huld over ideal':'ideelt huld');
   let indoorNote='';
   if(reg==='winter'&&nightRain>0) indoorNote=`<br><strong>Regn mens Balina er i boks:</strong> ${nightRain.toFixed(1).replace('.',',')} mm er synligt i prognosen, men vægtes ikke som udendørs regnbelastning.`;
