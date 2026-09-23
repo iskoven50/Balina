@@ -570,7 +570,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.1.1 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.1.3 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -736,10 +736,84 @@ function runHealthGuide(){
   document.getElementById('healthResult').innerHTML=html;
 }
 
+
+function migrateCalendarV913(){
+  const s=getState();
+  if(s.calendarV913Done)return;
+  s.lastFarrierDate='2026-09-21';
+  s.lastSaddleCleaning='2026-09-17';
+  if(!Array.isArray(s.appointments))s.appointments=[];
+  // Fredagsvagten er flyttet til mandag: fjern fremtidige fredags-staldvagter fra den gamle plan.
+  s.appointments=s.appointments.filter(a=>{
+    if(a.type!=='Staldvagt' || !a.date || a.date<'2026-09-23')return true;
+    const d=new Date(a.date+'T12:00:00');
+    return d.getDay()!==5;
+  });
+  // Undgå dubletter fra tidligere migrationer og opret fast mandagsvagt.
+  s.appointments=s.appointments.filter(a=>a.series!=='monday-duty' && !String(a.id||'').startsWith('monday-duty-'));
+  let d=new Date('2026-09-28T12:00:00'),end=new Date('2030-12-31T12:00:00');
+  while(d<=end){
+    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    s.appointments.push({id:'monday-duty-'+ds,series:'monday-duty',type:'Staldvagt',date:ds,time:'',note:'Fast staldvagt hver mandag',reminder:'1',visibility:'shared'});
+    d.setDate(d.getDate()+7);
+  }
+  const specials=[
+    {id:'duty-2026-10-10',type:'Lørdagsvagt',date:'2026-10-10',time:'',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'duty-2026-11-21',type:'Lørdagsvagt',date:'2026-11-21',time:'',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'duty-2027-01-02',type:'Lørdagsvagt',date:'2027-01-02',time:'',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'cikorie-duty-2026-10-04',type:'Staldvagt',date:'2026-10-04',time:'',note:'Passer Cikorie + staldvagt',reminder:'1',visibility:'shared'}
+  ];
+  specials.forEach(a=>{s.appointments=s.appointments.filter(x=>x.id!==a.id);s.appointments.push(a);});
+  s.calendarV913Done=true;
+  setState(s);
+}
+
+function migrateCalendarV914(){
+  const s=getState();
+  if(s.calendarV914Done)return;
+  s.lastFarrierDate='2026-09-21';
+  s.lastSaddleCleaning='2026-09-17';
+  if(!Array.isArray(s.appointments))s.appointments=[];
+
+  // Staldvagten har været mandag hele september: fjern gamle fredagsvagter og tidligere genererede mandagsrækker.
+  s.appointments=s.appointments.filter(a=>{
+    if(a.series==='monday-duty' || String(a.id||'').startsWith('monday-duty-')) return false;
+    if(a.type==='Staldvagt' && a.date){
+      const d=new Date(a.date+'T12:00:00');
+      if(d.getDay()===5) return false;
+    }
+    // Fjern tidligere kopier af de fire særvagter; de oprettes entydigt nedenfor.
+    const key=`${a.date||''}|${String(a.type||'').toLowerCase()}|${String(a.note||'').toLowerCase()}`;
+    if(a.date==='2026-10-10' && (String(a.type||'').toLowerCase().includes('lørdagsvagt') || String(a.note||'').toLowerCase().includes('staldvagt'))) return false;
+    if(a.date==='2026-11-21' && (String(a.type||'').toLowerCase().includes('lørdagsvagt') || String(a.note||'').toLowerCase().includes('staldvagt'))) return false;
+    if(a.date==='2027-01-02' && (String(a.type||'').toLowerCase().includes('lørdagsvagt') || String(a.note||'').toLowerCase().includes('staldvagt'))) return false;
+    if(a.date==='2026-10-04' && (String(a.note||'').toLowerCase().includes('cikorie') || String(a.type||'').toLowerCase().includes('staldvagt'))) return false;
+    return true;
+  });
+
+  // Fast mandagsvagt. Start 7/9 så historikken i september også er korrekt.
+  let d=new Date('2026-09-07T12:00:00'),end=new Date('2030-12-31T12:00:00');
+  while(d<=end){
+    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    s.appointments.push({id:'monday-duty-'+ds,series:'monday-duty',type:'Staldvagt',date:ds,time:'14:00',note:'Fast staldvagt hver mandag',reminder:'1',visibility:'shared'});
+    d.setDate(d.getDate()+7);
+  }
+  [
+    {id:'duty-2026-10-10',type:'Lørdagsvagt',date:'2026-10-10',time:'08:00',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'duty-2026-11-21',type:'Lørdagsvagt',date:'2026-11-21',time:'08:00',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'duty-2027-01-02',type:'Lørdagsvagt',date:'2027-01-02',time:'08:00',note:'Staldvagt',reminder:'1',visibility:'shared'},
+    {id:'cikorie-duty-2026-10-04',type:'Staldvagt',date:'2026-10-04',time:'',note:'Passer Cikorie + staldvagt',reminder:'1',visibility:'shared'}
+  ].forEach(a=>s.appointments.push(a));
+  s.calendarV914Done=true;
+  setState(s);
+}
+
 function init(){
   migrateV901();
   migrateV902();
   migrateV910();
+  migrateCalendarV913();
+  migrateCalendarV914();
   const st=getState();
   document.getElementById('regime').value=st.regime||'summer';
   document.getElementById('shelter').value=st.shelter||'none';
