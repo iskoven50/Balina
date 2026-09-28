@@ -251,7 +251,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
 .input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 
-/* v9.1.1 */
+/* v9.1.5 */
 .recommendation-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-top:12px}
 .need-card{border:1px solid #d9ddeb;background:#f8f9ff;border-radius:16px;padding:14px}
 .need-card .need-title{font-size:1.15rem;font-weight:800;margin-top:4px;color:#4f5266}
@@ -570,7 +570,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.1.3 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.1.5 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -1608,10 +1608,9 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }
   }
 
+  // Hals og liner vurderes uafhængigt. For Summer Series er hals primært vejrbeskyttelse,
+  // ikke ekstra isolering. Den endelige halsbeslutning træffes efter alle dækken-overrides nedenfor.
   let neck='';
-  if(rec.includes('Summer Series')&&((longest>=6&&maxWind>=5.5&&warmMax<18)||(feelsMin<=3&&sustainedRain))){
-    neck=' + hals'; reason+=' Hals vælges pga. langvarig regn kombineret med vind/kulde.';
-  }
 
   // Confidence: not a probability. Lower when competing signals or ensemble rain spread is large.
   const rainSpread=0;
@@ -1623,14 +1622,14 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const overheatRisk = veryHotPeriod || (hotPeriod && sunnyPeriod);
   const summerSeriesUnsafe = heavyRain || rainTotal>=8 || (longest>=6&&rainTotal>=4) || (sustainedRain && windy) || maxGust>=14;
   const mildWetSummerOption = (!summerSeriesUnsafe && warmMax <= 22 && (rainTotal >= 2 || modelWetRisk));
-  if((mildWetSummerOption || (modelMeta?.majorRainConflict && (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0))>=8 && warmMax<=22)) && !overheatRisk){
+  // Prognoseuenighed må aldrig tvinge Summer Series igennem, hvis den vådeste plausible prognose
+  // peger på kraftig/vedvarende regn. Mesh-siderne er ikke Balinas skybrudsløsning.
+  const wettestModelRain = modelMeta ? (modelMeta.wetter||Math.max(modelMeta.rainA||0,modelMeta.rainB||0)) : rainTotal;
+  const modelCouldBeTooWetForMesh = !!(modelMeta?.majorRainConflict && wettestModelRain>=8);
+  if(mildWetSummerOption && !modelCouldBeTooWetForMesh && !overheatRisk){
     rec='Summer Series – UDEN liner';
-    if(modelMeta?.manualRain!==null && modelMeta.manualRain!==undefined && modelMeta.manualRain>=8 && modelMeta.majorRainConflict){
-      attention=`${modelMeta.manual.source} viser ${modelMeta.manualRain.toFixed(1).replace('.',',')} mm regn, markant mere end de automatiske prognoser. Dækkenvagten tager det med og vælger Summer Series som det robuste mellemvalg: vandtæt ryg, ventilerende net og en tør Balina til ridning.`;
-    }else if(modelMeta?.majorRainConflict){
-      attention='De lokale prognoser er meget uenige om regnen. Dækkenvagten vælger Summer Series som det robuste mellemvalg: vandtæt ryg, ventilerende net og en tør Balina til ridning.';
-    }else if(modelMeta?.rainConflict){
-      attention='Regnprognoserne er forskellige, men den vådeste lokale model viser nok regn til, at Summer Series er det bedste samlede valg.';
+    if(modelMeta?.rainConflict){
+      attention='Regnprognoserne er forskellige, men ingen af de plausible scenarier gør mesh-siderne uegnede. Summer Series vælges for ventilation og regnbeskyttelse over ryggen.';
     }else if(!attention){
       attention='Mildt og vådt vejr: Summer Series beskytter ryggen mod regn og ventilerer gennem netdelen.';
     }
@@ -1653,6 +1652,14 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     else {rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind gør Summer Series uegnet; det nye 50 g giver den letteste lukkede beskyttelse.';}
     attention=`Summer Series er fravalgt pga. regnintensitet/vind. Maksimal beregnet regnintensitet er ${maxHourlyRain.toFixed(1).replace('.',',')} mm/time, og erfaringen fra skybrud viser, at rygdelen og mesh-siderne ikke giver tilstrækkelig beskyttelse.`;
   }
+  // Hvis modellerne er markant uenige, og den vådeste plausible prognose er for våd til mesh,
+  // vælges den letteste lukkede beskyttelse frem for at bruge Summer Series som kompromis.
+  if(modelCouldBeTooWetForMesh && !overheatRisk && reg==='summer'){
+    rec='Amigo 50 g med halvhøj hals';
+    reason="Den vådeste plausible prognose er for våd til Summer Series' mesh-sider. Balina får derfor den letteste lukkede regn- og vindbeskyttelse.";
+    attention='Prognoserne er uenige om regnen. Ved denne usikkerhed prioriterer Dækkenguiden beskyttelse mod at blive gennemvåd frem for Summer Series som mellemvalg.';
+  }
+
   // Individuel Balina-læring: kølig nat + lun dag kan passe til rygvarme og ventilerende sider.
   if(reg==='summer' && !summerSeriesUnsafe && rainTotal<2 && nightMin<=12+horseAdj && warmMax>=17 && warmMax<=21 && !veryHotPeriod){
     rec='Summer Series – UDEN liner';
@@ -1671,6 +1678,17 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     reason='Direkte sol og meget lidt vind øger varmebelastningen i et lukket 50 g dækken. Summer Series giver rygbeskyttelse med langt bedre ventilation.';
     attention='Balinas egen erfaring: 50 g blev for varmt i fuld sol og vindstille vejr. Sol og vind er derfor vægtet særskilt i dette valg.';
     conflict=false;
+  }
+
+  // Endelig halslogik for Summer Series:
+  // Når regn er en reel del af grunden til at vælge Summer Series, er udgangspunktet hals PÅ.
+  // Ved tørt/mildt vejr er udgangspunktet hals AF. Hals er vejrbeskyttelse og vurderes uafhængigt af liner.
+  const summerRainRelevant = rec.includes('Summer Series') && (rainTotal>=1 || wetHours>=2 || modelWetRisk);
+  if(rec.includes('Summer Series') && summerRainRelevant){
+    neck=' + hals';
+    if(!reason.includes('Hals')) reason+=' Hals vælges som ekstra regnbeskyttelse; liner vurderes separat.';
+  }else{
+    neck='';
   }
 
   // Sekundær bemærkning: hovedanbefalingen dækker hele perioden. Vis kun et ekstra skift som mulighed.
@@ -1706,7 +1724,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const periodFmt=d=>d.toLocaleString('da-DK',{weekday:'long',hour:'2-digit',minute:'2-digit'}).replace('.',':');
   const goldChoice=rec;
   const need=needFromGoldChoice(goldChoice);
-  need.neckPreferred = need.kind!=='none' && ((sustainedRain && (maxWind>=5.5 || feelsMin<=6+horseAdj)) || (need.target>=250 && feelsMin<=3+horseAdj));
+  need.neckPreferred = need.kind!=='none' && (summerRainRelevant || (sustainedRain && (maxWind>=5.5 || feelsMin<=6+horseAdj)) || (need.target>=250 && feelsMin<=3+horseAdj));
   need.neckRequired = !!neck || (heavyRain && windy && need.kind!=='none');
   if(need.neckPreferred && !need.label.includes('hals')) need.label += ' · halsbeskyttelse foretrækkes';
   const wardrobeMatch=matchWardrobeNeed(need);
