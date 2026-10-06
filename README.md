@@ -47,3 +47,11 @@ Hvis garderoben ikke har et forsvarligt match, viser appen behovet og forklarer 
 ## Data
 
 Data gemmes fortsat lokalt i browserens localStorage under `balinaHQ`. Brug Backup/flyt-funktionen før større ændringer eller telefonskift.
+
+
+## v9.1.6
+- Dækkenlogik kalibreret til Balinas slanke huld, manglende sikre læ og observerede komfort.
+- Dug/nattefugt indgår via luftfugtighed og dugpunkt.
+- Summer Series/0 g hybrid bevares som idealvalg, men det ødelagte dækken er inaktivt i garderoben.
+- Amigo Wug 50 g bruges som bedste tilgængelige kompromis ved kølige/fugtige/blæsende efterårsnætter.
+- Observationer: 50 g komfortabelt ca. 10–15 °C; lidt lunt men tørt ca. 17–19 °C.

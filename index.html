@@ -251,7 +251,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
 .input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 
-/* v9.1.5 */
+/* v9.1.6 */
 .recommendation-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-top:12px}
 .need-card{border:1px solid #d9ddeb;background:#f8f9ff;border-radius:16px;padding:14px}
 .need-card .need-title{font-size:1.15rem;font-weight:800;margin-top:4px;color:#4f5266}
@@ -570,7 +570,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.1.5 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.1.6 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -812,6 +812,7 @@ function init(){
   migrateV901();
   migrateV902();
   migrateV910();
+  migrateV916();
   migrateCalendarV913();
   migrateCalendarV914();
   const st=getState();
@@ -872,6 +873,27 @@ function migrateV910(){
     setState(s);
   }
 }
+
+function migrateV916(){
+  const s=getState();
+  if(!s.migrations)s.migrations={};
+  if(!s.migrations.v916){
+    // Balina 2026-10: slank (ca. BCS 4,5–5), døgnfold uden sikker læ.
+    // Faktisk erfaring: Amigo Wug 50 g ved ca. 10–15 °C har været tør/lun og ikke for varm;
+    // ved ca. 17–19 °C kan 50 g være lidt lunt. Summer/hybrid 0 g er derfor idealet i mildt vejr,
+    // mens 50 g er bedste tilgængelige kompromis, når hybriden er ude af drift.
+    s.bcs='under';
+    if(Array.isArray(s.wardrobe)){
+      const summer=s.wardrobe.find(x=>x.id==='summer155');
+      if(summer){summer.active=false;summer.note='Midlertidigt ude – nuværende dækken er ødelagt. Bevares i guldlogikken som ideal for kommende 0 g hybrid/sommerdækken.';}
+      const a50=s.wardrobe.find(x=>x.id==='amigo50');
+      if(a50){a50.active=true;a50.fit='preferred';a50.note='Meget god pasform. Empirisk reference: tør og behageligt lun ved ca. 10–15 °C; kan være lidt lun omkring 17–19 °C.';}
+    }
+    s.migrations.v916=true;
+    setState(s);
+  }
+}
+
 function saveProfile(silent=false){
   const s=getState();
   s.regime=document.getElementById('regime').value;
@@ -1366,7 +1388,7 @@ async function fetchWeather(lat,lon,force=false){
     }catch(e){}
   }
 
-  const vars="temperature_2m,apparent_temperature,precipitation,rain,wind_speed_10m,wind_gusts_10m,shortwave_radiation,cloud_cover";
+  const vars="temperature_2m,apparent_temperature,relative_humidity_2m,dew_point_2m,precipitation,rain,wind_speed_10m,wind_gusts_10m,shortwave_radiation,cloud_cover";
   const base={
     latitude:lat,longitude:lon,hourly:vars,forecast_days:"3",timezone:"Europe/Copenhagen"
   };
@@ -1395,6 +1417,8 @@ async function fetchWeather(lat,lon,force=false){
         date:new Date(t),
         temp:Number(h.temperature_2m[i]),
         feels:Number(h.apparent_temperature[i]),
+        rh:Number((h.relative_humidity_2m||[])[i]||0),
+        dew:Number((h.dew_point_2m||[])[i]??h.temperature_2m[i]),
         p:Number(h.precipitation[i]||0),
         rain:Number(h.rain[i]||0),
         wind:Number(h.wind_speed_10m[i]||0)/3.6,
@@ -1525,6 +1549,9 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const dayRain=day.length?sum(day,'p'):0;
   const nightWind=night.length?max(night,'wind'):maxWind;
   const dayWind=day.length?max(day,'wind'):maxWind;
+  const nightMaxRh=night.length?max(night,'rh'):0;
+  const nightMinDewSpread=night.length?Math.min(...night.map(x=>x.temp-x.dew)):99;
+  const dewRisk=night.length && nightMaxRh>=88 && nightMinDewSpread<=2.5;
   const daylightRad=daylight.length?max(daylight,'rad'):0;
   const sunnyPeriod=daylightRad>=350, hotPeriod=warmMax>=22, veryHotPeriod=warmMax>=25;
   const calmSunny = sunnyPeriod && maxWind<3.5 && maxGust<7 && warmMax>=15;
@@ -1548,6 +1575,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   if(windy){exposure+=2;pros.push(`vind op til ${maxWind.toFixed(1).replace('.',',')} m/s`)}
   if(feelsMin<=10+horseAdj)exposure+=1;
   if(feelsMin<=6+horseAdj)exposure+=2;
+  if(dewRisk){exposure+=0.75;pros.push('høj risiko for dug/nattefugt')}
   if(shelter==='none'){exposure+=1;pros.push('ingen sikker adgang til læ')}
   else if(shelter==='partial'){exposure+=0.5;pros.push('kun delvis/usikker adgang til læ')}
   if(clipType!=='unclipped'){exposure+=Math.min(2.5,clipAdj);pros.push('klipning: '+clipType)}
@@ -1660,10 +1688,20 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     attention='Prognoserne er uenige om regnen. Ved denne usikkerhed prioriterer Dækkenguiden beskyttelse mod at blive gennemvåd frem for Summer Series som mellemvalg.';
   }
 
-  // Individuel Balina-læring: kølig nat + lun dag kan passe til rygvarme og ventilerende sider.
-  if(reg==='summer' && !summerSeriesUnsafe && rainTotal<2 && nightMin<=12+horseAdj && warmMax>=17 && warmMax<=21 && !veryHotPeriod){
-    rec='Summer Series – UDEN liner';
-    reason='Balinas individuelle kompromis ved kølig nat og lun dag: lidt beskyttelse/rygvarme om natten, men mesh-sider når temperaturen stiger.';
+  // Balina-læring v9.1.6: hun er slank, vind/regnfølsom og står uden sikker læ.
+  // Ved efterårsnætter omkring 10–12 °C er "nøgen" ikke længere standard, især ikke ved dug/fugt eller vind.
+  // Idealet i mildt/tørt vejr er 0 g hybrid/Summer; ved mere fugt/vind vælges 50 g lukket beskyttelse.
+  const balinaCoolNight = reg==='summer' && shelter!=='yes' && (s.bcs||'ideal')==='under' && nightMin<=12.5 && warmMax<=21 && !veryHotPeriod;
+  const dampOrWindyNight = dewRisk || nightWind>=4.5 || maxGust>=9;
+  if(balinaCoolNight && !summerSeriesUnsafe && rainTotal<2){
+    if(dampOrWindyNight && warmMax<17.5){
+      rec='Amigo 50 g med halvhøj hals';
+      reason='Balinas slanke huld, kølige nat, dug/fugt eller vind og manglende sikre læ taler for let lukket beskyttelse. 50 g er afprøvet som behageligt ved disse forhold.';
+    }else{
+      rec='Summer Series – UDEN liner';
+      reason='Ideelt valg til Balinas kølige nat og milde dag: 0 g hybrid giver beskyttelse mod vind/dug over ryggen og bedre ventilation end 50 g, når dagen bliver lun.';
+      if(dampOrWindyNight) attention='Balina bør ikke stå nøgen gennem den kølige/fugtige nat. Hvis 0 g hybriden er utilgængelig, er Amigo Wug 50 g det bedre kompromis.';
+    }
   }
   // Ved moderat vind og køligt vådt vejr foretrækkes den lukkede nye 50 g frem for mesh.
   if(rec.includes('Summer Series') && maxWind>=7 && warmMax<18 && rainTotal>=2){
