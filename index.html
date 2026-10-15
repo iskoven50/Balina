@@ -33,6 +33,8 @@ footer{text-align:center;color:#ad8791;font-size:.8rem;padding:25px 5px}footer:b
 .conf-green{background:#8fbd91}.conf-yellow{background:#e8cd7d}.conf-orange{background:#e9a36e}.conf-empty{background:#eee7e9}
 .conf-label{font-size:.86rem;color:var(--muted);margin-left:4px}
 .attention{margin-top:10px;padding:11px 12px;border-radius:13px;background:#fff8e9;border:1px solid #f0ddb3}
+.drying-advice{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:#eef7fb;border:1px solid #bddce8;color:#294955}
+.drying-advice strong{display:block;margin-bottom:4px}
 .uncertain{margin-top:10px;padding:11px 12px;border-radius:13px;background:#fff4ed;border:1px solid #edc9b0}
 .feed-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
 .feed-actions{display:flex;gap:6px}
@@ -251,7 +253,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
 .input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 
-/* v9.2.0 */
+/* v9.2.1 */
 .recommendation-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-top:12px}
 .need-card{border:1px solid #d9ddeb;background:#f8f9ff;border-radius:16px;padding:14px}
 .need-card .need-title{font-size:1.15rem;font-weight:800;margin-top:4px;color:#4f5266}
@@ -336,8 +338,10 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
     <input id="nextChangeAt" type="datetime-local" onchange="saveRecommendationInputs()">
     <span class="input-help">Anbefalingen skal fungere helt frem til dette tidspunkt. Standard er næste dag kl. 15.</span>
   </label>
-  <label>Balina er nu
-    <select id="horseWetness" onchange="saveRecommendationInputs()"><option value="dry">Tør</option><option value="damp">Let fugtig</option><option value="rainwet">Våd efter regn</option><option value="sweaty">Svedig/våd efter ridning</option></select>
+  <label>Pels ved dækkenskiftet
+    <select id="horseWetness" onchange="saveRecommendationInputs()"><option value="dry">Tør</option><option value="damp">Let fugtig</option><option value="rainwet">Gennemvåd efter regn</option><option value="sweaty">Svedig/våd efter ridning</option></select>
+    <span class="input-help">Kun Balinas tilstand lige nu – ikke en vurdering af det tidligere dækken. Status nulstilles automatisk efter 4 timer.</span>
+    <span class="input-help">Tidligere dækkenvalg gemmes under Garderobe → Efterkontrol af dækken.</span>
   </label>
   <label>Ekstra skift muligt
     <select id="extraChange" onchange="saveRecommendationInputs()"><option value="no">Nej</option><option value="morning">Ja, om morgenen</option></select>
@@ -345,6 +349,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
   <button class="secondary" type="button" onclick="resetNextChange()">Næste dag kl. 15</button>
 </div>
 
+<div id="dryingAdvice"></div>
 <div class="recommendation-grid">
   <div class="need-card">
     <div class="small muted">OPTIMALT BEHOV</div>
@@ -352,7 +357,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
     <div id="optimalNeedReason" class="need-explain">—</div>
   </div>
   <div class="notice">
-    <div class="small muted">ANBEFALING – BEDSTE MATCH I BALINAS GARDEROBE</div>
+    <div id="recommendationHeading" class="small muted">ANBEFALING – BEDSTE MATCH I BALINAS GARDEROBE</div>
     <div id="recommendation" class="bigrec">—</div>
     <div id="recommendationPeriod" class="small" style="margin-top:5px;font-weight:700">—</div>
     <div id="confidenceBox" style="margin-top:8px"></div>
@@ -599,7 +604,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 </section>
 
 </main>
-<footer>Balina v9.2.0 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.2.1 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -843,9 +848,14 @@ function init(){
   migrateV910();
   migrateV916();
   migrateV920();
+  migrateV921();
   migrateCalendarV913();
   migrateCalendarV914();
   const st=getState();
+  if(st.horseWetness && st.horseWetness!=='dry'){
+    const age=st.horseWetnessAt?Date.now()-new Date(st.horseWetnessAt).getTime():Infinity;
+    if(!Number.isFinite(age)||age>4*60*60*1000){st.horseWetness='dry';st.horseWetnessAt='';setState(st)}
+  }
   document.getElementById('regime').value=st.regime||'summer';
   document.getElementById('shelter').value=st.shelter||'none';
   document.getElementById('coat').value=st.coat||'normal';
@@ -861,7 +871,7 @@ function init(){
   document.getElementById('extraChange').value=st.extraChange||'no';
   const next=document.getElementById('nextChangeAt'); if(next)next.value=validNextChange(st.nextChangeAt)?st.nextChangeAt:defaultNextChangeValue();
   document.getElementById('txDate').value=today();
-  ensureAutomaticExpenses();renderProfile();renderLinerInventory();renderWardrobe();renderRugObservations();renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();useHilleroed();
+  ensureAutomaticExpenses();renderProfile();renderLinerInventory();renderWardrobe();renderRugObservations();renderDryingAdvice(st);renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();useHilleroed();
 }
 function migrateV901(){
   const s=getState();
@@ -944,7 +954,7 @@ function migrateV920(){
   s.linerInventory=[
     {id:'thermal100',name:'Horseware liner 100 g',grams:100,type:'thermal',owned:true},
     {id:'thermal400',name:'Horseware liner 400 g',grams:400,type:'thermal',owned:true},
-    {id:'dry0',name:'Horseware Dry Liner 0 g',grams:0,type:'dry',owned:false}
+    {id:'dry0',name:'Horseware Dry Liner 50 g',grams:50,type:'dry',owned:false}
   ];
   if(!Array.isArray(s.wardrobe))s.wardrobe=DEFAULT_WARDROBE.map(x=>({...x}));
   const byId=id=>s.wardrobe.find(x=>x.id===id);
@@ -971,6 +981,18 @@ function migrateV920(){
   setState(s);
 }
 
+function migrateV921(){
+  const s=getState();
+  if(!s.migrations)s.migrations={};
+  if(s.migrations.v921)return;
+  if(Array.isArray(s.linerInventory)){
+    const dry=s.linerInventory.find(x=>x.id==='dry0');
+    if(dry)Object.assign(dry,{name:'Horseware Dry Liner 50 g',grams:50,type:'dry'});
+  }
+  s.migrations.v921=true;
+  setState(s);
+}
+
 function localDateTimeValue(d){
   const z=n=>String(n).padStart(2,'0');
   return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`;
@@ -978,12 +1000,32 @@ function localDateTimeValue(d){
 function formatDaDateTime(d,opts){return d.toLocaleString('da-DK',opts).replace(/(\d{2})\.(\d{2})(?!.*\d)/,'$1:$2')}
 function defaultNextChangeValue(){const d=new Date();d.setDate(d.getDate()+1);d.setHours(15,0,0,0);return localDateTimeValue(d)}
 function validNextChange(v){if(!v)return false;const d=new Date(v);return Number.isFinite(d.getTime())&&d>new Date()}
+function renderDryingAdvice(state=getState()){
+  const host=document.getElementById('dryingAdvice');if(!host)return;
+  const heading=document.getElementById('recommendationHeading');
+  const wet=state.horseWetness||'dry';
+  if(heading)heading.textContent=wet==='dry'?'ANBEFALING – BEDSTE MATCH I BALINAS GARDEROBE':'NÅR BALINA ER TØR – BEDSTE MATCH I GARDEROBEN';
+  if(wet==='dry'){host.innerHTML='';return}
+  const dryLiner=Array.isArray(state.linerInventory)&&state.linerInventory.find(x=>x.id==='dry0'&&x.owned);
+  let text='';
+  if(wet==='damp'){
+    text='<strong>Trin 1: Tør den fugtige pels</strong>Tør Balina med håndklæde og giv hende lidt tid til at dampe af. Det almindelige dækken nedenfor er trin 2 og gælder, når pelsen er tør.';
+  }else if(wet==='rainwet'&&dryLiner){
+    text='<strong>Trin 1: Fjern overskydende vand og brug Dry Liner</strong>Læg ikke et almindeligt dækken direkte på den gennemvåde pels. Fjern først mest muligt vand med håndklæde eller svedskraber. Brug derefter Horseware Dry Liner 50 g under et kompatibelt Horseware-dækken efter producentens anvisning. Lineren bidrager med ca. 50 g, mens den bruges, og Balina skal kontrolleres for varme og komfort. Dækkenet nedenfor er behovet, når hun er tør.';
+  }else if(wet==='rainwet'){
+    text='<strong>Trin 1: Balina skal tørres før et almindeligt dækken</strong>Læg ikke det anbefalede dækken direkte på den gennemvåde pels. Dry Liner er ikke markeret som ejet. Fjern mest muligt vand med håndklæde eller svedskraber og brug kun et egnet sved-/tørredækken under opsyn. Dækkenet nedenfor er trin 2 og gælder først, når hun ikke længere er gennemvåd.';
+  }else{
+    text='<strong>Svedig efter ridning – køl af og tør først</strong>Skridt Balina af, fjern sved med håndklæde eller svedskraber og brug eventuelt et egnet sveddækken under opsyn. Læg først det anbefalede dækken på, når hun er kølet af og ikke længere er våd.';
+  }
+  host.innerHTML=`<div class="drying-advice">${text}<div class="small" style="margin-top:6px">Vil du gemme, hvordan det tidligere dækken fungerede? Brug <a href="#garderobe" onclick="openHashSection()">Efterkontrol af dækken</a> under garderoben.</div></div>`;
+}
 function saveRecommendationInputs(){
   const s=getState();
   s.nextChangeAt=document.getElementById('nextChangeAt').value||defaultNextChangeValue();
   s.horseWetness=document.getElementById('horseWetness').value;
+  s.horseWetnessAt=s.horseWetness==='dry'?'':new Date().toISOString();
   s.extraChange=document.getElementById('extraChange').value;
-  setState(s);useHilleroed();
+  setState(s);renderDryingAdvice(s);useHilleroed();
 }
 function resetNextChange(){document.getElementById('nextChangeAt').value=defaultNextChangeValue();saveRecommendationInputs()}
 
@@ -1072,7 +1114,7 @@ function waterConditionLabel(v){return ({strong:'Sikker i kraftig regn',normal:'
 function getLinerInventory(){
   const s=getState();
   if(!Array.isArray(s.linerInventory)){
-    s.linerInventory=[{id:'thermal100',name:'Horseware liner 100 g',grams:100,type:'thermal',owned:true},{id:'thermal400',name:'Horseware liner 400 g',grams:400,type:'thermal',owned:true},{id:'dry0',name:'Horseware Dry Liner 0 g',grams:0,type:'dry',owned:false}];setState(s);
+    s.linerInventory=[{id:'thermal100',name:'Horseware liner 100 g',grams:100,type:'thermal',owned:true},{id:'thermal400',name:'Horseware liner 400 g',grams:400,type:'thermal',owned:true},{id:'dry0',name:'Horseware Dry Liner 50 g',grams:50,type:'dry',owned:false}];setState(s);
   }
   return s.linerInventory;
 }
@@ -1762,8 +1804,8 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
 
   if(rainTotal<1)heat+=1;
   if(wintryPrecip){exposure+=1.5;pros.push('sne, slud eller frysende nedbør')}
-  if(s.horseWetness==='damp'){exposure+=0.5;pros.push('Balina er let fugtig ved dækkenskiftet')}
-  if(s.horseWetness==='rainwet'||s.horseWetness==='sweaty'){exposure+=1;pros.push(s.horseWetness==='rainwet'?'Balina er våd efter regn':'Balina er svedig/våd efter ridning')}
+  // Våd pels kræver en separat tørrehandling, ikke automatisk flere gram.
+  // Den almindelige anbefaling beregnes derfor som behovet, når Balina er tør.
 
   // I boksen kl. 18–08 er Balina tør og i læ. Kun faktisk nattemperatur og ekstrem vind
   // påvirker samme udedækken, og med langt lavere vægt end udendørs eksponering.

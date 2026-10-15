@@ -1,8 +1,16 @@
-# Balina – Hestelogbog v9.2.0
+# Balina – Hestelogbog v9.2.1
 
 Version 9.2 omsætter de seneste erfaringer fra Balina Dækkenvagt til en mere præcis døgnvurdering. Anbefalingen gælder fra nu til det registrerede næste dækkenskift og tager højde for, at Balina normalt kun får skiftet dækken én gang i døgnet.
 
-## Nyt i v9.2.0
+## Nyt i v9.2.1
+
+- Feltet hedder nu **Pels ved dækkenskiftet** og forklarer, at det handler om Balinas tilstand lige nu.
+- Fugtig, regnvåd eller svedig pels ændrer ikke længere automatisk den anbefalede gramvægt.
+- Våd pels giver i stedet en særskilt tørreanvisning. En registreret Horseware Dry Liner 50 g foreslås som midlertidig tørreløsning og vises med sit reelle varmebidrag.
+- Den midlertidige vådhedsstatus nulstilles automatisk efter fire timer, så et gammelt valg ikke påvirker næste dags vurdering.
+- Linket til **Efterkontrol af dækken** gør det tydeligt, hvor erfaringer med det tidligere dækken gemmes.
+
+## Fra v9.2.0
 
 - **Næste dækkenskift** registreres med dato og tidspunkt. Standard er næste dag kl. 15.
 - Kulde og varme vurderes efter **varighed**: kuldetimer, varme timer og soltimer tæller sammen med minimum og maksimum.
@@ -15,7 +23,7 @@ Version 9.2 omsætter de seneste erfaringer fra Balina Dækkenvagt til en mere p
 - Sne, slud og frysende nedbør indgår i vejrvurderingen.
 - Vejrmodellerne blandes ikke længere til et kunstigt timeforløb. Én sammenhængende, forsigtig model bruges, mens den anden bruges som kontrol og til sikkerhedsscoren.
 - Hals vises som en konkret konfiguration: uden hals, halvhøj hals eller fuld hals på.
-- Linere er et fælles lager. Balina har Horseware 100 g og 400 g liner. Dry Liner 0 g kan registreres særskilt som tørring og tæller ikke som varme.
+- Linere er et fælles lager. Balina har Horseware 100 g og 400 g liner. Dry Liner 50 g kan registreres særskilt som tørreløsning. Den indgår ikke automatisk som permanent varmeliner, men appen oplyser, at den bidrager med cirka 50 g, mens den bruges.
 - Dækkener har status: aktiv, reserve, til salg, ødelagt, solgt eller planlagt køb.
 - Vandtæthed kan registreres som sikker i kraftig regn, brugbar i almindelig regn, usikker eller ikke regnsikker.
 - Et manglende idealdækken giver stadig ét konkret sikkert garderobematch med en tydelig kompromisforklaring.

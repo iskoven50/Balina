@@ -13,7 +13,7 @@ const document={
 };
 const localStorage={getItem:k=>storage.has(k)?storage.get(k):null,setItem:(k,v)=>storage.set(k,String(v)),removeItem:k=>storage.delete(k)};
 const context={console,document,localStorage,location:{hash:'',reload(){}},window:{addEventListener(){}},alert(){},confirm(){return true},prompt(){return null},fetch:async()=>{throw new Error('fetch disabled in tests')},URL,URLSearchParams,Blob,FileReader:class{}};
-vm.createContext(context);vm.runInContext(script,context);vm.runInContext('migrateV920()',context);
+vm.createContext(context);vm.runInContext(script,context);vm.runInContext('migrateV920();migrateV921()',context);
 
 function runScenario(name,spec,expected){
   context.testSpec=spec;
@@ -23,7 +23,7 @@ function runScenario(name,spec,expected){
       const d=new Date(base.getTime()+i*3600000),h=d.getHours(),night=h>=18||h<8,wet=(spec.rainHours||[]).includes(i);
       rows.push({date:d,temp:night?spec.nightTemp:spec.dayTemp,feels:night?(spec.nightFeels??spec.nightTemp):(spec.dayFeels??spec.dayTemp),rh:night?90:70,dew:night?spec.nightTemp-1:spec.dayTemp-4,p:wet?(spec.rainPerHour??0):0,rain:wet?(spec.rainPerHour??0):0,snow:spec.snow||0,code:spec.snow?71:0,wind:spec.wind??2,gust:spec.gust??4,rad:!night&&spec.sun?500:0,cloud:spec.sun?15:95});
     }
-    const s=getState();Object.assign(s,{regime:spec.regime||'summer',shelter:'none',bcs:'under',coat:'normal',coatSeason:'transition',rainSensitivity:'sensitive',coldSensitivity:'sensitive',windSensitivity:'sensitive',clipType:'unclipped',stableClimate:'balina',rugInBox:'same',horseWetness:'dry',extraChange:'no'});setState(s);
+    const s=getState();Object.assign(s,{regime:spec.regime||'summer',shelter:'none',bcs:'under',coat:'normal',coatSeason:'transition',rainSensitivity:'sensitive',coldSensitivity:'sensitive',windSensitivity:'sensitive',clipType:'unclipped',stableClimate:'balina',rugInBox:'same',horseWetness:spec.horseWetness||'dry',extraChange:'no'});setState(s);renderDryingAdvice(s);
     analyseWeatherCore(rows,{start:base,end},'test',null);
     return {optimal:document.getElementById('optimalNeed').textContent,recommendation:document.getElementById('recommendation').textContent,reason:document.getElementById('reason').textContent,timeline:document.getElementById('weatherTimeline').textContent||document.getElementById('weatherTimeline').innerHTML};
   })()`,context);
@@ -42,3 +42,11 @@ runScenario('Koldt og vådt 200 g-trin',{nightTemp:0,nightFeels:-4,dayTemp:4,sun
 const box=runScenario('Boks med regn om natten',{regime:'winter',nightTemp:6,nightFeels:0,dayTemp:12,sun:false,wind:2,gust:4,rainHours:[0,1,2,3,4,5,6,7],rainPerHour:3},[]);
 if(!box.timeline.includes('Regn, dug og almindelig vind vægtes ikke'))throw new Error('Bokslogik forklarer ikke, at natregn ignoreres');
 console.log('✓ Boks 18–08: natregn og almindelig vind ignoreres, nattemperaturen forklares særskilt');
+
+const dryChoice=runScenario('Tør pels – normalt dækkenvalg',{nightTemp:11,nightFeels:10,dayTemp:15,sun:false},['Amigo Wug 50 g']);
+const wetChoice=runScenario('Gennemvåd pels – tørretrin først',{nightTemp:11,nightFeels:10,dayTemp:15,sun:false,horseWetness:'rainwet'},['Amigo Wug 50 g']);
+const dryingText=elements.get('dryingAdvice').innerHTML;
+if(!dryingText.includes('Læg ikke det anbefalede dækken direkte på den gennemvåde pels'))throw new Error('Mangler tydelig advarsel mod almindeligt dækken direkte på gennemvåd pels');
+if(dryChoice.recommendation!==wetChoice.recommendation)throw new Error('Våd pels må ikke ændre vejrets gram-anbefaling; den skal udløse et særskilt tørretrin');
+if(!elements.get('recommendationHeading').textContent.includes('NÅR BALINA ER TØR'))throw new Error('Anbefalingen er ikke mærket som behovet efter tørring');
+console.log('✓ Gennemvåd pels: særskilt tørretrin, tydelig advarsel og uændret efter-tørring-dækkenvalg');
