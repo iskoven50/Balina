@@ -357,9 +357,68 @@ button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
 .conf-green{background:#b9a1d0}.conf-yellow{background:#efd9a1}.conf-orange{background:#eab8a2}
 .weather-glance{margin:12px 0 4px}
 @media(max-width:470px){.home-card{min-height:88px}.home-card strong{font-size:.73rem}}
+
+/* v9.4 – coherent pastel application, focused one-screen navigation */
+:root{--ink:#473d4e;--muted:#776b7c;--line:#eee2ec;--pink:#a86f95;--blush:#fcf1f7;--shadow:0 9px 30px rgba(93,65,91,.055)}
+body{background:linear-gradient(160deg,#fffdfa 0%,#faf7fc 56%,#fefaf8 100%);color:var(--ink)}
+.wrap{max-width:880px;padding-bottom:110px}
+.balina-hero{padding:16px 22px;margin-bottom:12px;gap:16px;border:1px solid #f4eaf0;border-radius:22px}
+.balina-photo{width:82px;height:82px;border:3px solid #f4e3ec}
+.balina-title h1{font-size:2rem;margin:0;color:#56415c}
+.balina-title .eyebrow{font-size:.63rem;letter-spacing:.13em}
+.balina-title .sub{font-size:.78rem;line-height:1.35;margin-top:4px}
+.balina-title .sub strong{display:none}
+.balina-title .statusbar{display:none}
+.app-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:0 0 16px;padding:5px;border:1px solid #f1e6ee;border-radius:19px;background:#fff;box-shadow:0 4px 18px rgba(96,69,92,.03)}
+.app-nav a{min-width:0;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;border-radius:13px;padding:11px 6px;color:#7c7080;font-size:.82rem;font-weight:700;transition:background .15s}
+.app-nav a span{font-size:1.22rem;line-height:1}
+.app-nav a[aria-current="page"]{background:#f8eaf3;color:#754e70}
+.app-nav a:focus-visible,.more-grid a:focus-visible,.overview-tile:focus-visible{outline:3px solid #b78cae;outline-offset:3px}
+main.grid{display:block}main.grid>.card,main.grid>.home-summary{margin-bottom:14px}
+body[data-view] main.grid > section,body[data-view] main.grid > .home-summary{display:none}
+body[data-view="home"] #homeSummary,body[data-view="home"] #daekken,body[data-view="rugs"] #garderobe,body[data-view="calendar"] #kalender,body[data-view="care"] #sundhed,body[data-view="more"] #mere,body[data-view="profile"] #status,body[data-view="feed"] #foder,body[data-view="account"] #konto,body[data-view="sizes"] #stoerrelser,body[data-view="backup"] #backup{display:block}
+.card{padding:22px;border-radius:20px;background:#fff;border:1px solid #f2e9f0}
+.welcome-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 2px 15px}
+.welcome-row h2{margin:4px 0 4px;font-size:1.3rem}.welcome-row p{margin:0;color:var(--muted);font-size:.83rem}
+.eyebrow-soft{font-size:.68rem;font-weight:800;letter-spacing:.14em;color:#ae83a4}
+.welcome-flower{font-size:2.3rem;color:#dfc6e0}
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.overview-tile{display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;text-decoration:none;color:#53485d;min-height:96px}
+.tile-lilac{background:#f1eafa}.tile-peach{background:#fff2e9}
+.overview-icon{font-size:1.6rem;flex:none;color:#9d7da9}.overview-tile>span:nth-child(2){flex:1;min-width:0}
+.overview-tile small{display:block;font-size:.64rem;font-weight:800;letter-spacing:.1em;color:#88778b}
+.overview-tile strong{display:block;font-size:.95rem;margin:4px 0 3px;line-height:1.35}
+.overview-tile em{display:block;font-style:normal;font-size:.74rem;color:#827689}
+.tile-arrow{font-size:1.4rem;color:#a58ba5}
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.more-grid a{display:flex;align-items:center;gap:12px;text-decoration:none;color:#54485a;border:1px solid #f0e5ee;background:#fffdfd;border-radius:17px;padding:14px;min-height:82px}
+.more-grid a>span:nth-child(2){flex:1;min-width:0}.more-grid strong,.more-grid small{display:block}.more-grid strong{font-size:.91rem}.more-grid small{color:#847887;font-size:.74rem;margin-top:4px}
+.more-grid a>span:last-child{color:#ac8fa8;font-size:1.3rem}.more-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;font-size:1.3rem;flex:none}
+.more-icon.lilac{background:#f2eafa;color:#84679b}.more-icon.peach{background:#fff0e8;color:#b47c67}.more-icon.cream{background:#fff5e4;color:#a58b5e}.more-icon.blue{background:#edf4fc;color:#728da9}
+#daekken>.section-eyebrow{margin-bottom:4px}#daekken h2{font-size:1.5rem;margin-bottom:9px}
+.recommendation-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;margin-top:13px}
+.recommendation-grid .notice{order:0;background:linear-gradient(135deg,#f9eaf3,#f5effc);border-color:#ecdbe9;padding:21px;border-radius:18px}
+.recommendation-grid .need-card{order:1;background:#fcf9fd;border-color:#f1e8f3}
+.bigrec{font-size:clamp(1.35rem,3.5vw,2rem);color:#674b6d;line-height:1.25}
+#recommendationHeading{font-size:.69rem;letter-spacing:.07em;font-weight:800;color:#886d8b}
+#recommendationPeriod{font-size:.76rem;font-weight:500!important;color:#796a7d}
+#confidenceBox{opacity:.85}
+#weatherStatus{font-size:.8rem;line-height:1.45}
+#reason{margin:4px 0 9px;font-size:.9rem;color:#68596e}
+.weather-glance{gap:8px}.glance-item{border-radius:15px;background:#fbf9fd;padding:11px 6px}
+.period-settings{margin:14px 0 6px}
+#daekken .actions>button{padding:11px 17px}
+.legal-note{margin:14px 0}.legal-note summary{font-size:.81rem}
+#backup .legal-note{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:15px}
+#status .fold-body,#sundhed .fold-body,#foder .fold-body{padding-top:14px}
+button{min-height:40px}input,select,textarea{min-height:43px}
+footer{font-size:.7rem;padding:15px 4px}
+@media(max-width:700px){.wrap{padding:10px 11px 104px}.balina-hero{padding:12px 13px}.balina-photo{width:65px;height:65px}.balina-title h1{font-size:1.65rem}.balina-title .sub{font-size:.72rem}.app-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:grid;margin:0;padding:7px max(9px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(9px,env(safe-area-inset-left));border-radius:20px 20px 0 0;box-shadow:0 -8px 26px rgba(83,62,88,.1);border:1px solid #f0e5ef}.app-nav a{flex-direction:column;gap:3px;font-size:.68rem;padding:7px 2px}.app-nav a span{font-size:1.42rem}.card{padding:17px}.recommendation-grid{grid-template-columns:1fr}.recommendation-grid .need-card{padding:13px 15px}.more-grid{grid-template-columns:1fr}.welcome-row{padding:2px 0 12px}.overview-tile{padding:13px;gap:8px;min-height:92px}.overview-icon{font-size:1.35rem}.overview-tile strong{font-size:.83rem}.overview-tile em{font-size:.69rem}}
+@media(max-width:390px){.overview-grid{grid-template-columns:1fr}.overview-tile{min-height:70px}.balina-title .sub{font-size:.68rem}.welcome-row h2{font-size:1.13rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
-<body>
+<body data-view="home">
 <div class="wrap">
 <header class="balina-hero">
       <img src="balina-bw.jpg" alt="Balina" class="balina-photo">
@@ -371,40 +430,54 @@ button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
       </div>
     </header>
 
-    <section class="home-menu">
-      <a href="#daekken" class="home-card tone-pink">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 22c9-8 31-8 40 0v25H12V22Zm0 7H6v12h6M52 29h6v12h-6M20 21v26M44 21v26" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Dækkenguide</strong><span>Vejr, pasform og anbefaling</span>
-      </a>
-      <a href="#foder" class="home-card tone-sage">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 36h44l-5 14H15l-5-14Zm7-8c6-9 24-9 30 0M24 25c-2-7 4-11 8-11s10 4 8 11M48 18c5 2 7 7 5 12M52 20l6-4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Foderplan</strong><span>Manuel oversigt over foder og tilskud</span>
-      </a>
-      <a href="#konto" class="home-card tone-cream">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 18h39a7 7 0 0 1 7 7v25H10V18Zm0 8h46M43 33h13v10H43a5 5 0 0 1 0-10Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Hestekonto</strong><span>Saldo og rådighedsbeløb</span>
-      </a>
-      <a href="#sundhed" class="home-card tone-peach">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M19 12h18v40H19V12Zm9 9v12m-6-6h12M40 35h14v17H40V35Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Sundhed & behandling</strong><span>Balina Premium · sår, muk og observation</span>
-      </a>
-      <a href="#kalender" class="home-card tone-lilac">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 31c7-12 31-12 38 0-7 12-31 12-38 0Zm12 0h14M32 20v22M17 45l-5 7M47 45l5 7" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Pleje & kalender</strong><span>Smed, sadelpudsning og aftaler</span>
-      </a>
-      <a href="#status" class="home-card tone-beige">
-        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 48c8-3 10-13 11-20 1-8 5-14 12-14 7 0 11 6 12 14 1 7 3 17 11 20M21 32h22M25 39h14" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <strong>Balina lige nu</strong><span>Fold, boks og pels</span>
-      </a>
-    </section>
+    <nav class="app-nav" aria-label="Hovedmenu">
+      <a href="#hjem" data-nav="home"><span aria-hidden="true">⌂</span>Hjem</a>
+      <a href="#garderobe" data-nav="rugs"><span aria-hidden="true">♧</span>Dækkener</a>
+      <a href="#kalender" data-nav="calendar"><span aria-hidden="true">▦</span>Kalender</a>
+      <a href="#sundhed" data-nav="care"><span aria-hidden="true">♡</span>Pleje</a>
+      <a href="#mere" data-nav="more"><span aria-hidden="true">☷</span>Mere</a>
+    </nav>
 
-<details class="legal-note"><summary>ⓘ Om anbefalingerne og ansvar</summary><p>Balinas dækkenguide er vejledende og bygger på vejrudsigt og registrerede oplysninger. Kontrollér altid Balinas faktiske tilstand, pels, pasform og komfort. En beregning kan ikke erstatte ejerens vurdering eller faglig rådgivning fra dyrlæge, foderrådgiver eller beslagsmed. Prognoser og indtastede oplysninger kan være fejlbehæftede. Undlad at gemme personoplysninger om andre i noter eller billeder.</p></details>
-<main class="grid">
+
+<main class="grid" id="appMain">
+  <div id="homeSummary" class="home-summary wide" aria-label="Dagens overblik">
+    <div class="welcome-row"><div><span class="eyebrow-soft">DIT DAGLIGE OVERBLIK</span><h2>Balinas hverdag <span aria-hidden="true">♡</span></h2><p>Dagens vigtigste – resten er kun et tryk væk.</p></div><span class="welcome-flower" aria-hidden="true">✿</span></div>
+    <div class="overview-grid">
+      <a class="overview-tile tile-lilac" href="#kalender"><span class="overview-icon" aria-hidden="true">▦</span><span><small>NÆSTE AFTALE</small><strong id="homeNextAppointment">Henter aftaler…</strong><em id="homeNextAppointmentMeta"></em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
+      <a class="overview-tile tile-peach" href="#kalender"><span class="overview-icon" aria-hidden="true">♧</span><span><small>HUSK</small><strong id="homeFarrier">Henter smededato…</strong><em>Smed og pleje</em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
+    </div>
+  </div>
+  <section class="card wide more-hub" id="mere" aria-label="Flere funktioner">
+    <div class="section-eyebrow">ALT OM BALINA</div><h2>Hvad vil du gøre?</h2><p class="section-lead">Vælg det, du har brug for. Dine registreringer er bevaret.</p>
+    <div class="more-grid">
+      <a href="#status"><span class="more-icon lilac">♞</span><span><strong>Balinas profil</strong><small>Fold, boks, pels og klipning</small></span><span aria-hidden="true">›</span></a>
+      <a href="#foder"><span class="more-icon peach">♧</span><span><strong>Foderplan</strong><small>Foder og tilskud</small></span><span aria-hidden="true">›</span></a>
+      <a href="#konto"><span class="more-icon cream">◫</span><span><strong>Hestekonto</strong><small>Saldo, udgifter og indbetalinger</small></span><span aria-hidden="true">›</span></a>
+      <a href="#stoerrelser"><span class="more-icon blue">⌁</span><span><strong>Størrelser & udstyr</strong><small>Mål og pasform</small></span><span aria-hidden="true">›</span></a>
+      <a href="#backup"><span class="more-icon lilac">⇩</span><span><strong>Backup & indstillinger</strong><small>Gem eller gendan dine data</small></span><span aria-hidden="true">›</span></a>
+    </div>
+  </section>
 
 <section class="card wide" id="daekken">
 <div id="nextReminder"></div>
-<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>🐴 Dagens dækken</h2><p class="section-lead">Ét godt valg til hele perioden – med plads til detaljerne.</p>
+<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>Dagens dækken <span aria-hidden="true">♡</span></h2><p class="section-lead">Et enkelt valg, tilpasset Balina og vejret.</p>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
+
+
+<div id="dryingAdvice"></div>
+<div class="recommendation-grid">
+  <div class="need-card">
+    <div class="small muted">BEREGNET BEHOV</div>
+    <div id="optimalNeed" class="need-title">—</div>
+    <div id="optimalNeedReason" class="need-explain">—</div>
+  </div>
+  <div class="notice">
+    <div id="recommendationHeading" class="small muted">DAGENS ANBEFALING</div>
+    <div id="recommendation" class="bigrec">—</div>
+    <div id="recommendationPeriod" class="small" style="margin-top:5px;font-weight:700">—</div>
+    <div id="confidenceBox" style="margin-top:8px"></div>
+  </div>
+</div>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
     <input id="nextChangeAt" type="datetime-local" onchange="saveRecommendationInputs()">
@@ -420,21 +493,6 @@ button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
   </label>
   <button class="secondary" type="button" onclick="resetNextChange()">Næste dag kl. 15</button>
 </div></details>
-
-<div id="dryingAdvice"></div>
-<div class="recommendation-grid">
-  <div class="need-card">
-    <div class="small muted">OPTIMALT BEHOV</div>
-    <div id="optimalNeed" class="need-title">—</div>
-    <div id="optimalNeedReason" class="need-explain">—</div>
-  </div>
-  <div class="notice">
-    <div id="recommendationHeading" class="small muted">ANBEFALING – BEDSTE MATCH I BALINAS GARDEROBE</div>
-    <div id="recommendation" class="bigrec">—</div>
-    <div id="recommendationPeriod" class="small" style="margin-top:5px;font-weight:700">—</div>
-    <div id="confidenceBox" style="margin-top:8px"></div>
-  </div>
-</div>
 <div id="weatherGlance" class="weather-glance" aria-label="Vejret i perioden"></div><div id="reason" class="reason-short"></div>
 <div id="uncertaintyBox"></div>
 <details class="technical-details"><summary>🔎 Hele begrundelsen og Balinas profil</summary><p id="reasonFull" class="small muted"></p><div id="currentFactorsQuick" class="quick-factors"></div><p class="small muted">Oplysningerne ovenfor indgår i beregningen. En ændring kan godt give samme dækken, hvis det fortsat er bedste match.</p></details>
@@ -665,7 +723,7 @@ button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
 </details>
 </section>
 
-<section class="card wide">
+<section class="card wide" id="backup"><details class="legal-note"><summary>ⓘ Om anbefalingerne og ansvar</summary><p>Balinas dækkenguide er vejledende og bygger på vejrudsigt og registrerede oplysninger. Kontrollér altid Balinas faktiske tilstand, pels, pasform og komfort. En beregning kan ikke erstatte ejerens vurdering eller faglig rådgivning fra dyrlæge, foderrådgiver eller beslagsmed. Prognoser og indtastede oplysninger kan være fejlbehæftede. Undlad at gemme personoplysninger om andre i noter eller billeder.</p></details>
 <details class="fold-section"><summary>💾 Backup / flyt til ny telefon<span class="fold-hint">Eksport og import af data</span></summary><div class="fold-body">
 <div class="actions">
 <button class="secondary" onclick="exportData()">Eksportér data</button>
@@ -676,19 +734,43 @@ button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
 </section>
 
 </main>
-<footer>Balina v9.3.2 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.4.0 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
 
+// v9.4: one page at a time; old deep links continue to work.
+const PAGE_BY_HASH={hjem:'home',daekken:'home',garderobe:'rugs',kalender:'calendar',sundhed:'care',mere:'more',status:'profile',foder:'feed',konto:'account',stoerrelser:'sizes',backup:'backup'};
 function openHashSection(){
-  const id=location.hash.slice(1); if(!id)return;
-  const section=document.getElementById(id); if(!section)return;
-  const d=section.querySelector(':scope > details.fold-section'); if(d)d.open=true;
+  const id=decodeURIComponent(location.hash.slice(1))||'hjem';
+  const page=PAGE_BY_HASH[id]||'home';
+  document.body.dataset.view=page;
+  document.querySelectorAll('.app-nav a').forEach(a=>{
+    const selected=a.dataset.nav===(['profile','feed','account','sizes','backup'].includes(page)?'more':page);
+    if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  });
+  const section=document.getElementById(id);
+  if(section && id!=='hjem' && id!=='mere'){
+    const d=section.querySelector(':scope > details.fold-section, :scope > details:not(.legal-note)');
+    if(d)d.open=true;
+  }
+  // Navigation replaces page content instead of jumping down a huge document.
+  if(typeof window.scrollTo==='function')window.scrollTo({top:0,behavior:'instant'});
 }
-window.addEventListener('hashchange',()=>setTimeout(openHashSection,0));
+window.addEventListener('hashchange',openHashSection);
 window.addEventListener('DOMContentLoaded',openHashSection);
-
+function updateHomeSummary(){
+  const pairs=[['nextAppointmentBig','homeNextAppointment'],['nextAppointmentMeta','homeNextAppointmentMeta'],['farrierCountdown','homeFarrier']];
+  pairs.forEach(([src,dst])=>{const a=document.getElementById(src),b=document.getElementById(dst);if(a&&b)b.textContent=a.textContent||'Ikke registreret';});
+}
+function initHomeSummary(){
+  updateHomeSummary();
+  const sources=['nextAppointmentBig','nextAppointmentMeta','farrierCountdown'];
+  if(typeof MutationObserver!=='undefined'){
+    const observer=new MutationObserver(updateHomeSummary);
+    sources.forEach(id=>{const node=document.getElementById(id);if(node)observer.observe(node,{childList:true,characterData:true,subtree:true});});
+  }
+}
 const HILLEROED={lat:55.9279,lon:12.3008};
 const START_BAL=1197.53;
 const fmt=v=>new Intl.NumberFormat('da-DK',{style:'currency',currency:'DKK'}).format(v);
@@ -944,7 +1026,7 @@ function init(){
   document.getElementById('extraChange').value=st.extraChange||'no';
   const next=document.getElementById('nextChangeAt'); if(next)next.value=validNextChange(st.nextChangeAt)?st.nextChangeAt:defaultNextChangeValue();
   document.getElementById('txDate').value=today();
-  ensureAutomaticExpenses();renderProfile();renderLinerInventory();renderWardrobe();renderRugObservations();renderDryingAdvice(st);renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();useHilleroed();
+  ensureAutomaticExpenses();renderProfile();renderLinerInventory();renderWardrobe();renderRugObservations();renderDryingAdvice(st);renderTransactions();renderHealthForm();renderFarrierCountdown();renderSaddleCountdown();renderFeedPlan();renderSizes();renderCalendar();renderAppointments();initHomeSummary();openHashSection();useHilleroed();
 }
 
 const CLIP_ZONES=[
@@ -1141,7 +1223,7 @@ function renderDryingAdvice(state=getState()){
   const host=document.getElementById('dryingAdvice');if(!host)return;
   const heading=document.getElementById('recommendationHeading');
   const wet=state.horseWetness||'dry';
-  if(heading)heading.textContent=wet==='dry'?'ANBEFALING – BEDSTE MATCH I BALINAS GARDEROBE':'NÅR BALINA ER TØR – BEDSTE MATCH I GARDEROBEN';
+  if(heading)heading.textContent=wet==='dry'?'DAGENS ANBEFALING':'NÅR BALINA ER TØR – BEDSTE MATCH I GARDEROBEN';
   if(wet==='dry'){host.innerHTML='';return}
   const dryLiner=Array.isArray(state.linerInventory)&&state.linerInventory.find(x=>x.id==='dry0'&&x.owned);
   let text='';
@@ -1700,13 +1782,14 @@ async function fetchWeather(lat,lon,force=false){
   if(!force){
     try{
       const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
-      if(cached && now-cached.savedAt < 30*60*1000 && cached.primary?.length && cached.control?.length){
+      if(cached && now-cached.savedAt < 30*60*1000 && (cached.primary?.length || cached.control?.length)){
         analyseDualWeather(
-          cached.primary.map(x=>({...x,date:new Date(x.date)})),
-          cached.control.map(x=>({...x,date:new Date(x.date)})),
+          (cached.primary?.length?cached.primary:cached.control).map(x=>({...x,date:new Date(x.date)})),
+          (cached.control?.length?cached.control:cached.primary).map(x=>({...x,date:new Date(x.date)})),
           decisionWindow(),
           'cache'
         );
+        if(!cached.primary?.length||!cached.control?.length)markSingleWeatherSource();
         return;
       }
     }catch(e){}
@@ -1725,14 +1808,16 @@ async function fetchWeather(lat,lon,force=false){
   document.getElementById('weatherStatus').textContent='Sammenligner lokale vejrmodeller for Hillerød…';
 
   try{
-    const [a,b]=await Promise.all([
+    // En enkelt svigtende prognose må ikke blokere dagens dækkenvalg.
+    const responses=await Promise.allSettled([
       fetch(url('best_match')),
       fetch(url('metno_seamless'))
     ]);
-    if(!a.ok) throw new Error(`hovedprognose svarede ${a.status}`);
-    if(!b.ok) throw new Error(`kontrolprognose svarede ${b.status}`);
-
-    const [da,db]=await Promise.all([a.json(),b.json()]);
+    const weatherData=await Promise.all(responses.map(async r=>{
+      if(r.status!=='fulfilled'||!r.value.ok)return null;
+      try{return await r.value.json()}catch(e){return null}
+    }));
+    if(!weatherData.some(Boolean))throw new Error('begge vejrkilder er utilgængelige');
 
     function rows(data){
       const h=data.hourly;
@@ -1754,15 +1839,16 @@ async function fetchWeather(lat,lon,force=false){
       })).filter(x=>!isNaN(x.date)&&Number.isFinite(x.temp));
     }
 
-    const primary=rows(da), control=rows(db);
-
+    const primary=weatherData[0]?rows(weatherData[0]):[];
+    const control=weatherData[1]?rows(weatherData[1]):[];
+    if(!primary.length&&!control.length)throw new Error('vejrkilderne mangler brugbare timedata');
     localStorage.setItem(cacheKey,JSON.stringify({
       savedAt:now,
       primary:primary.map(x=>({...x,date:x.date.toISOString()})),
       control:control.map(x=>({...x,date:x.date.toISOString()}))
     }));
-
-    analyseDualWeather(primary,control,decisionWindow(),'live');
+    analyseDualWeather(primary.length?primary:control,control.length?control:primary,decisionWindow(),'live');
+    if(!primary.length||!control.length)markSingleWeatherSource();
 
   }catch(e){
     console.error(e);
@@ -1773,6 +1859,14 @@ async function fetchWeather(lat,lon,force=false){
     const ub=document.getElementById('uncertaintyBox'); if(ub)ub.innerHTML='';
     const mb=document.getElementById('modelCompareBox'); if(mb)mb.innerHTML='';
   }
+}
+function markSingleWeatherSource(){
+  const el=document.getElementById('weatherStatus');
+  if(el)el.textContent+=' · Kun én vejrkilde tilgængelig – større usikkerhed';
+  const cb=document.getElementById('confidenceBox');
+  if(cb)cb.insertAdjacentHTML('beforeend','<div class="small muted" style="margin-top:5px">Vurderingen er baseret på én prognose, ikke to uafhængige kontroller.</div>');
+  const mb=document.getElementById('modelCompareBox');
+  if(mb)mb.innerHTML='<p>Kun én vejrkilde svarede. Sammenligning mellem modeller er ikke mulig lige nu.</p>';
 }
 function decisionWindow(){
   const start=new Date();
@@ -2312,7 +2406,7 @@ function exportData(){
   const blob=new Blob([JSON.stringify(getState(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='balina-hq-backup.json';a.click();URL.revokeObjectURL(a.href)
 }
 function importData(ev){
-  const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{setState(JSON.parse(r.result));location.reload()}catch(e){alert('Filen kunne ikke læses.')}};r.readAsText(f)
+  const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!data||typeof data!=='object'||Array.isArray(data))throw Error('Ugyldig backup');if(!confirm('Import erstatter Balinas nuværende gemte data på denne enhed. Har du eksporteret en backup af de nuværende data?'))return;setState(data);location.reload()}catch(e){alert('Filen kunne ikke læses som en gyldig Balina-backup.')}};r.readAsText(f)
 }
 
 
