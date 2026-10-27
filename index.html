@@ -253,7 +253,7 @@ main,.grid,.card,.wide,section{min-width:0;max-width:100%}
 .app-disclaimer{margin:0 0 16px;padding:13px 15px;border:1px solid #ead6dc;border-radius:16px;background:#fff9fb;font-size:.86rem;line-height:1.5}.app-disclaimer strong{color:#765c64}.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.clip-guide{width:100%;max-height:460px;object-fit:contain;border-radius:15px;border:1px solid var(--line);background:#fff}.visual-choice-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.visual-choice{border:1px solid var(--line);border-radius:14px;padding:8px;background:#fff;cursor:pointer;text-align:center}.visual-choice.active{outline:2px solid var(--pink);background:#fff4f7}.visual-choice img{width:100%;height:120px;object-fit:cover;border-radius:10px}.visual-choice strong{display:block;font-size:.82rem;margin-top:6px}.module-note{padding:10px 12px;border:1px dashed #ddc7cd;border-radius:13px;background:#fffdfd;font-size:.82rem;color:var(--muted)}.feed-smart-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}.photo-preview{max-width:100%;max-height:260px;border-radius:14px;border:1px solid var(--line);display:none;margin-top:10px}@media(max-width:760px){.profile-grid{grid-template-columns:1fr 1fr}.feed-smart-grid{grid-template-columns:1fr 1fr}}@media(max-width:470px){.profile-grid,.feed-smart-grid{grid-template-columns:1fr}}
 .input-help{display:block;margin-top:5px;font-size:.76rem;color:var(--muted);line-height:1.35}.period-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:10px 0 0}.period-controls label{margin:0;min-width:180px}.maintenance-farrier{background:#edf7ef!important;border-color:#cfe8d3!important}.maintenance-saddle{background:#f6effb!important;border-color:#dfd0ea!important}.maintenance-saddle .farrier-big{color:#705d78}.premium-lock{padding:11px 13px;border:1px solid #ead3dc;border-radius:14px;background:#fff7fa;margin-bottom:12px}.camera-label{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--pink);color:white;font-weight:700;cursor:pointer}.camera-label input{display:none}.clip-caption{font-size:.74rem;color:var(--muted);margin-top:3px;line-height:1.25}.smart-summary{display:grid;gap:7px;margin-top:10px}.smart-summary div{padding:8px 10px;border-radius:12px;background:#fff9fb;border:1px solid var(--line)}
 
-/* v9.3.1 */
+/* v9.3.2 */
 .recommendation-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-top:12px}
 .need-card{border:1px solid #d9ddeb;background:#f8f9ff;border-radius:16px;padding:14px}
 .need-card .need-title{font-size:1.15rem;font-weight:800;margin-top:4px;color:#4f5266}
@@ -308,6 +308,55 @@ button{background:#638977;border-color:#638977}button.secondary{color:#4c745f;bo
 
 .weather-glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0 4px}.glance-item{border:1px solid var(--line);border-radius:13px;background:#f8faf7;padding:10px 7px;text-align:center;display:grid;gap:2px}.glance-item>span{font-size:1.25rem}.glance-item small{color:var(--muted);font-size:.72rem}.glance-item strong{font-size:.95rem;color:#365a47}
 @media(max-width:470px){.weather-glance{gap:5px}.glance-item{padding:8px 3px}.glance-item strong{font-size:.78rem}}
+
+/* v9.3.2 · Pastelunivers: lys, varm og rolig, uden grønt hovedtema. */
+:root{
+ --paper:#fffdfb;--bg:#fcf9fb;--ink:#4c4352;--muted:#857b8c;
+ --pink:#b77e9f;--pink2:#efc5d6;--line:#eadde8;--blush:#fff4f8;
+ --green:#8b9d91;--greenbg:#f2f6f0;--warn:#fff7e9;
+ --shadow:0 9px 30px rgba(119,85,118,.055);--r:22px
+}
+body{background:linear-gradient(180deg,#fffdfc 0%,#faf7fb 50%,#fdf9f8 100%);color:var(--ink)}
+.card,.balina-hero{background:#fffdfd;border-color:#f1e7ef;box-shadow:var(--shadow)}
+.balina-photo{border-color:#f5e4ee}
+.balina-title .eyebrow,.section-eyebrow{color:#b582a3}
+.balina-title h1,h1{color:#514158}
+.balina-title .sub{color:#82778a}
+.home-card{background:#fff!important;border-color:#f1e6ed;box-shadow:0 3px 12px rgba(145,112,143,.025)}
+.home-card:nth-child(6n+1){background:#fff2f7!important}
+.home-card:nth-child(6n+2){background:#f5f0ff!important}
+.home-card:nth-child(6n+3){background:#fff9ee!important}
+.home-card:nth-child(6n+4){background:#eef4fa!important}
+.home-card:nth-child(6n+5){background:#fdf1f0!important}
+.home-card:nth-child(6n+6){background:#f8f2fb!important}
+.home-card svg{color:#a27f9c}
+.home-card:hover{border-color:#e5c4da}
+h2{color:#59465e}.bigrec{color:#694968}.need-card .need-title,.need-title{color:#6a587b}
+.recommendation-grid .notice{background:linear-gradient(140deg,#fff0f6 0%,#fbf3ff 100%);border-color:#efdce9}
+.recommendation-grid .need-card{background:#fcfaff;border-color:#eee4f4}
+.reason-short{color:#756579}
+button{background:#b681a4;border-color:#b681a4;color:#fff}
+button:hover{background:#a16b8d;border-color:#a16b8d}
+button.secondary{color:#8f6285;border-color:#ead5e5;background:#fff}
+.pill,.statusbar .pill{color:#79697e;border-color:#eadde8;background:#fff}
+.legal-note,.legal-note summary{color:#938493}
+.period-settings,.technical-details{background:#fffdfd;border-color:#f0e5ee}
+.period-settings summary,.technical-details summary{color:#876b8e}
+.notice{background:#fff5fa;border-color:#f0e0e9}
+.metric,.glance-item{background:#fcf9fe;border-color:#eee6f3}
+.glance-item strong{color:#665477}
+.clip-zone{background:#fbf7ff;border-color:#e9e0f0}
+.clip-head h3,.clip-area-name{color:#6b5678}
+.clip-summary{color:#9a7c9e}
+.clip-levels button{background:#f6f0f9;color:#806d8a}
+.clip-levels button.selected{background:#a47eae;color:#fff}
+.wardrobe-status,.status-active{background:#f4ecf6;color:#775981}
+.wardrobe-editor,.liner-inventory{background:#fffbfe;border-color:#eee1ee}
+.drying-advice{background:#eff7fb;border-color:#d6eaf3}
+.maintenance-farrier{background:#f4f0fb!important;border-color:#e7def4!important}
+.conf-green{background:#b9a1d0}.conf-yellow{background:#efd9a1}.conf-orange{background:#eab8a2}
+.weather-glance{margin:12px 0 4px}
+@media(max-width:470px){.home-card{min-height:88px}.home-card strong{font-size:.73rem}}
 </style>
 </head>
 <body>
@@ -627,7 +676,7 @@ button{background:#638977;border-color:#638977}button.secondary{color:#4c745f;bo
 </section>
 
 </main>
-<footer>Balina v9.3.1 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.3.2 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -1942,6 +1991,21 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     }else{
       rec='Intet dækken';reason='Foldperioden giver ikke nok samlet vejreksponering til dækken, og natten foregår i læ.';
     }
+  }
+
+  // v9.3.2: Kalibrering efter Balinas observerede komfort i Wug 50 g.
+  // Boks om natten fjerner natregn/vind fra eksponeringen, men ikke kølig vind på folden.
+  // Tidligere blev dette lette beskyttelsesbehov overset, især ved 'ideelt huld'.
+  // Ikke en universel temperaturgrænse: kræver både individuel følsomhed,
+  // reelt vindpres og en kølig foldperiode uden tydelig risiko for overophedning.
+  const coolWindyTurnout = reg==='winter' && rec==='Intet dækken' &&
+    shelter!=='yes' && (windSensitivity!=='normal'||coldSensitivity==='sensitive'||coldSensitivity==='very_sensitive') &&
+    (maxGust>=9||maxWind>=5.5) && feelsMin<=12 && warmMax<=16 &&
+    !sunnyPeriod && !hotPeriod && coatSeason!=='winter';
+  if(coolWindyTurnout){
+    rec='Amigo 50 g med halvhøj hals';
+    reason='Kølig vind på folden og Balinas kendte følsomhed taler for let beskyttelse. Hun står tørt i boks om natten, så 50 g er tilstrækkeligt.';
+    attention='Let beskyttelse er valgt på grund af vind og Balinas erfaringer, ikke på grund af regn eller en fast temperaturgrænse.';
   }
 
   // Hals og liner vurderes uafhængigt. For Summer Series er hals primært vejrbeskyttelse,
