@@ -1,51 +1,33 @@
-# Balina – Hestelogbog v9.2.1
+# Balina – Hestelogbog v9.3.1
 
-Version 9.2 omsætter de seneste erfaringer fra Balina Dækkenvagt til en mere præcis døgnvurdering. Anbefalingen gælder fra nu til det registrerede næste dækkenskift og tager højde for, at Balina normalt kun får skiftet dækken én gang i døgnet.
+## Det nye i v9.3
 
-## Nyt i v9.2.1
+- Roligere, mobilvenligt design med salviegrønne nuancer, tydelig hovedanbefaling og et kort vejr-overblik med ikoner.
+- Lange vejrtabeller, detaljerede beregninger og indstillinger er foldet sammen, men er stadig tilgængelige.
+- Kort juridisk information kan foldes ud; appens anbefaling er vejledende og erstatter ikke kontrol af hesten eller faglig rådgivning.
+- Klipning registreres efter **seks områder**, hvert med bevaret, delvist klippet eller klippet pels: halsens overside, halsens underside, ryg/lænd, bryst/sider, mave/underside og bagpart. Den gamle kliptype migreres automatisk til et omtrentligt områdevalg, som bør kontrolleres.
+- Klippede områder påvirker den beregnede kuldeeksponering; klipning af halsen påvirker særskilt ønsket om halsbeskyttelse. Hals udløser ikke automatisk flere gram.
+- Ny garderobe: Rambo Summer Series Turnout V-front med separat 100 g **rygliner**, Amigo Wug 50 g, Amigo AmECO 12 Plus 100 g og Amigo Bravo 12 Plus Heavy 400 g. De gamle standarddækkener er fjernet fra den aktive garderobe. Egne tilføjede dækkener bevares.
+- Bravo 400 g er linerkompatibel. Denne rettelse opdateres også i allerede gemte v9.3.0-garderober ved første åbning af v9.3.1.
+- Linere registreret som ejet: Horseware Liner 100 g, Horseware Liner 400 g og Horseware Dry Liner 50 g. Dry Liner anvendes som midlertidig tørreløsning, ikke som permanent varmeliner.
+- Summer Series' 100 g rygliner modelleres som isolering **kun over ryggen**, ikke som et almindeligt fuldt 100 g dækken. Begge tilstande (med og uden rygliner) kan vælges i anbefalingslogikken.
+- Ny standard for Balina: fold 08–18 og boks 18–08 i uisoleret stald. Vejr i boksen vægtes anderledes end ude på folden.
+- Profil, klipning, garderobe, linerstatus og andre indstillinger gemmes lokalt og genberegner anbefalingen med den seneste cachede prognose (eller henter ny).
+- Eksisterende kalender, økonomi, foder, observationer og andre data bevares ved migration fra v9.2.1.
 
-- Feltet hedder nu **Pels ved dækkenskiftet** og forklarer, at det handler om Balinas tilstand lige nu.
-- Fugtig, regnvåd eller svedig pels ændrer ikke længere automatisk den anbefalede gramvægt.
-- Våd pels giver i stedet en særskilt tørreanvisning. En registreret Horseware Dry Liner 50 g foreslås som midlertidig tørreløsning og vises med sit reelle varmebidrag.
-- Den midlertidige vådhedsstatus nulstilles automatisk efter fire timer, så et gammelt valg ikke påvirker næste dags vurdering.
-- Linket til **Efterkontrol af dækken** gør det tydeligt, hvor erfaringer med det tidligere dækken gemmes.
+## Bemærk før brug
 
-## Fra v9.2.0
+1. **Eksportér en backup fra den eksisterende app** under "Backup / flyt til ny telefon" før du skifter version.
+2. Hvis du åbner appen under en **anden adresse eller som en anden lokal fil**, er browserens localStorage ikke automatisk delt. Importér din JSON-backup i den nye version.
+3. Kontrollér klipområderne efter første åbning. Gamle kliptyper er kun omtrentligt oversat.
+4. Kontrollér, at linerfæsterne passer til de konkrete dækkener. Både AmECO 100 g og Bravo 400 g er markeret linerkompatible efter ejerens bekræftelse. Dry Liner 50 g er til midlertidig tørring og må ikke få appen til at vælge 400 g, hvis det er for varmt.
+5. Appen kræver internetforbindelse til livevejr fra Open-Meteo. De medfølgende automatiske tests kører offline med syntetiske vejrtimer. De er ikke en veterinær validering af gram-anbefalingerne.
+6. Der er stadig kun én hesteprofil. Flere heste, racer og livsfaser er en senere udvidelse.
 
-- **Næste dækkenskift** registreres med dato og tidspunkt. Standard er næste dag kl. 15.
-- Kulde og varme vurderes efter **varighed**: kuldetimer, varme timer og soltimer tæller sammen med minimum og maksimum.
-- Den kolde nat vægtes tydeligt. Kontrolscenariet 3 °C/føles 0 °C, maks. 12 °C og ingen sol giver behov omkring **100 g med fuld hals**.
-- 10–12 °C om natten og cirka 14–17 °C om dagen uden stærk sol giver som udgangspunkt **Amigo Wug 50 g**.
-- Sol kræver flere relevante soltimer; en enkelt lys time nedgraderer ikke længere hele perioden.
-- Ved boksordning opdeles døgnet: fold kl. 08–18 vægtes fuldt, mens boks kl. 18–08 kun bruger faktisk nattemperatur og meget kraftig vind med reduceret vægt.
-- Balinas faste staldprofil er **uisoleret, højloftet, lukket og trækfri stald på ca. 100 m² med seks heste**.
-- Nye profildata: kuldefølsomhed, vindfølsomhed, staldprofil, dækken i boksen og Balinas tørre/fugtige tilstand.
-- Sne, slud og frysende nedbør indgår i vejrvurderingen.
-- Vejrmodellerne blandes ikke længere til et kunstigt timeforløb. Én sammenhængende, forsigtig model bruges, mens den anden bruges som kontrol og til sikkerhedsscoren.
-- Hals vises som en konkret konfiguration: uden hals, halvhøj hals eller fuld hals på.
-- Linere er et fælles lager. Balina har Horseware 100 g og 400 g liner. Dry Liner 50 g kan registreres særskilt som tørreløsning. Den indgår ikke automatisk som permanent varmeliner, men appen oplyser, at den bidrager med cirka 50 g, mens den bruges.
-- Dækkener har status: aktiv, reserve, til salg, ødelagt, solgt eller planlagt køb.
-- Vandtæthed kan registreres som sikker i kraftig regn, brugbar i almindelig regn, usikker eller ikke regnsikker.
-- Et manglende idealdækken giver stadig ét konkret sikkert garderobematch med en tydelig kompromisforklaring.
-- Efterkontrol kan gemme om Balina var kold, behageligt lun, varm eller svedig samt tør/fugtig under dækkenet.
-- Profilen minder om kontrol efter 14 dage.
+## Test
 
-## Aktuel garderobelogik
-
-- Amigo Wug 50 g, str. 145: aktivt førstevalg i lette, kølige forhold.
-- Amigo Wug 250 g: til salg og indgår ikke i anbefalinger.
-- Rambo Summer Series 155: ødelagt og indgår kun som erfaring for det ideelle 0 g-hybridbehov.
-- Ældre Amigo 100 g, str. 145: aktivt med aftagelig fuld hals og liner-system; vandtæthed er registreret med forbehold.
-- Amigo 400 g, str. 145: aktivt vinterdækken med V-front og aftagelig fuld hals.
-- Mellemtrinnet er 100 g-dækken + 100 g liner = 200 g.
-- 400 g-lineren findes i lageret, men kombinationer over 500 g genereres ikke automatisk.
-
-## Princip
-
-**Vejr gennem hele perioden + Balinas aktuelle forhold + opstaldning + Balinas dokumenterede reaktioner = optimalt behov.**
-
-Derefter matches behovet mod aktive eller relevante reservedækkener. Ødelagte, solgte, planlagte og dækkener til salg indgår ikke i anbefalingen.
+Kør `node tests/regression.mjs` og `node tests/startup.mjs` i mappen med `index.html`.
 
 ## Data
 
-Data gemmes lokalt i browserens `localStorage` under `balinaHQ`. Migrationen til v9.2 bevarer eksisterende poster og opdaterer garderobestatus, linere og Balinas nye profilfelter. Brug Backup/flyt-funktionen før telefonskift.
+Appen gemmer data lokalt under `localStorage`-nøglen `balinaHQ`. Eksportér en JSON-backup regelmæssigt. Ingen live-synkronisering eller egentligt brugerlogin i denne udgave.
