@@ -487,6 +487,37 @@ body[data-view="rugs"] .balina-hero{background:linear-gradient(115deg,#edf8f1,#f
 body[data-view="calendar"] .balina-hero{background:linear-gradient(115deg,#eaf4ff,#f9fcff);border-color:#dceaf8}
 body[data-view="care"] .balina-hero{background:linear-gradient(115deg,#ffedf4,#fff9fb);border-color:#f2dce6}
 body[data-view="more"] .balina-hero{background:linear-gradient(115deg,#fff0e3,#fffbf6);border-color:#f2e2d0}
+
+/* v9.4.13 – tydelige, men bløde pastelfarver på hele indholdssiden */
+body[data-view="home"]{background:#f1e9f8}
+body[data-view="home"] #homeSummary{background:#eee3f8;border:1px solid #dccbea}
+body[data-view="home"] #daekken{background:#e6f3ea;border:1px solid #cce3d4}
+body[data-view="rugs"]{background:#e9f5ed}
+body[data-view="rugs"] #garderobe{background:#e3f2e8;border:1px solid #c6dfcf}
+body[data-view="rugs"] #garderobe .fold-body{background:transparent}
+body[data-view="rugs"] #garderobe .wardrobe-toolbar{background:#edf8f0;border-color:#d1e7d9}
+body[data-view="rugs"] #garderobe .subcard,
+body[data-view="rugs"] #garderobe .item{background:#f2faf5;border-color:#cfe6d7}
+body[data-view="calendar"]{background:#e7f1fc}
+body[data-view="calendar"] #kalender{background:#e2effd;border:1px solid #c8def5}
+body[data-view="calendar"] #kalender .calendar-layout>div:first-child{background:#f1f7ff;border-color:#d2e3f5}
+body[data-view="calendar"] #kalender .next-appt-card,
+body[data-view="calendar"] #kalender .item{background:#f0f7ff;border-color:#d1e4f8}
+body[data-view="calendar"] #kalender .cal-day.is-today{background:#bad9fa;color:#275987}
+body[data-view="calendar"] #kalender .cal-day.has-appt i{background:#6b9dcc}
+body[data-view="calendar"] #kalender .module-note{background:#f1f7ff;border-color:#cbdff3}
+body[data-view="care"]{background:#fceaf1}
+body[data-view="care"] #sundhed{background:#fae5ee;border:1px solid #efcbdc}
+body[data-view="care"] #sundhed .subcard,
+body[data-view="care"] #sundhed .item{background:#fff2f7;border-color:#efd3df}
+body[data-view="more"]{background:#fff0e0}
+body[data-view="more"] #mere{background:#ffecd8;border:1px solid #efd5b9}
+body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
+@media(max-width:700px){
+ body[data-view="home"] .wrap,body[data-view="rugs"] .wrap,
+ body[data-view="calendar"] .wrap,body[data-view="care"] .wrap,
+ body[data-view="more"] .wrap{padding-top:10px}
+}
 </style>
 </head>
 <body data-view="home">
