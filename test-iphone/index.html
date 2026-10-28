@@ -518,6 +518,17 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
  body[data-view="calendar"] .wrap,body[data-view="care"] .wrap,
  body[data-view="more"] .wrap{padding-top:10px}
 }
+
+/* V9.4.14 – genveje fra anbefaling og garderobe til Balinas aktuelle forhold */
+.quick-edit{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#f4f8f5;border:1px solid #cce4d4;border-radius:14px;padding:11px 12px;margin:11px 0 17px}
+.quick-edit>span{font-size:.83rem;color:#526f5e;line-height:1.4}
+.quick-edit-link{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:9px 12px;border-radius:11px;background:#d9eee0;border:1px solid #bbdcc8;color:#32654e;font-weight:750;font-size:.85rem;text-decoration:none;line-height:1.25}
+.quick-edit-link:focus-visible{outline:3px solid #6caa88;outline-offset:2px}
+.quick-edit-link:hover{background:#cce7d6}
+.quick-edit-back{justify-content:flex-start;background:#f9f5fd;border-color:#e6d8ef}
+.quick-edit-back .quick-edit-link{background:#f1e8f9;color:#6d5584;border-color:#e2d4ee}
+body[data-view="home"] #daekken .quick-edit{margin-top:8px}
+@media(max-width:480px){.quick-edit{align-items:stretch;flex-direction:column}.quick-edit-link{justify-content:space-between;width:100%;box-sizing:border-box}.quick-edit-back{gap:7px}}
 </style>
 </head>
 <body data-view="home">
@@ -552,7 +563,7 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
   <section class="card wide more-hub" id="mere" aria-label="Flere funktioner">
     <div class="section-eyebrow">ALT OM BALINA</div><h2>Hvad vil du gøre?</h2><p class="section-lead">Vælg det, du har brug for. Dine registreringer er bevaret.</p>
     <div class="more-grid">
-      <a href="#status"><span class="more-icon lilac">🐴</span><span><strong>Balinas profil</strong><small>Fold, boks, pels og klipning</small></span><span aria-hidden="true">›</span></a>
+      <a href="#status"><span class="more-icon lilac">🐴</span><span><strong>Balinas forhold</strong><small>Redigér klipning, pels, fold og boks</small></span><span aria-hidden="true">›</span></a>
       <a href="#foder"><span class="more-icon peach">🌾</span><span><strong>Foderplan</strong><small>Foder og tilskud</small></span><span aria-hidden="true">›</span></a>
       <a href="#konto"><span class="more-icon cream">💰</span><span><strong>Hestekonto</strong><small>Saldo, udgifter og indbetalinger</small></span><span aria-hidden="true">›</span></a>
       <a href="#stoerrelser"><span class="more-icon blue">📏</span><span><strong>Størrelser & udstyr</strong><small>Mål og pasform</small></span><span aria-hidden="true">›</span></a>
@@ -562,7 +573,7 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
 
 <section class="card wide" id="daekken">
 <div id="nextReminder"></div>
-<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>Dagens dækken <span aria-hidden="true">♡</span></h2><p class="section-lead">Et enkelt valg, tilpasset Balina og vejret.</p>
+<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>Dagens dækken <span aria-hidden="true">♡</span></h2><p class="section-lead">Et enkelt valg, tilpasset Balina og vejret.</p><div class="quick-edit"><span>Ændret klipning, fold eller pels?</span><a href="#status" class="quick-edit-link">⚙️ Redigér Balinas forhold <span aria-hidden="true">›</span></a></div>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
 
 
@@ -649,7 +660,9 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
 </details>
 </section>
 
-<section class="card wide" id="status"><details class="fold-section"><summary>Balina lige nu<span class="fold-hint">De forhold, der justerer Balinas guldlogik</span></summary><div class="fold-body">
+<section class="card wide" id="status"><details class="fold-section"><summary>Balinas forhold lige nu<span class="fold-hint">Klipning, pels, fold og boks</span></summary><div class="fold-body">
+<p class="small muted">Her ændrer du Balinas forhold, som bruges til dagens dækkenanbefaling. Dine dækkener redigeres separat i garderoben.</p>
+<div class="quick-edit quick-edit-back"><a href="#garderobe" class="quick-edit-link">👕 Tilbage til dækkener <span aria-hidden="true">›</span></a><a href="#hjem" class="quick-edit-link">🏡 Se dagens dækken <span aria-hidden="true">›</span></a></div>
 <div id="profileReminder"></div>
 <div class="profile-grid">
 <div><label>Aktuel ordning</label><select id="regime" onchange="saveProfile(true)"><option value="summer">Døgnfold</option><option value="winter">Fold 08–18 / boks 18–08</option></select><span class="input-help">Bruges til at afgøre, hvornår Balina er udsat for regn, vind og kulde.</span></div>
@@ -704,7 +717,8 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
 </section>
 
 <section class="card wide" id="garderobe"><details class="fold-section"><summary>🐴 Balinas garderobe<span class="fold-hint">Aktive dækkener, pasform og prioritet</span></summary><div class="fold-body">
-<p class="small muted">Kun dækkener, du har, indgår i dagens valg. Du kan redigere pasform og vandtæthed her.</p>
+<p class="small muted">Her redigerer du dine dækkener, deres pasform og vandtæthed.</p>
+<div class="quick-edit"><span>Skal du ændre klipning, pels, fold eller boks?</span><a href="#status" class="quick-edit-link">⚙️ Redigér Balinas forhold <span aria-hidden="true">›</span></a></div>
 <div class="wardrobe-toolbar"><span class="small muted">Deaktivér et dækken, hvis det er gået i stykker eller midlertidigt ikke skal bruges.</span><button type="button" onclick="openWardrobeEditor()">+ Tilføj dækken</button></div>
 <div id="linerInventory" class="liner-inventory"></div>
 <div id="wardrobeEditor"></div>
