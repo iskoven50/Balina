@@ -551,6 +551,30 @@ body[data-view="rugs"] #daekken .technical-details,body[data-view="rugs"] #daekk
 body[data-view="rugs"] #garderobe{margin-top:8px}
 body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
 @media(max-width:520px){.home-rug-summary{padding:14px}.home-rug-summary strong{font-size:1.08rem}.rug-next-actions{flex-direction:column}.rug-next-actions a{width:100%;box-sizing:border-box}}
+
+/* v9.4.16 – kalender og pleje med en tydelig primær handling og færre synlige detaljer */
+.module-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.module-heading h2{margin:4px 0 5px}
+.module-heading .section-lead{margin:0}
+.calendar-add{flex:none;background:#cfe4fa;border:1px solid #a9cdef;border-radius:13px;color:#315d89;font-weight:800;padding:12px 15px;min-height:46px}
+.calendar-add:hover{background:#bedaf6}
+#kalender .next-appt-card{background:#f3f9ff;border-color:#c8dff7}
+#kalender .next-appt-main{font-size:1.12rem}
+.calendar-extra{margin-top:16px;background:#f0f7ff;border:1px solid #c9dff4;border-radius:15px;padding:12px 14px}
+.calendar-extra>summary{cursor:pointer;font-weight:800;color:#4d7093}
+.calendar-extra-body{display:grid;gap:10px;margin-top:13px}
+.calendar-extra-body .item{margin:0}
+.calendar-help{margin-top:12px;color:#627d9c;font-size:.84rem}
+.calendar-help summary{cursor:pointer}
+.care-quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.care-quick-actions button{display:flex;align-items:center;justify-content:space-between;gap:8px;border-radius:14px;padding:14px;min-height:62px;font-weight:800;line-height:1.35;text-align:left}
+.care-guide-button{background:#f7dce8;border:1px solid #ebc4d6;color:#8a4f6d}
+.care-kit-button{background:#fff3f8;border:1px solid #efd5e0;color:#9b617c}
+#sundhed #careGuidePanel{background:#fff4f8;border:1px solid #eecfdd;border-radius:15px;padding:13px;margin-top:12px}
+#careGuidePanel>summary{font-weight:800;color:#905873;cursor:pointer}
+#careGuidePanel>.fold-body{padding-top:13px}
+#sundhed .premium-lock{margin-top:8px}
+@media(max-width:540px){.module-heading{align-items:stretch;flex-direction:column}.calendar-add{align-self:stretch}.care-quick-actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body data-view="home">
@@ -760,7 +784,7 @@ body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
 </div></details></section>
 
 <section class="card wide" id="kalender">
-<h2>📅 Kalender & aftaler</h2><div class="module-note">Påmindelser vises som badges/banner <strong>inde i appen</strong>. Der sendes ikke push-notifikationer i denne version. Aftaler kan markeres fælles, privat eller skjult for delte brugere.</div>
+<div class="module-heading"><div><div class="section-eyebrow">PLANLÆGNING</div><h2>📅 Kalender</h2><p class="section-lead">Se dine aftaler, eller opret en ny.</p></div><button type="button" class="calendar-add" onclick="openAppointmentEditor()">＋ Ny aftale</button></div>
 
 <div class="calendar-layout">
   <div>
@@ -776,14 +800,13 @@ body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
     <div class="small muted">NÆSTE AFTALE</div>
     <div id="nextAppointmentBig" class="next-appt-main">Ingen kommende aftaler</div>
     <div id="nextAppointmentMeta" class="small muted"></div>
-    <div class="actions"><button class="secondary" onclick="openAppointmentEditor()">+ Ny aftale</button></div>
-  </div>
+    </div>
 </div>
 
 <div id="selectedDayAppointments" class="selected-day-list"></div>
 <div id="appointmentEditor"></div>
 
-<div class="item maintenance-farrier">
+<details class="calendar-extra"><summary>🛠️ Staldens påmindelser <span class="fold-hint">Smed, sadelpudsning og lørdagsvagt</span></summary><div class="calendar-extra-body"><div class="item maintenance-farrier">
 <strong>🔨 Tid til smed</strong>
 <span id="farrierCountdown" class="farrier-big">Beregner…</span><span id="farrierDetail" class="farrier-sub"></span>
 <div class="actions"><button class="secondary" onclick="registerFarrier()">Registrér ny smededato</button></div>
@@ -792,11 +815,14 @@ body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
 <strong>🧹 Næste lørdagsvagt</strong>
 <span id="saturdayCountdown" class="farrier-big">Ingen planlagt</span><span id="saturdayDate" class="farrier-sub">Opret en Lørdagsvagt i kalenderen.</span>
 <div class="actions"><button class="secondary" onclick="openAppointmentEditor()">+ Opret lørdagsvagt</button></div>
-</div>
+</div></div></details>
+<details class="calendar-help"><summary>ⓘ Om aftaler og påmindelser</summary><p class="small muted">Påmindelser vises inde i appen. Der sendes ikke push-notifikationer i denne version. Aftaler kan markeres fælles, privat eller skjult for delte brugere.</p></details>
 </section>
 
 <section class="card wide" id="sundhed">
-<details class="fold-section"><summary>Sundhed & behandling<span class="fold-hint">Pleje, guide og medicinskab</span></summary><div class="fold-body">
+<div class="section-eyebrow">BALINAS PLEJE</div><h2>💗 Pleje & sundhed</h2><p class="section-lead">Få hjælp til at vurdere et sår eller en hudforandring, og se hvad du har i medicinskabet.</p>
+<div class="care-quick-actions"><button type="button" class="care-guide-button" onclick="toggleCareGuide()">🩹 Åbn pleje-guiden <span aria-hidden="true">›</span></button><button type="button" class="care-kit-button" onclick="openCareKit()">🧰 Se medicinskabet <span aria-hidden="true">›</span></button></div>
+<details class="fold-section" id="careGuidePanel"><summary>🩹 Pleje-guide <span class="fold-hint">Sår, muk, hud og hævelser</span></summary><div class="fold-body">
 <div class="premium-lock"><strong>⭐ Balina Premium</strong><br><span class="small muted">Behandlingsvejledning og billedfunktion er foreløbig kun en del af Balinas ejer-version. Vurderingen er vejledende og erstatter ikke dyrlæge.</span></div>
 <p class="small muted">Guiden arbejder i tre niveauer: egen pleje/observation, behandl og følg tæt, eller kontakt dyrlæge. Den kan ikke stille diagnose.</p><div class="subcard"><h3>📷 Tag billede af området</h3><label class="camera-label">📷 Tag billede / vælg foto<input id="healthPhoto" type="file" accept="image/*" capture="environment" onchange="previewHealthPhoto(event)"></label><img id="healthPhotoPreview" class="photo-preview" alt="Forhåndsvisning af foto"><p class="small muted">På telefon åbner knappen som udgangspunkt kameraet. Fotoet forhåndsvises kun lokalt i denne version og gemmes ikke som historik endnu. Undlad billeder med personoplysninger om mennesker.</p></div>
 
@@ -824,8 +850,8 @@ body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
 <div class="actions"><button onclick="runHealthGuide()">Vis hvad vi gør nu</button></div>
 <div id="healthResult" style="margin-top:14px"></div>
 
-<details>
-<summary>Balinas medicinskab</summary>
+<details id="careKitPanel">
+<summary>🧰 Balinas medicinskab</summary>
 <div class="section-list" style="margin-top:10px">
 
 <div class="item"><strong>Apotekets Sårskyl · 0,9 % sterilt saltvand</strong><span class="small muted">Skylning/rensning af sår.</span></div>
@@ -895,7 +921,7 @@ function openHashSection(){
   const section=document.getElementById(id);
   if(section && id!=='hjem' && id!=='mere'){
     const d=section.querySelector(':scope > details.fold-section, :scope > details:not(.legal-note)');
-    if(d)d.open=true;
+    if(d && page!=='care')d.open=true;
   }
   // Dækkener starter med anbefalingen. Garderoben åbnes kun ved direkte valg.
   if(page==='rugs' && id==='daekken'){
@@ -904,6 +930,18 @@ function openHashSection(){
   }
   // Navigation replaces page content instead of jumping down a huge document.
   if(typeof window.scrollTo==='function')window.scrollTo({top:0,behavior:'instant'});
+}
+function toggleCareGuide(){
+  const panel=document.getElementById('careGuidePanel');
+  if(!panel)return;
+  panel.open=!panel.open;
+  if(panel.open)panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function openCareKit(){
+  const guide=document.getElementById('careGuidePanel');
+  const kit=document.getElementById('careKitPanel');
+  if(guide)guide.open=true;
+  if(kit){kit.open=true;kit.scrollIntoView({behavior:'smooth',block:'start'});}
 }
 window.addEventListener('hashchange',openHashSection);
 window.addEventListener('DOMContentLoaded',openHashSection);
