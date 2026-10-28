@@ -450,6 +450,19 @@ body{background:linear-gradient(155deg,#fffaf7 0%,#f9f5fc 34%,#f5fbf8 69%,#fffaf
 .glance-item:nth-child(4n+3){background:#fff5ec}
 .glance-item:nth-child(4n){background:#f9f1fa}
 @media(max-width:700px){.app-nav{background:#fffdfd;padding-top:9px}.app-nav a{border-radius:14px;gap:4px;padding:8px 2px}.app-nav a span{font-size:1.38rem}}
+
+/* Kalenderen deler nu farveidentitet med den lyseblå bundmenuknap. */
+body[data-view="calendar"]{background:linear-gradient(160deg,#f5faff 0%,#edf5fd 58%,#f8fbff 100%)}
+body[data-view="calendar"] #kalender{background:linear-gradient(145deg,#eff6ff 0%,#f4f9ff 56%,#ffffff 100%);border-color:#dceaf8}
+#kalender h2,#kalender #calendarMonthTitle{color:#567ba2}
+#kalender .calendar-layout>div:first-child{background:rgba(255,255,255,.78);border:1px solid #e0ebf8;border-radius:17px;padding:13px}
+#kalender .next-appt-card{background:#fafdff;border-color:#dceaf8}
+#kalender .cal-nav{color:#6588ae}
+#kalender .cal-day{color:#4e6680}
+#kalender .cal-day:hover{background:#e5f1ff}
+#kalender .cal-day.is-today{background:#d9eaff;color:#315e8b}
+#kalender .cal-day.has-appt i{background:#78a2d0}
+#kalender .selected-day-list{border-color:#dceaf8}
 </style>
 </head>
 <body data-view="home">
