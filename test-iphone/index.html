@@ -463,6 +463,30 @@ body[data-view="calendar"] #kalender{background:linear-gradient(145deg,#eff6ff 0
 #kalender .cal-day.is-today{background:#d9eaff;color:#315e8b}
 #kalender .cal-day.has-appt i{background:#78a2d0}
 #kalender .selected-day-list{border-color:#dceaf8}
+
+/* Sammenhængende farvetema på alle fem hovedvisninger – samme farve som bundmenuen. */
+body[data-view="home"]{background:linear-gradient(155deg,#fcf9ff,#f5effc 60%,#fbf8ff)}
+body[data-view="home"] #homeSummary{background:linear-gradient(145deg,#f7f1fd,#fcf9ff 65%,#fff);border-color:#e8dcf2}
+body[data-view="home"] #homeSummary h2{color:#78608f}
+body[data-view="home"] #daekken{background:linear-gradient(145deg,#f4faf6,#fbfefb 70%,#fff);border-color:#deede3}
+body[data-view="home"] #daekken h2{color:#527e6d}
+body[data-view="rugs"]{background:linear-gradient(155deg,#f6fcf8,#edf7f1 60%,#f9fdfa)}
+body[data-view="rugs"] #garderobe{background:linear-gradient(145deg,#edf8f1,#f6fcf8 65%,#fff);border-color:#d7eadd}
+body[data-view="rugs"] #garderobe h2,body[data-view="rugs"] #garderobe h3,body[data-view="rugs"] #garderobe summary{color:#497765}
+body[data-view="rugs"] #garderobe .wardrobe-toolbar,body[data-view="rugs"] #garderobe .subcard{background:#f7fcf8;border-color:#e0efe5}
+body[data-view="care"]{background:linear-gradient(155deg,#fff9fb,#fff0f5 60%,#fffafd)}
+body[data-view="care"] #sundhed{background:linear-gradient(145deg,#fff0f5,#fff7fa 65%,#fff);border-color:#f2dce6}
+body[data-view="care"] #sundhed h2,body[data-view="care"] #sundhed h3,body[data-view="care"] #sundhed summary{color:#9b5f7b}
+body[data-view="care"] #sundhed .subcard{background:#fff9fb;border-color:#f1e0e7}
+body[data-view="more"]{background:linear-gradient(155deg,#fffbf6,#fff3e8 60%,#fffcf8)}
+body[data-view="more"] #mere{background:linear-gradient(145deg,#fff3e7,#fff9f2 65%,#fff);border-color:#f2e2d0}
+body[data-view="more"] #mere h2,body[data-view="more"] #mere h3{color:#98734e}
+/* Skiftende headerfarve binder hele skærmen sammen uden at farve tekstfelter. */
+body[data-view="home"] .balina-hero{background:linear-gradient(115deg,#f8f0fd,#fff9fd)}
+body[data-view="rugs"] .balina-hero{background:linear-gradient(115deg,#edf8f1,#f9fdfa);border-color:#dcece1}
+body[data-view="calendar"] .balina-hero{background:linear-gradient(115deg,#eaf4ff,#f9fcff);border-color:#dceaf8}
+body[data-view="care"] .balina-hero{background:linear-gradient(115deg,#ffedf4,#fff9fb);border-color:#f2dce6}
+body[data-view="more"] .balina-hero{background:linear-gradient(115deg,#fff0e3,#fffbf6);border-color:#f2e2d0}
 </style>
 </head>
 <body data-view="home">
