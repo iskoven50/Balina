@@ -379,7 +379,7 @@ body{background:linear-gradient(160deg,#fffdfa 0%,#faf7fc 56%,#fefaf8 100%);colo
 .app-nav a:focus-visible,.more-grid a:focus-visible,.overview-tile:focus-visible{outline:3px solid #b78cae;outline-offset:3px}
 main.grid{display:block}main.grid>.card,main.grid>.home-summary{margin-bottom:14px}
 body[data-view] main.grid > section,body[data-view] main.grid > .home-summary{display:none}
-body[data-view="home"] #homeSummary,body[data-view="home"] #daekken,body[data-view="rugs"] #garderobe,body[data-view="calendar"] #kalender,body[data-view="care"] #sundhed,body[data-view="more"] #mere,body[data-view="profile"] #status,body[data-view="feed"] #foder,body[data-view="account"] #konto,body[data-view="sizes"] #stoerrelser,body[data-view="backup"] #backup{display:block}
+body[data-view="home"] #homeSummary,body[data-view="rugs"] #daekken,body[data-view="rugs"] #garderobe,body[data-view="calendar"] #kalender,body[data-view="care"] #sundhed,body[data-view="more"] #mere,body[data-view="profile"] #status,body[data-view="feed"] #foder,body[data-view="account"] #konto,body[data-view="sizes"] #stoerrelser,body[data-view="backup"] #backup{display:block}
 .card{padding:22px;border-radius:20px;background:#fff;border:1px solid #f2e9f0}
 .welcome-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 2px 15px}
 .welcome-row h2{margin:4px 0 4px;font-size:1.3rem}.welcome-row p{margin:0;color:var(--muted);font-size:.83rem}
@@ -529,6 +529,28 @@ body[data-view="more"] #mere .more-grid a{border-color:#ead6c4}
 .quick-edit-back .quick-edit-link{background:#f1e8f9;color:#6d5584;border-color:#e2d4ee}
 body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 @media(max-width:480px){.quick-edit{align-items:stretch;flex-direction:column}.quick-edit-link{justify-content:space-between;width:100%;box-sizing:border-box}.quick-edit-back{gap:7px}}
+
+/* v9.4.15 – rolig Hjem-side, anbefaling først i Dækkener, garderobe efter behov */
+.home-rug-summary{display:flex;align-items:center;gap:13px;margin:0 0 13px;padding:18px;border:1px solid #d7e7db;border-radius:18px;background:linear-gradient(125deg,#e3f2e9,#f1faf4);color:#325a44;text-decoration:none;min-height:100px}
+.home-rug-summary .home-rug-icon{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:15px;background:#f5fcf7;font-size:1.9rem}
+.home-rug-summary .home-rug-text{min-width:0;flex:1;display:block}
+.home-rug-summary small{display:block;color:#577b64;font-weight:800;font-size:.68rem;letter-spacing:.11em}
+.home-rug-summary strong{display:block;margin:5px 0 3px;font-size:1.2rem;line-height:1.3;overflow-wrap:anywhere}
+.home-rug-summary em{display:block;font-style:normal;font-size:.77rem;color:#5f7a69;line-height:1.35}
+.home-rug-summary .tile-arrow{color:#54856a}
+.home-rug-summary:focus-visible{outline:3px solid #76a88b;outline-offset:2px}
+.rug-next-actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 13px}
+.rug-next-actions a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 13px;border-radius:13px;font-size:.87rem;font-weight:750;text-decoration:none;line-height:1.3}
+.rug-action-primary{background:#d5ebdd;border:1px solid #b9d9c4;color:#37654d}
+.rug-action-secondary{background:#f5faf6;border:1px solid #cde2d4;color:#517661}
+.rug-next-actions a:focus-visible{outline:3px solid #77a78c;outline-offset:2px}
+body[data-view="rugs"] #daekken{background:#e3f2e8;border-color:#c6dfcf}
+body[data-view="rugs"] #daekken .recommendation-grid .notice{background:linear-gradient(135deg,#f4fcf6,#e6f5ec);border-color:#c9e5d3}
+body[data-view="rugs"] #daekken .recommendation-grid .need-card{background:#f5fbf7;border-color:#d1e6d8}
+body[data-view="rugs"] #daekken .technical-details,body[data-view="rugs"] #daekken .weather-details{background:#f7fcf9}
+body[data-view="rugs"] #garderobe{margin-top:8px}
+body[data-view="rugs"] #garderobe>details>summary{font-weight:800}
+@media(max-width:520px){.home-rug-summary{padding:14px}.home-rug-summary strong{font-size:1.08rem}.rug-next-actions{flex-direction:column}.rug-next-actions a{width:100%;box-sizing:border-box}}
 </style>
 </head>
 <body data-view="home">
@@ -545,7 +567,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 
     <nav class="app-nav" aria-label="Hovedmenu">
       <a href="#hjem" data-nav="home"><span aria-hidden="true">🏡</span>Hjem</a>
-      <a href="#garderobe" data-nav="rugs"><span aria-hidden="true">👕</span>Dækkener</a>
+      <a href="#daekken" data-nav="rugs"><span aria-hidden="true">👕</span>Dækkener</a>
       <a href="#kalender" data-nav="calendar"><span aria-hidden="true">📅</span>Kalender</a>
       <a href="#sundhed" data-nav="care"><span aria-hidden="true">💗</span>Pleje</a>
       <a href="#mere" data-nav="more"><span aria-hidden="true">✨</span>Mere</a>
@@ -555,6 +577,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 <main class="grid" id="appMain">
   <div id="homeSummary" class="home-summary wide" aria-label="Dagens overblik">
     <div class="welcome-row"><div><span class="eyebrow-soft">DIT DAGLIGE OVERBLIK</span><h2>Balinas hverdag <span aria-hidden="true">♡</span></h2><p>Dagens vigtigste – resten er kun et tryk væk.</p></div><span class="welcome-flower" aria-hidden="true">🌸</span></div>
+    <a href="#daekken" class="home-rug-summary" aria-label="Se dagens dækkenanbefaling"><span class="home-rug-icon" aria-hidden="true">👕</span><span class="home-rug-text"><small>DAGENS DÆKKEN</small><strong id="homeRugRecommendation">Henter anbefaling…</strong><em id="homeRugPeriod">Baseret på vejret og Balinas forhold</em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
     <div class="overview-grid">
       <a class="overview-tile tile-lilac" href="#kalender"><span class="overview-icon" aria-hidden="true">📆</span><span><small>NÆSTE AFTALE</small><strong id="homeNextAppointment">Henter aftaler…</strong><em id="homeNextAppointmentMeta"></em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
       <a class="overview-tile tile-peach" href="#kalender"><span class="overview-icon" aria-hidden="true">🐴</span><span><small>HUSK</small><strong id="homeFarrier">Henter smededato…</strong><em>Smed og pleje</em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
@@ -573,7 +596,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 
 <section class="card wide" id="daekken">
 <div id="nextReminder"></div>
-<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>Dagens dækken <span aria-hidden="true">♡</span></h2><p class="section-lead">Et enkelt valg, tilpasset Balina og vejret.</p><div class="quick-edit"><span>Ændret klipning, fold eller pels?</span><a href="#status" class="quick-edit-link">⚙️ Redigér Balinas forhold <span aria-hidden="true">›</span></a></div>
+<div class="section-eyebrow">DÆKKENVAGT · BALINA</div><h2>Dagens dækken <span aria-hidden="true">👕</span></h2><p class="section-lead">Balinas anbefaling lige nu.</p>
 <div id="weatherStatus" class="muted">Henter lokal vejrprognose…</div>
 
 
@@ -591,6 +614,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
     <div id="confidenceBox" style="margin-top:8px"></div>
   </div>
 </div>
+<div class="rug-next-actions"><a href="#garderobe" class="rug-action-primary">👕 Min garderobe <span aria-hidden="true">›</span></a><a href="#status" class="rug-action-secondary">⚙️ Redigér Balinas forhold <span aria-hidden="true">›</span></a></div>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
     <input id="nextChangeAt" type="datetime-local" onchange="saveRecommendationInputs()">
@@ -608,7 +632,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 </div></details>
 <div id="weatherGlance" class="weather-glance" aria-label="Vejret i perioden"></div><div id="reason" class="reason-short"></div>
 <div id="uncertaintyBox"></div>
-<details class="technical-details"><summary>🔎 Hele begrundelsen og Balinas profil</summary><p id="reasonFull" class="small muted"></p><div id="currentFactorsQuick" class="quick-factors"></div><p class="small muted">Oplysningerne ovenfor indgår i beregningen. En ændring kan godt give samme dækken, hvis det fortsat er bedste match.</p></details>
+<details class="technical-details"><summary>🔎 Hvorfor dette dækken? <span class="fold-hint">Se hele begrundelsen</span></summary><p id="reasonFull" class="small muted"></p><div id="currentFactorsQuick" class="quick-factors"></div><p class="small muted">Oplysningerne ovenfor indgår i beregningen. En ændring kan godt give samme dækken, hvis det fortsat er bedste match.</p></details>
 <details class="weather-details"><summary>Se hvorfor / sammenlign vejrudsigter</summary><div id="modelCompareBox" class="notice small" style="margin-top:10px"></div>
 </details>
 
@@ -662,7 +686,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 
 <section class="card wide" id="status"><details class="fold-section"><summary>Balinas forhold lige nu<span class="fold-hint">Klipning, pels, fold og boks</span></summary><div class="fold-body">
 <p class="small muted">Her ændrer du Balinas forhold, som bruges til dagens dækkenanbefaling. Dine dækkener redigeres separat i garderoben.</p>
-<div class="quick-edit quick-edit-back"><a href="#garderobe" class="quick-edit-link">👕 Tilbage til dækkener <span aria-hidden="true">›</span></a><a href="#hjem" class="quick-edit-link">🏡 Se dagens dækken <span aria-hidden="true">›</span></a></div>
+<div class="quick-edit quick-edit-back"><a href="#garderobe" class="quick-edit-link">👕 Tilbage til dækkener <span aria-hidden="true">›</span></a><a href="#daekken" class="quick-edit-link">👕 Se dagens dækken <span aria-hidden="true">›</span></a></div>
 <div id="profileReminder"></div>
 <div class="profile-grid">
 <div><label>Aktuel ordning</label><select id="regime" onchange="saveProfile(true)"><option value="summer">Døgnfold</option><option value="winter">Fold 08–18 / boks 18–08</option></select><span class="input-help">Bruges til at afgøre, hvornår Balina er udsat for regn, vind og kulde.</span></div>
@@ -859,7 +883,7 @@ body[data-view="home"] #daekken .quick-edit{margin-top:8px}
 <script>
 
 // v9.4: one page at a time; old deep links continue to work.
-const PAGE_BY_HASH={hjem:'home',daekken:'home',garderobe:'rugs',kalender:'calendar',sundhed:'care',mere:'more',status:'profile',foder:'feed',konto:'account',stoerrelser:'sizes',backup:'backup'};
+const PAGE_BY_HASH={hjem:'home',daekken:'rugs',garderobe:'rugs',kalender:'calendar',sundhed:'care',mere:'more',status:'profile',foder:'feed',konto:'account',stoerrelser:'sizes',backup:'backup'};
 function openHashSection(){
   const id=decodeURIComponent(location.hash.slice(1))||'hjem';
   const page=PAGE_BY_HASH[id]||'home';
@@ -873,6 +897,11 @@ function openHashSection(){
     const d=section.querySelector(':scope > details.fold-section, :scope > details:not(.legal-note)');
     if(d)d.open=true;
   }
+  // Dækkener starter med anbefalingen. Garderoben åbnes kun ved direkte valg.
+  if(page==='rugs' && id==='daekken'){
+    const wardrobe=document.querySelector('#garderobe > details.fold-section');
+    if(wardrobe)wardrobe.open=false;
+  }
   // Navigation replaces page content instead of jumping down a huge document.
   if(typeof window.scrollTo==='function')window.scrollTo({top:0,behavior:'instant'});
 }
@@ -882,8 +911,24 @@ function updateHomeSummary(){
   const pairs=[['nextAppointmentBig','homeNextAppointment'],['nextAppointmentMeta','homeNextAppointmentMeta'],['farrierCountdown','homeFarrier']];
   pairs.forEach(([src,dst])=>{const a=document.getElementById(src),b=document.getElementById(dst);if(a&&b)b.textContent=a.textContent||'Ikke registreret';});
 }
+function updateHomeRug(){
+  const source=document.getElementById('recommendation');
+  const period=document.getElementById('recommendationPeriod');
+  const dest=document.getElementById('homeRugRecommendation');
+  const meta=document.getElementById('homeRugPeriod');
+  if(dest && source)dest.textContent=(source.textContent||'').trim()||'Henter anbefaling…';
+  if(meta && period)meta.textContent=(period.textContent||'').trim()||'Baseret på vejret og Balinas forhold';
+}
 function initHomeSummary(){
   updateHomeSummary();
+  updateHomeRug();
+  if(typeof MutationObserver!=='undefined'){
+    const source=document.getElementById('recommendation');
+    const period=document.getElementById('recommendationPeriod');
+    const observer=new MutationObserver(updateHomeRug);
+    if(source)observer.observe(source,{subtree:true,childList:true,characterData:true});
+    if(period)observer.observe(period,{subtree:true,childList:true,characterData:true});
+  }
   const sources=['nextAppointmentBig','nextAppointmentMeta','farrierCountdown'];
   if(typeof MutationObserver!=='undefined'){
     const observer=new MutationObserver(updateHomeSummary);
