@@ -420,6 +420,36 @@ footer{font-size:.7rem;padding:15px 4px}
 @media(max-width:390px){.overview-grid{grid-template-columns:1fr}.overview-tile{min-height:70px}.balina-title .sub{font-size:.68rem}.welcome-row h2{font-size:1.13rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 .recurring-rules{display:grid;gap:9px;margin:12px 0}.account-rule{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px;border:1px solid #ebdeeb;border-radius:14px;background:#fdf9fc;flex-wrap:wrap}.account-rule strong{font-size:.9rem}.account-rule-form{margin:14px 0;padding:16px;border-radius:16px;background:#f7eff8;border:1px solid #eadceb}.account-rule-form h4{margin:0 0 12px}
+
+/* v9.4.12 – farverig, rolig pastelpalette og tydeligere iPhone-ikoner */
+:root{--ink:#4c4854;--muted:#746f7c;--line:#e9e5ed;--pink:#b77d9e;--blush:#fff0f5}
+body{background:linear-gradient(155deg,#fffaf7 0%,#f9f5fc 34%,#f5fbf8 69%,#fffaf5 100%)}
+.balina-hero{background:linear-gradient(115deg,#fff8fa 0%,#faf5ff 47%,#f0f8f4 100%);border-color:#e9e1ed}
+.balina-photo{border-color:#e6d9ea}
+.app-nav{background:#fffdfd;border-color:#ebe1eb}
+.app-nav a{transition:background .15s,color .15s,transform .15s}
+.app-nav a span{display:inline-grid;place-items:center;min-height:1.5em}
+.app-nav a[data-nav="home"]{background:#f5f0fb;color:#7b6896}
+.app-nav a[data-nav="rugs"]{background:#edf7f2;color:#527e6d}
+.app-nav a[data-nav="calendar"]{background:#edf4fd;color:#5f7fa4}
+.app-nav a[data-nav="care"]{background:#fff0f4;color:#a06a84}
+.app-nav a[data-nav="more"]{background:#fff5e9;color:#9a7a52}
+.app-nav a[aria-current="page"]{outline:2px solid currentColor;outline-offset:-2px;font-weight:800;box-shadow:0 2px 9px rgba(80,60,80,.08)}
+.tile-lilac{background:linear-gradient(135deg,#f1eafa,#eaf2fc)}
+.tile-peach{background:linear-gradient(135deg,#fff0e7,#fff6e9)}
+.overview-icon{font-size:1.65rem}
+.more-grid a:nth-child(5n+1){background:#f8f2ff;border-color:#eee2f8}
+.more-grid a:nth-child(5n+2){background:#f2f9f1;border-color:#e3efdf}
+.more-grid a:nth-child(5n+3){background:#fff7e9;border-color:#f3e9d7}
+.more-grid a:nth-child(5n+4){background:#eff7ff;border-color:#e2edf9}
+.more-grid a:nth-child(5n){background:#fff1f5;border-color:#f4e1e9}
+.recommendation-grid .notice{background:linear-gradient(125deg,#fff0f5,#f2f0fc 58%,#eff9f4);border-color:#e8dfeb}
+.recommendation-grid .need-card{background:#f4faf7;border-color:#e2eee6}
+.glance-item:nth-child(4n+1){background:#f1f7ff}
+.glance-item:nth-child(4n+2){background:#f3f9f2}
+.glance-item:nth-child(4n+3){background:#fff5ec}
+.glance-item:nth-child(4n){background:#f9f1fa}
+@media(max-width:700px){.app-nav{background:#fffdfd;padding-top:9px}.app-nav a{border-radius:14px;gap:4px;padding:8px 2px}.app-nav a span{font-size:1.38rem}}
 </style>
 </head>
 <body data-view="home">
@@ -435,30 +465,30 @@ footer{font-size:.7rem;padding:15px 4px}
     </header>
 
     <nav class="app-nav" aria-label="Hovedmenu">
-      <a href="#hjem" data-nav="home"><span aria-hidden="true">⌂</span>Hjem</a>
-      <a href="#garderobe" data-nav="rugs"><span aria-hidden="true">♧</span>Dækkener</a>
-      <a href="#kalender" data-nav="calendar"><span aria-hidden="true">▦</span>Kalender</a>
-      <a href="#sundhed" data-nav="care"><span aria-hidden="true">♡</span>Pleje</a>
-      <a href="#mere" data-nav="more"><span aria-hidden="true">☷</span>Mere</a>
+      <a href="#hjem" data-nav="home"><span aria-hidden="true">🏡</span>Hjem</a>
+      <a href="#garderobe" data-nav="rugs"><span aria-hidden="true">👕</span>Dækkener</a>
+      <a href="#kalender" data-nav="calendar"><span aria-hidden="true">📅</span>Kalender</a>
+      <a href="#sundhed" data-nav="care"><span aria-hidden="true">💗</span>Pleje</a>
+      <a href="#mere" data-nav="more"><span aria-hidden="true">✨</span>Mere</a>
     </nav>
 
 
 <main class="grid" id="appMain">
   <div id="homeSummary" class="home-summary wide" aria-label="Dagens overblik">
-    <div class="welcome-row"><div><span class="eyebrow-soft">DIT DAGLIGE OVERBLIK</span><h2>Balinas hverdag <span aria-hidden="true">♡</span></h2><p>Dagens vigtigste – resten er kun et tryk væk.</p></div><span class="welcome-flower" aria-hidden="true">✿</span></div>
+    <div class="welcome-row"><div><span class="eyebrow-soft">DIT DAGLIGE OVERBLIK</span><h2>Balinas hverdag <span aria-hidden="true">♡</span></h2><p>Dagens vigtigste – resten er kun et tryk væk.</p></div><span class="welcome-flower" aria-hidden="true">🌸</span></div>
     <div class="overview-grid">
-      <a class="overview-tile tile-lilac" href="#kalender"><span class="overview-icon" aria-hidden="true">▦</span><span><small>NÆSTE AFTALE</small><strong id="homeNextAppointment">Henter aftaler…</strong><em id="homeNextAppointmentMeta"></em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
-      <a class="overview-tile tile-peach" href="#kalender"><span class="overview-icon" aria-hidden="true">♧</span><span><small>HUSK</small><strong id="homeFarrier">Henter smededato…</strong><em>Smed og pleje</em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
+      <a class="overview-tile tile-lilac" href="#kalender"><span class="overview-icon" aria-hidden="true">📆</span><span><small>NÆSTE AFTALE</small><strong id="homeNextAppointment">Henter aftaler…</strong><em id="homeNextAppointmentMeta"></em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
+      <a class="overview-tile tile-peach" href="#kalender"><span class="overview-icon" aria-hidden="true">🐴</span><span><small>HUSK</small><strong id="homeFarrier">Henter smededato…</strong><em>Smed og pleje</em></span><span class="tile-arrow" aria-hidden="true">›</span></a>
     </div>
   </div>
   <section class="card wide more-hub" id="mere" aria-label="Flere funktioner">
     <div class="section-eyebrow">ALT OM BALINA</div><h2>Hvad vil du gøre?</h2><p class="section-lead">Vælg det, du har brug for. Dine registreringer er bevaret.</p>
     <div class="more-grid">
-      <a href="#status"><span class="more-icon lilac">♞</span><span><strong>Balinas profil</strong><small>Fold, boks, pels og klipning</small></span><span aria-hidden="true">›</span></a>
-      <a href="#foder"><span class="more-icon peach">♧</span><span><strong>Foderplan</strong><small>Foder og tilskud</small></span><span aria-hidden="true">›</span></a>
-      <a href="#konto"><span class="more-icon cream">◫</span><span><strong>Hestekonto</strong><small>Saldo, udgifter og indbetalinger</small></span><span aria-hidden="true">›</span></a>
-      <a href="#stoerrelser"><span class="more-icon blue">⌁</span><span><strong>Størrelser & udstyr</strong><small>Mål og pasform</small></span><span aria-hidden="true">›</span></a>
-      <a href="#backup"><span class="more-icon lilac">⇩</span><span><strong>Backup & indstillinger</strong><small>Gem eller gendan dine data</small></span><span aria-hidden="true">›</span></a>
+      <a href="#status"><span class="more-icon lilac">🐴</span><span><strong>Balinas profil</strong><small>Fold, boks, pels og klipning</small></span><span aria-hidden="true">›</span></a>
+      <a href="#foder"><span class="more-icon peach">🌾</span><span><strong>Foderplan</strong><small>Foder og tilskud</small></span><span aria-hidden="true">›</span></a>
+      <a href="#konto"><span class="more-icon cream">💰</span><span><strong>Hestekonto</strong><small>Saldo, udgifter og indbetalinger</small></span><span aria-hidden="true">›</span></a>
+      <a href="#stoerrelser"><span class="more-icon blue">📏</span><span><strong>Størrelser & udstyr</strong><small>Mål og pasform</small></span><span aria-hidden="true">›</span></a>
+      <a href="#backup"><span class="more-icon lilac">💾</span><span><strong>Backup & indstillinger</strong><small>Gem eller gendan dine data</small></span><span aria-hidden="true">›</span></a>
     </div>
   </section>
 
@@ -741,7 +771,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.4.11 · ISOLERET TEST · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.4.12 · ISOLERET TEST · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
