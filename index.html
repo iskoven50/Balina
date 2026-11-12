@@ -2089,8 +2089,13 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     if(veryHotPeriod||(hotPeriod&&sunnyPeriod)){
       rec='Intet dækken';reason='Den varme del af foldperioden bliver varm/solrig, mens natten er tør og trækfri i boksen.';
     }else if(exposure>=11&&feelsMin<=-3+horseAdj&&heat<=2){rec='Vandtæt 400 g';reason='Reel vinterkulde kombineret med Balinas samlede eksponering gør 400 g relevant.';
-    }else if(exposure>=8&&feelsMin<=4+horseAdj&&heat<=2){
-      rec='Vandtæt 200 g';reason='Foldtimerne og den kølige periode kræver omkring 200 g; garderoben matches først bagefter.';
+    }else if(exposure>=8 && heat<=2 &&
+      // Isolering styres af vedvarende reel kulde, ikke alene af vindstød og 'føles som'.
+      // Vind og regn kan stadig begrunde vandtæt dækken og halsbeskyttelse.
+      ((nightMin<=0 && coldHours5>=6 && warmMax<=8) ||
+       (nightMin<=2 && coldHours5>=9 && warmMax<=7) ||
+       (clipped.count && nightMin<=4 && coldHours5>=6 && warmMax<=9))){
+      rec='Vandtæt 200 g';reason='Flere timers reel kulde og hestens isoleringsbehov taler for omkring 200 g; vind og regn vurderes særskilt som vejrbeskyttelse.';
     }else if((feelsMin<=5+horseAdj&&coldHours7>=3&&warmMax<=15&&sunHours<2)||exposure>=6){
       rec='Vandtæt 100 g';reason='Kølige timer og begrænset sol gør 100 g til det bedste samlede valg frem til næste dækkenskift.';
     }else if(exposure>=4&&(rainTotal>=2||sustainedRain)){
@@ -2248,6 +2253,10 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   if(conflict)confidence-=2;
   if(rainSpread>=5)confidence-=1;
   if(Math.abs(exposure-heat)<=1)confidence-=1;
+  // Vejrbeskyttelse kan være tydelig, selv når 100 og 200 g begge er plausible.
+  // Vis ikke 5/5 ved køligt, vådt/blæsende overgangsvejr med et 100 g-valg.
+  if(reg==='winter' && rec==='Vandtæt 100 g' && nightMin>=1 && nightMin<=7 &&
+     (windy || rainTotal>=1)) confidence=Math.min(confidence,4);
   // Tæt på isoleringsgrænserne er gramvalget mindre entydigt, selv med ens prognoser.
   const thermalMargins=[4,6,8,11].map(t=>Math.abs(exposure-t));
   if(Math.min(...thermalMargins)<0.6)confidence=Math.min(confidence,4);

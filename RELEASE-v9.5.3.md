@@ -1,0 +1,1 @@
+Balina v9.5.3 – kalibrering af vinterens isoleringsvalg. 200 g kræver nu vedvarende faktisk kulde, ikke alene høj vind/kunstigt lav føles-som. Vejrbeskyttelse og hals beregnes fortsat separat. Sikkerhed ved køligt blæsevejr nedjusteres. Bevar backup før opdatering. Ændringen er en heuristisk kalibrering, ikke veterinær validering.
