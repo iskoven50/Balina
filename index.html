@@ -417,12 +417,34 @@ footer{font-size:.7rem;padding:15px 4px}
 @media(max-width:390px){.overview-grid{grid-template-columns:1fr}.overview-tile{min-height:70px}.balina-title .sub{font-size:.68rem}.welcome-row h2{font-size:1.13rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 .parameter-explain{margin-top:7px;border-radius:10px;background:#f8f4fa;padding:7px 10px;font-size:.85rem}.parameter-explain summary{cursor:pointer;font-weight:650;color:#665478}.parameter-explain p{margin:8px 0 3px;line-height:1.5}
+
+/* Balina 9.6 — muted pastel navigation and horse portrait */
+.app-nav{background:#fffdfd;border-color:#f0e4eb}
+.app-nav a{transition:background .15s ease,box-shadow .15s ease;color:#655b68}
+.app-nav a:nth-child(1){background:#f1dfe5}
+.app-nav a:nth-child(2){background:#e1ebe2}
+.app-nav a:nth-child(3){background:#eae2f0}
+.app-nav a:nth-child(4){background:#f5e8dc}
+.app-nav a:nth-child(5){background:#e1eaf0}
+.app-nav a[aria-current="page"]{color:#584157;box-shadow:inset 0 0 0 2px rgba(112,75,102,.28);filter:saturate(1.12)}
+.balina-photo{object-position:center 39%;border-color:#ecdce4}
+.balina-looks{margin:14px 0 18px;padding:16px;border:1px solid #eee0e9;border-radius:18px;background:#fffafc}
+.balina-looks h3{margin:0 0 4px;font-size:1rem}
+.balina-looks p{margin:0 0 12px;color:var(--muted);font-size:.8rem}
+.balina-look-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.balina-look{min-width:0;background:#fff;border:1px solid #eddfeb;border-radius:12px;overflow:hidden;text-align:center}
+.balina-look img{width:100%;aspect-ratio:1.15;object-fit:cover;display:block}
+.balina-look strong{display:block;font-size:.73rem;line-height:1.25;padding:8px 5px 3px}
+.balina-look small{display:block;color:#796d7b;font-size:.66rem;padding:0 4px 8px}
+.balina-look.current{border:2px solid #a67b9b;box-shadow:0 2px 12px rgba(125,77,110,.13)}
+.balina-look.current:after{content:'Anbefalet';display:block;background:#f2e4ed;color:#70536c;font-size:.66rem;font-weight:700;padding:4px}
+@media(max-width:700px){.balina-look-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.balina-look{min-width:145px;max-width:145px;scroll-snap-align:start}.balina-looks{padding:12px}.app-nav a{padding:8px 2px}}
 </style>
 </head>
 <body data-view="home">
 <div class="wrap">
 <header class="balina-hero">
-      <img src="balina-bw.jpg" alt="Balina" class="balina-photo">
+      <img src="balina-profil.jpg" alt="Balina – profilbillede" class="balina-photo">
       <div class="balina-title">
         <div class="eyebrow">BALINA – HESTELOGBOG</div>
         <h1>Balina</h1>
@@ -479,6 +501,18 @@ footer{font-size:.7rem;padding:15px 4px}
     <div id="confidenceBox" style="margin-top:8px"></div>
   </div>
 </div>
+
+<section class="balina-looks" aria-label="Balina med og uden dækken">
+ <h3>Balina med og uden dækken ♡</h3>
+ <p>Se Balina med sine dækkener. Billederne med dækken er illustrationer; den aktuelle anbefaling beregnes ud fra vejret.</p>
+ <div class="balina-look-grid">
+  <div class="balina-look" data-look="none"><img loading="lazy" src="balina-uden-daekken.jpg" alt="Balina uden dækken"><strong>Uden dækken</strong><small>Naturlig pels</small></div>
+  <div class="balina-look" data-look="summer"><img loading="lazy" src="balina-rambo-summer.jpg" alt="Illustration af Balina med Rambo Summer Series"><strong>Rambo Summer Series</strong><small>100 g rygliner</small></div>
+  <div class="balina-look" data-look="ameco"><img loading="lazy" src="balina-amigo-ameco.jpg" alt="Illustration af Balina med Amigo AmECO"><strong>Amigo AmECO</strong><small>100 g · hals</small></div>
+  <div class="balina-look" data-look="wug"><img loading="lazy" src="balina-amigo-wug.jpg" alt="Illustration af Balina med Amigo Wug"><strong>Amigo Wug</strong><small>50 g · high neck</small></div>
+  <div class="balina-look" data-look="bravo"><img loading="lazy" src="balina-amigo-bravo.jpg" alt="Illustration af Balina med Amigo Bravo"><strong>Amigo Bravo</strong><small>400 g · hals</small></div>
+ </div>
+</section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
     <input id="nextChangeAt" type="datetime-local" onchange="saveRecommendationInputs()">
@@ -735,7 +769,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.5 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.0 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -2159,7 +2193,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // Læring fra skybrud: Summer Series må ikke være hovedvalg ved kraftig/vedvarende regn + vind.
   if(summerSeriesUnsafe){
     if(warmMax>=20 && feelsMin>9+horseAdj){rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind diskvalificerer Summer Series. 50 g giver lukket beskyttelse med mindst mulig ekstra varme.';}
-    else if(feelsMin<=1+horseAdj && heat<=2){rec='Vandtæt 200 g';reason='Kraftig regn/vind kombineret med kulde kræver lukket beskyttelse omkring 200 g.';}
+    else if(reg==='winter' && exposure>=8 && heat<=2 && ((nightMin<=0 && coldHours5>=6 && warmMax<=8) || (nightMin<=2 && coldHours5>=9 && warmMax<=7) || (clipped.count && nightMin<=4 && coldHours5>=6 && warmMax<=9))){rec='Vandtæt 200 g';reason='Vedvarende reel kulde og isoleringsbehov begrunder 200 g; kraftig regn/vind begrunder lukket vejrbeskyttelse.';}
     else if(feelsMin<=8+horseAdj){rec='Vandtæt 100 g';reason='Kraftig regn/vind gør mesh-sider uegnede, og temperaturen taler for et lukket 100 g dækken.';}
     else {rec='Amigo 50 g med halvhøj hals';reason='Kraftig regn/vind gør Summer Series uegnet; det nye 50 g giver den letteste lukkede beskyttelse.';}
     attention=`Summer Series er fravalgt pga. regnintensitet/vind. Maksimal beregnet regnintensitet er ${maxHourlyRain.toFixed(1).replace('.',',')} mm/time, og erfaringen fra skybrud viser, at rygdelen og mesh-siderne ikke giver tilstrækkelig beskyttelse.`;
@@ -2474,5 +2508,23 @@ try{ init(); }catch(e){
   const w=document.getElementById('weatherStatus');
   if(w) w.textContent='App-fejl ved opstart: '+e.message;
 }
+</script>
+
+<script>
+/* Visual enhancement only. This does not alter the blanket algorithm or save data. */
+(function(){
+ function markBlanket(){
+  const rec=(document.getElementById('recommendation')?.textContent||'').toLowerCase();
+  let key='';
+  if(rec.includes('ameco'))key='ameco';
+  else if(rec.includes('wug'))key='wug';
+  else if(rec.includes('bravo'))key='bravo';
+  else if(rec.includes('summer'))key='summer';
+  else if(/intet dækken|uden dækken/.test(rec))key='none';
+  document.querySelectorAll('.balina-look').forEach(el=>el.classList.toggle('current',!!key&&el.dataset.look===key));
+ }
+ const rec=document.getElementById('recommendation');
+ if(rec){new MutationObserver(markBlanket).observe(rec,{childList:true,subtree:true,characterData:true});markBlanket();}
+})();
 </script>
 </body></html>

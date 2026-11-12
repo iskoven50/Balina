@@ -1,0 +1,11 @@
+Balina v9.6.0 – visuel opdatering
+
+Upload ALLE filerne i denne ZIP til roden af GitHub-repositoriet iskoven50/Balina og erstat index.html. Bevar eksisterende andre filer.
+
+NYT: Farvefoto af Balina i toppen, fem støvede pastelfarver i navigationen og en billedoversigt over Balina med/uden fire dækkener. Dækkenbilleder er illustrationer baseret på de aftalte referencer, ikke fotografier af Balina iført dækkenerne. Den anbefalede model fremhæves når den kan identificeres i appens tekst.
+
+UÆNDRET: Dækkenalgoritme, kalender, foder, pleje, hestekonto og lokal lagring.
+
+VIGTIGT: Render-database, login, ejerrettigheder og synkronisering mellem telefoner er IKKE implementeret. Det kræver separat serveropsætning, sikker adgangskontrol og migrering. Del derfor ikke privat hestekonto via en fælles offentlig kopi.
+
+Tag en JSON-backup i appen før opdateringen. GitHub Pages kan cache tidligere filer; genindlæs ved behov.

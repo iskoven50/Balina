@@ -1,6 +1,13 @@
-# Balina – Hestelogbog v9.4.0
+# Balina – Hestelogbog v9.5.4
 
-## Hvad er nyt?
+## Hvad er nyt i v9.5.4?
+
+- Rettet en efterfølgende kraftig-regn/vind-regel, som kunne overskrive den nye kuldebaserede 200 g-grænse.
+- 200 g kræver nu vedvarende kulde i begge beregningsgrene; regn og vind prioriterer vandtæthed og hals.
+- Huldscore, parameterforklaringer og justeret sikkerhedsskala fra v9.5 er bevaret.
+- Versionsnummer i app og README er synkroniseret.
+
+## Tidligere ændringer
 
 Balina er bygget om til en enkel, mobilvenlig pastelapp med tydelig navigation, én hovedopgave ad gangen og bevaret eksisterende dækkenlogik, økonomi, kalender, foder, sundhed og hesteprofil.
 
