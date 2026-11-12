@@ -1,3 +1,12 @@
+Balina v9.6.1 – billedopdatering
+
+- Nyt sommerportræt af Balina i profil og under Uden dækken.
+- Navyblå Amigo Bravo 400 g illustration er bevaret.
+- Øvrig funktionalitet uændret fra v9.6.0.
+- Render-synkronisering og brugerrettigheder er endnu ikke implementeret.
+
+Upload alle filerne til roden af GitHub-repositoriet. Tag JSON-backup først.
+
 # Balina – Hestelogbog v9.5.4
 
 ## Hvad er nyt i v9.5.4?
