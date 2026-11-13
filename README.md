@@ -48,3 +48,13 @@ Balina er bygget om til en enkel, mobilvenlig pastelapp med tydelig navigation, 
 - Automatisk migration fra ældre versioner fortsat aktiv.
 - Anbefalingerne er vejledende. Kontroller altid hestens komfort og tilstand.
 - Testet med headless Chromium for navigation, redigering af profil, browserlager og én fungerende vejrmodel. Dette er ikke veterinær validering af dækkenmodellen.
+
+
+## v9.6.2 – kontrol af dækkenberegner
+- 400 g kræver nu vedvarende hård frost og reduceret isolering, ikke kun en høj eksponeringsscore.
+- 250 g er et særskilt vejledende mellembehov (225–275 g), der ikke automatisk matches til 400 g.
+- Ved manglende match vises besked om manglende passende dækken.
+- Usikkerhed ved 250/400 g begrænses til højst 3/5.
+- Ingen ændringer af lagrede data eller synkronisering.
+
+Bemærk: Gram er vejledende og ikke et valideret fysiologisk varmebehov.

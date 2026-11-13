@@ -769,7 +769,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.1 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.3 · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -1434,7 +1434,8 @@ function needFromGoldChoice(rec){
   if(rec.includes('0 g-hybrid')||rec.includes('Summer Series')){const liner=rec.includes('100 g')?100:0;return {kind:'mesh',target:liner,min:liner,max:liner,label:liner?'Ventilerende rygbeskyttelse med 100 g rygliner':'Ventilerende 0 g-regn-/hybridbeskyttelse',detail:'Behovet er regnbeskyttelse over ryggen kombineret med høj ventilation i siderne.'};}
   if(rec.includes('50 g'))return {kind:'closed',target:50,min:0,max:50,label:'Let, vandtæt lukket beskyttelse ca. 0–50 g',detail:'Det vigtigste er at holde ryggen tør uden at pakke Balina for varmt ind.'};
   if(rec.includes('100 g'))return {kind:'closed',target:100,min:80,max:125,label:'Vandtæt lukket beskyttelse omkring 100 g',detail:'Der er behov for lidt isolering sammen med fuld regn- og vindbeskyttelse.'};
-  if(rec.includes('200 g')||rec.includes('250 g'))return {kind:'closed',target:200,min:175,max:250,label:'Vandtæt lukket beskyttelse omkring 200 g',detail:'Kulde, vind og/eller regn kræver tydelig isolering gennem perioden.'};
+  if(rec.includes('250 g'))return {kind:'closed',target:250,min:225,max:275,label:'Vejledende behov omkring 250 g (ca. 225–275 g)',detail:'Et mellembehov uden præcist match skal vises som et skøn, ikke rundes op til 400 g.'};
+  if(rec.includes('200 g'))return {kind:'closed',target:200,min:175,max:225,label:'Vandtæt lukket beskyttelse omkring 200 g',detail:'Flere timers reel kulde kan begrunde ekstra isolering. Behovet er vejledende.'};
   if(rec.includes('400 g'))return {kind:'closed',target:400,min:350,max:450,label:'Varmt, vandtæt vinterdækken omkring 400 g',detail:'Perioden giver et reelt vinterbehov med høj isolering.'};
   return {kind:'closed',target:0,min:0,max:50,label:'Let beskyttelse',detail:'Dækkenguiden har beregnet et let beskyttelsesbehov.'};
 }
@@ -1452,17 +1453,26 @@ function matchWardrobeNeed(need){
     if(need.kind==='mesh')return r.mesh && (r.waterproof==='partial'||r.waterproof==='yes') && c.grams>=need.min && c.grams<=need.max;
     return !r.mesh && r.waterproof==='yes' && r.waterproofCondition!=='no' && c.grams>=need.min && c.grams<=need.max && r.fit!=='caution';
   }).map(c=>({...c,rank:100-Math.abs(c.grams-need.target)+c.scoreBonus+(need.neckPreferred==='full'&&neckStrength(c)===2?8:need.neckPreferred==='half'&&neckStrength(c)>0?4:0)+(c.rug.waterproofCondition==='strong'?5:c.rug.waterproofCondition==='uncertain'?-8:0)})).sort((a,b)=>b.rank-a.rank);
-  const nearest=configs.filter(c=>need.kind==='mesh'?c.rug.mesh:(!c.rug.mesh&&c.rug.waterproof==='yes')).map(c=>({...c,diff:Math.abs(c.grams-need.target)})).sort((a,b)=>a.diff-b.diff)[0]||null;
+  // Nærmeste mulighed er kun information – ikke en automatisk anbefaling.
+  // Udeluk usikre/udgåede dækkener og respekter behovet for vandtæthed.
+  const nearest=configs.filter(c=>need.kind==='mesh'
+    ? c.rug.mesh && c.rug.fit!=='caution'
+    : !c.rug.mesh && c.rug.waterproof==='yes' && c.rug.waterproofCondition!=='no' && c.rug.fit!=='caution')
+    .map(c=>({...c,diff:Math.abs(c.grams-need.target)}))
+    .sort((a,b)=>a.diff-b.diff || (a.grams>b.grams?1:-1))[0]||null;
   let c=valid[0],compromise=false;
   if(!c&&need.kind==='mesh'){
     c=configs.filter(x=>!x.rug.mesh&&x.rug.waterproof==='yes'&&x.grams<=50&&x.rug.fit!=='caution').sort((a,b)=>b.scoreBonus-a.scoreBonus)[0];
     compromise=!!c;
   }
-  if(!c && need.kind==='closed'){
-    c=configs.filter(x=>!x.rug.mesh&&x.rug.waterproof==='yes'&&x.rug.waterproofCondition!=='no'&&x.rug.fit!=='caution'&&x.grams<=Math.max(need.max,need.target+50))
+  if(!c && need.kind==='closed' && need.target!==250){
+    // Kun et *tyndere* dækken inden for en lille tolerance er et kompromis.
+    // Aldrig automatisk opgradering fra fx 200 g til 400 g eller fra 100 g til 200 g.
+    c=configs.filter(x=>!x.rug.mesh&&x.rug.waterproof==='yes'&&x.rug.waterproofCondition!=='no'&&x.rug.fit!=='caution'&&x.grams<=need.target&&x.grams>=need.target-50)
       .sort((a,b)=>Math.abs(a.grams-need.target)-Math.abs(b.grams-need.target)||b.scoreBonus-a.scoreBonus)[0];
     compromise=!!c;
   }
+  // Et foretrukket halsniveau er ikke et absolut krav, men kompromis skal fremgå.
   if(!c)return {ok:false,nearest};
   const linerText=c.backLiner?`${c.backLiner} g rygliner (kun ryggen)`:c.liner?`${c.liner} g liner`:'uden liner';
   const neckText=c.neckMode==='full'?'fuld hals på':c.neckMode==='half'?'halvhøj hals':'uden hals';
@@ -2122,7 +2132,10 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   }else{
     if(veryHotPeriod||(hotPeriod&&sunnyPeriod)){
       rec='Intet dækken';reason='Den varme del af foldperioden bliver varm/solrig, mens natten er tør og trækfri i boksen.';
-    }else if(exposure>=11&&feelsMin<=-3+horseAdj&&heat<=2){rec='Vandtæt 400 g';reason='Reel vinterkulde kombineret med Balinas samlede eksponering gør 400 g relevant.';
+    }else if(exposure>=11 && nightMin<=-5 && coldHours5>=8 && warmMax<=3 && heat<=1 && (clipped.count || coatSeason!=='winter' || coldSensitivity==='very_sensitive')){
+      rec='Vandtæt 400 g';reason='Vedvarende hård frost, lav dagtemperatur og nedsat isolering kan begrunde et tungt vinterdækken. Kontrollér altid hestens komfort.';
+    }else if(exposure>=10 && heat<=2 && nightMin<=-1 && coldHours5>=6 && warmMax<=7 && (clipped.count || coatSeason!=='winter' || coldSensitivity==='sensitive' || coldSensitivity==='very_sensitive')){
+      rec='Vandtæt 250 g';reason='Vedvarende kulde og hestens aktuelle isolering peger på et mellembehov omkring 250 g. Det er et vejledende skøn, ikke et eksakt gramkrav.';
     }else if(exposure>=8 && heat<=2 &&
       // Isolering styres af vedvarende reel kulde, ikke alene af vindstød og 'føles som'.
       // Vind og regn kan stadig begrunde vandtæt dækken og halsbeskyttelse.
@@ -2285,6 +2298,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     else if(modelMeta.rainConflict) confidence=Math.min(confidence,3);
   }
   if(conflict)confidence-=2;
+  if(rec.includes('400 g') || rec.includes('250 g') || rec.includes('200 g'))confidence=Math.min(confidence,3);
   if(rainSpread>=5)confidence-=1;
   if(Math.abs(exposure-heat)<=1)confidence-=1;
   // Vejrbeskyttelse kan være tydelig, selv når 100 og 200 g begge er plausible.
