@@ -442,7 +442,19 @@ footer{font-size:.7rem;padding:15px 4px}
 .quarter-rug-panel h3{margin:0 0 8px}
 .quarter-rug-panel label{display:inline-flex;flex-direction:column;gap:5px;min-width:170px;margin:8px 12px 8px 0;font-size:.85rem}
 .quarter-rug-panel select{max-width:100%}
-.quarter-rug-panel #quarterRugResult{padding:10px;background:#f4edf5;border-radius:10px}
+.quarter-recommendation{padding:14px;background:linear-gradient(135deg,#f5eaf5,#fff7fb);border:1px solid #ead8e7;border-radius:14px;margin:10px 0}
+.quarter-eyebrow{display:block;color:#9a6e90;font-size:.67rem;font-weight:800;letter-spacing:.09em;margin-bottom:6px}
+.quarter-recommendation strong{display:block;color:#69516f;font-size:1.2rem}
+.quarter-recommendation p{margin:7px 0 0}
+.quarter-gallery-title{font-size:.91rem;margin:15px 0 8px;color:#705a70}
+.quarter-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.quarter-card{min-width:0;border:1px solid #eadce5;background:#fff;border-radius:12px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.quarter-card-symbol{display:flex;align-items:center;justify-content:center;background:#f6eef5;border-radius:9px;width:100%;min-height:55px;font-size:1.6rem}
+.quarter-card-photo{display:block;width:100%;height:74px;object-fit:cover;border-radius:9px}.quarter-card strong{font-size:.74rem}.quarter-card small{font-size:.65rem;color:#827581}
+.quarter-card.current{border-color:#b67f9e;background:#fff4fa;box-shadow:0 2px 5px #e9d5e4}
+.quarter-card-tag{background:#f1ddea;border-radius:7px;padding:4px;width:100%;font-size:.65rem;font-weight:700;color:#794e70}
+.quarter-card-tag[hidden]{display:none}
+@media(max-width:440px){.quarter-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .balina-look.current{border:2px solid #a67b9b;box-shadow:0 2px 12px rgba(125,77,110,.13)}
 .balina-look.current:after{content:'Anbefalet';display:block;background:#f2e4ed;color:#70536c;font-size:.66rem;font-weight:700;padding:4px}
 @media(max-width:700px){.balina-look-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.balina-look{min-width:145px;max-width:145px;scroll-snap-align:start}.balina-looks{padding:12px}.app-nav a{padding:8px 2px}}
@@ -509,9 +521,9 @@ footer{font-size:.7rem;padding:15px 4px}
   </div>
 </div>
 
-<section class="balina-looks" aria-label="Balina med og uden dækken">
- <h3>Balina med og uden dækken ♡</h3>
- <p>Se Balina med sine dækkener. Billederne med dækken er illustrationer; den aktuelle anbefaling beregnes ud fra vejret.</p>
+<section class="balina-looks" aria-label="Balinas dækkener">
+ <h3>Balinas dækkener ♡</h3>
+ <p>Se dækkenerne i garderoben. Det anbefalede dækken er fremhævet, og en eventuel liner vises på kortet. Billederne er illustrationer.</p>
  <div class="balina-look-grid">
   <div class="balina-look" data-look="none"><img loading="lazy" src="balina-uden-daekken.jpg" alt="Balina uden dækken"><strong>Uden dækken</strong><small>Naturlig pels</small></div>
   <div class="balina-look" data-look="summer"><img loading="lazy" src="balina-rambo-summer.jpg" alt="Illustration af Balina med Rambo Summer Series"><strong>Rambo Summer Series</strong><small>100 g rygliner</small></div>
@@ -521,14 +533,21 @@ footer{font-size:.7rem;padding:15px 4px}
  </div>
 </section>
 <section class="quarter-rug-panel" aria-label="Skridttæppe ved ridning">
- <h3>🐴 Skridttæppe ved ridning</h3>
+ <h3>Skridttæppe til rideturen ♡</h3>
  <p class="small muted">Vejledende forslag ud fra aktivitet og den seneste lokale vejrudsigt. Vurder også Balinas sved og komfort.</p>
  <label for="quarterRide">Aktivitet
  <select id="quarterRide"><option value="trail">Skovtur</option><option value="dressage">Dressur</option><option value="jumping">Spring</option></select></label>
- <div id="quarterRugResult" class="small" aria-live="polite">Beregner anbefaling…</div>
+ <div class="quarter-recommendation" aria-live="polite"><span class="quarter-eyebrow">ANBEFALING TIL RIDETUREN</span><strong id="quarterRugTitle">Afventer vejrdata</strong><p id="quarterRugResult" class="small">Beregner anbefaling…</p></div>
+ <h4 class="quarter-gallery-title">Balinas skridttæpper</h4>
+ <div class="quarter-card-grid" id="quarterCards" aria-label="Mulige skridttæpper">
+  <div class="quarter-card" data-quarter="none"><span class="quarter-card-symbol">🐎</span><strong>Uden skridttæppe</strong><small>Ved mildt vejr</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+  <div class="quarter-card" data-quarter="wool"><span class="quarter-card-symbol">🧶</span><strong>Uld</strong><small>Kun over bagparten</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+  <div class="quarter-card" data-quarter="fleece"><img class="quarter-card-photo" loading="lazy" src="balina-refleks-fleece-bagpart.jpg" alt="Illustration af refleksskridttæppe med fleecefor, der kun ligger over bagparten bag sadlen og ikke lukkes over manken"><strong>Refleksskridttæppe</strong><small>Fleecefor · kun bagparten · ingen lukning over manken</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+  <div class="quarter-card" data-quarter="rain"><span class="quarter-card-symbol">🌧️</span><strong>Vandafvisende</strong><small>Ved regn og blæst</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+ </div>
  <label for="quarterOverride"><input type="checkbox" id="quarterOverride"> Vælg selv i stedet</label>
  <label for="quarterChoice" id="quarterChoiceWrap" hidden>Mit valg
- <select id="quarterChoice"><option value="wool">Uld – kun bagpart</option><option value="fleece">Fleece/refleks</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
+ <select id="quarterChoice"><option value="wool">Uld – kun bagpart</option><option value="fleece">Refleks med fleecefor – kun bagpart</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
  <p class="small muted">Skridttæppe er især relevant ved skridt og afskridtning. Fjern det, hvis Balina bliver varm. Ved spring skal det ikke bruges under selve springningen.</p>
 </section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
@@ -787,7 +806,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.6-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.8-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -2638,11 +2657,18 @@ function quarterSuggestion(activity,weather){
 }
 function updateQuarterRug(){
  const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),override=document.getElementById('quarterOverride');
- const result=document.getElementById('quarterRugResult'),wrap=document.getElementById('quarterChoiceWrap');
- if(!ride||!choice||!result||!override||!wrap)return;
- const labels={wool:'Uld – kun bagpart',fleece:'Fleece/refleks',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
+ const result=document.getElementById('quarterRugResult'),title=document.getElementById('quarterRugTitle'),wrap=document.getElementById('quarterChoiceWrap');
+ if(!ride||!choice||!result||!title||!override||!wrap)return;
+ const labels={wool:'Uld – kun bagpart',fleece:'Refleksskridttæppe med fleecefor – kun bagparten',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
  const weather=quarterWeatherSummary(),suggestion=quarterSuggestion(ride.value,weather);
  wrap.hidden=!override.checked;
+ const active=override.checked?choice.value:suggestion.choice;
+ title.textContent=active?(override.checked?'Dit valg: ':'')+labels[active]:'Ingen sikker anbefaling endnu';
+ document.querySelectorAll('.quarter-card').forEach(card=>{
+   const selected=!!active&&card.dataset.quarter===active;
+   card.classList.toggle('current',selected);
+   const tag=card.querySelector('.quarter-card-tag');if(tag){tag.hidden=!selected;tag.textContent=override.checked?'Dit valg':'Anbefalet';}
+ });
  if(override.checked){
   result.textContent='Dit valg: '+labels[choice.value]+'. '+(suggestion.choice?'Appens forslag: '+labels[suggestion.choice]+'. ':'')+suggestion.why;
  }else{
