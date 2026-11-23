@@ -460,6 +460,24 @@ footer{font-size:.7rem;padding:15px 4px}
 .balina-look.current:after{content:'Anbefalet';display:block;background:#f2e4ed;color:#70536c;font-size:.66rem;font-weight:700;padding:4px}
 @media(max-width:700px){.balina-look-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.balina-look{min-width:145px;max-width:145px;scroll-snap-align:start}.balina-looks{padding:12px}.app-nav a{padding:8px 2px}}
 </style>
+
+<style id="balina-hero-ux-v9613">
+/* Hero only: larger, more legible, responsive; no effect on blanket logic */
+.balina-hero{display:flex;align-items:center;gap:24px;min-height:172px;padding:26px 28px!important}
+.balina-hero .balina-photo{flex:0 0 auto;width:126px!important;height:126px!important;aspect-ratio:1;border-radius:50%!important;object-fit:cover;object-position:center center;border:4px solid #f0dbe7;box-shadow:0 6px 18px rgba(102,71,93,.12)}
+.balina-hero .balina-title{min-width:0;flex:1}
+.balina-hero .balina-title .eyebrow{font-size:.83rem!important;letter-spacing:.14em;line-height:1.45}
+.balina-hero .balina-title h1{font-size:clamp(2.9rem,6vw,4.1rem)!important;line-height:1.15;margin:3px 0 9px}
+.balina-hero .balina-title .sub{font-size:.97rem!important;line-height:1.6;letter-spacing:0}
+@media(max-width:600px){
+ .balina-hero{gap:15px!important;padding:18px 16px!important;min-height:140px}
+ .balina-hero .balina-photo{width:94px!important;height:94px!important;border-width:3px}
+ .balina-hero .balina-title h1{font-size:2.75rem!important}
+ .balina-hero .balina-title .eyebrow{font-size:.67rem!important;letter-spacing:.1em}
+ .balina-hero .balina-title .sub{font-size:.82rem!important;line-height:1.45}
+}
+@media(max-width:365px){.balina-hero{gap:10px!important;padding:15px 12px!important}.balina-hero .balina-photo{width:78px!important;height:78px!important}.balina-hero .balina-title h1{font-size:2.3rem!important}}
+</style>
 </head>
 <body data-view="home">
 <div class="wrap">
@@ -808,7 +826,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.12-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.13-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
