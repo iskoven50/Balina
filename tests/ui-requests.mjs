@@ -1,0 +1,15 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const order=['data-look="none"','data-look="summer"','data-look="wug"','data-look="ameco"','data-look="bravo"'];
+for(let i=1;i<order.length;i++)assert.ok(html.indexOf(order[i-1])<html.indexOf(order[i]),'Blanket gallery ordering');
+assert.match(html,/id="amecoLinerBadge"/);
+assert.match(html,/Inkl\. '\+liner\[1\]\+' g liner'/);
+assert.match(html,/function isDuplicateMondayDuty/);
+assert.match(html,/a\.time==='15:00'/);
+assert.match(html,/MANDAGSVAGT/);
+assert.match(html,/function cleanDuplicateMondayDutyOnce/);
+assert.match(html,/id="quarterRide"/);
+assert.match(html,/id="quarterChoice"/);
+assert.match(html,/trail:'wool'/);
+assert.match(html,/Balina v9\.6\.5-test/);
+console.log('UI checks: 11 passed');

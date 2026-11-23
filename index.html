@@ -436,6 +436,13 @@ footer{font-size:.7rem;padding:15px 4px}
 .balina-look img{width:100%;aspect-ratio:1.15;object-fit:cover;display:block}
 .balina-look strong{display:block;font-size:.73rem;line-height:1.25;padding:8px 5px 3px}
 .balina-look small{display:block;color:#796d7b;font-size:.66rem;padding:0 4px 8px}
+.look-liner-badge{display:block;background:#f3e3ee;color:#684b67;border-radius:8px;margin:0 5px 6px;padding:5px 3px;font-size:.65rem;font-weight:750}
+.look-liner-badge[hidden]{display:none}
+.quarter-rug-panel{margin:14px 0;padding:15px;border:1px solid #eee0e9;border-radius:16px;background:#fff9fc}
+.quarter-rug-panel h3{margin:0 0 8px}
+.quarter-rug-panel label{display:inline-flex;flex-direction:column;gap:5px;min-width:170px;margin:8px 12px 8px 0;font-size:.85rem}
+.quarter-rug-panel select{max-width:100%}
+.quarter-rug-panel #quarterRugResult{padding:10px;background:#f4edf5;border-radius:10px}
 .balina-look.current{border:2px solid #a67b9b;box-shadow:0 2px 12px rgba(125,77,110,.13)}
 .balina-look.current:after{content:'Anbefalet';display:block;background:#f2e4ed;color:#70536c;font-size:.66rem;font-weight:700;padding:4px}
 @media(max-width:700px){.balina-look-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.balina-look{min-width:145px;max-width:145px;scroll-snap-align:start}.balina-looks{padding:12px}.app-nav a{padding:8px 2px}}
@@ -508,10 +515,20 @@ footer{font-size:.7rem;padding:15px 4px}
  <div class="balina-look-grid">
   <div class="balina-look" data-look="none"><img loading="lazy" src="balina-uden-daekken.jpg" alt="Balina uden dækken"><strong>Uden dækken</strong><small>Naturlig pels</small></div>
   <div class="balina-look" data-look="summer"><img loading="lazy" src="balina-rambo-summer.jpg" alt="Illustration af Balina med Rambo Summer Series"><strong>Rambo Summer Series</strong><small>100 g rygliner</small></div>
-  <div class="balina-look" data-look="ameco"><img loading="lazy" src="balina-amigo-ameco.jpg" alt="Illustration af Balina med Amigo AmECO"><strong>Amigo AmECO</strong><small>100 g · hals</small></div>
   <div class="balina-look" data-look="wug"><img loading="lazy" src="balina-amigo-wug.jpg" alt="Illustration af Balina med Amigo Wug"><strong>Amigo Wug</strong><small>50 g · high neck</small></div>
+  <div class="balina-look" data-look="ameco"><img loading="lazy" src="balina-amigo-ameco.jpg" alt="Illustration af Balina med Amigo AmECO"><strong>Amigo AmECO</strong><small>100 g · hals</small><span id="amecoLinerBadge" class="look-liner-badge" hidden></span></div>
   <div class="balina-look" data-look="bravo"><img loading="lazy" src="balina-amigo-bravo.jpg" alt="Illustration af Balina med Amigo Bravo"><strong>Amigo Bravo</strong><small>400 g · hals</small></div>
  </div>
+</section>
+<section class="quarter-rug-panel" aria-label="Skridttæppe ved ridning">
+ <h3>🐴 Skridttæppe ved ridning</h3>
+ <p class="small muted">Forvalg til skovtur – kan ændres før hver tur. Dette er en praktisk huskeliste, ikke en automatisk vejrberegning.</p>
+ <label for="quarterRide">Aktivitet
+ <select id="quarterRide" onchange="updateQuarterRug()"><option value="trail">Skovtur</option><option value="dressage">Dressur</option><option value="jumping">Spring</option></select></label>
+ <label for="quarterChoice">Skridttæppe
+ <select id="quarterChoice" onchange="updateQuarterRug()"><option value="wool">Uld – kun bagpart</option><option value="fleece">Fleece/refleks</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
+ <div id="quarterRugResult" class="small" aria-live="polite"></div>
+ <p class="small muted">Vurder sved, temperatur og vind under opvarmning og afskridtning. Undgå at Balina bliver for varm.</p>
 </section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
@@ -769,7 +786,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.4-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.5-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -1043,6 +1060,7 @@ function init(){
   migrateV964();
   migrateCalendarV913();
   migrateCalendarV914();
+  cleanDuplicateMondayDutyOnce();
   const st=getState();
   if(st.horseWetness && st.horseWetness!=='dry'){
     const age=st.horseWetnessAt?Date.now()-new Date(st.horseWetnessAt).getTime():Infinity;
@@ -1646,9 +1664,23 @@ function renderSaturdayDuty(){
   b.textContent=days===0?'I dag':days===1?'I morgen':`Om ${days} dage`;
   m.textContent=d.toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(x.time?' · kl. '+x.time:'');
 }
+function isDuplicateMondayDuty(a){
+  return a && a.type==='Staldvagt' && a.time==='15:00' &&
+    /MANDAGSVAGT/i.test(String(a.note||'')) && a.date &&
+    new Date(a.date+'T12:00:00').getDay()===1;
+}
+function cleanDuplicateMondayDutyOnce(){
+ const state=getState();
+ if(state.mondayDuty15Cleaned)return;
+ if(Array.isArray(state.appointments)){
+   state.appointments=state.appointments.filter(a=>!isDuplicateMondayDuty(a));
+ }
+ state.mondayDuty15Cleaned=true;
+ setState(state);
+}
 function renderAppointments(){
   renderSaturdayDuty();
-  const items=getAppointments().filter(x=>x.date>=today()).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+  const items=getAppointments().filter(x=>x.date>=today()&&!isDuplicateMondayDuty(x)).sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
   const big=document.getElementById('nextAppointmentBig');
   const meta=document.getElementById('nextAppointmentMeta');
   const reminder=document.getElementById('nextReminder');
@@ -2064,7 +2096,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   const clipped=clipStats(s);
   const clipAdj=clipped.adj;
   // Valgfri BCS-score påvirker kun den termiske reserve gradvist. Ældre profiler bevarer deres kategori.
-  const bcsScore=Number.isFinite(Number(s.bcsScore))&&s.bcsScore!=null?Number(s.bcsScore):null;
+  const bcsScore=(s.bcsScore!==null && s.bcsScore!==undefined && String(s.bcsScore).trim()!=='' && Number.isFinite(Number(s.bcsScore)))?Number(s.bcsScore):null;
   const bcsAdj=bcsScore!==null?Math.max(-0.5,Math.min(1,(5-bcsScore)*0.4)):((s.bcs||'ideal')==='under'?1:(s.bcs||'ideal')==='over'?-0.5:0);
   const coatAdj=coat==='thin'?0.75:coat==='thick'?-0.75:0;
   const coatSeasonAdj=coatSeason==='summer'?1:coatSeason==='early_transition'?0.75:coatSeason==='transition'?0.4:-0.5;
@@ -2392,6 +2424,17 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     document.getElementById('reasonFull').textContent=msg;
     confidence=Math.min(confidence,2);
   }
+  // Sikkerhedsadvarsel: En gemt døgnfold-indstilling må aldrig ændres lydløst.
+  // Men når den afviger fra Balinas typiske vinterordning, skal brugeren kontrollere den.
+  const winterMonth=[10,11,0,1,2,3].includes(win.start.getMonth());
+  if(winterMonth && reg==='summer'){
+    const warning='⚠ Kontrollér opstaldning under Dækkener → Balinas profil: Appen er indstillet til døgnfold, ikke fold 08–18 / boks 18–08. Det ændrer beregningen. Indstillingen er ikke ændret automatisk.';
+    for(const id of ['reason','reasonFull']){
+      const node=document.getElementById(id);
+      if(node)node.textContent=(node.textContent?node.textContent+' ':'')+warning;
+    }
+    confidence=Math.min(confidence,2);
+  }
   document.getElementById('recommendationPeriod').textContent=`Gælder: ${periodFmt(win.start)} → ${periodFmt(win.end)}`;
   document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}<div class="small muted">Skalaen viser både prognosernes sikkerhed og hvor tydeligt valget er mellem mere eller mindre dækken.</div>`;
 
@@ -2559,7 +2602,26 @@ try{ init(); }catch(e){
 </script>
 
 <script>
-/* Visual enhancement only. This does not alter the blanket algorithm or save data. */
+/* Visual enhancement only. This does not alter the blanket algorithm. */
+function updateQuarterRug(){
+ const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),result=document.getElementById('quarterRugResult');
+ if(!ride||!choice||!result)return;
+ const labels={wool:'Uldskridttæppe kun over bagparten',fleece:'Fleece/refleksskridttæppe',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
+ result.textContent='Valgt: '+labels[choice.value]+'. Kontrollér Balinas komfort ved opvarmning og afskridtning.';
+ try{localStorage.setItem('balina-quarter-rug-'+ride.value,choice.value);}catch(e){}
+}
+(function initQuarterRug(){
+ const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice');
+ if(!ride||!choice)return;
+ const defaults={trail:'wool',dressage:'none',jumping:'none'};
+ function sync(){
+   let saved=null;try{saved=localStorage.getItem('balina-quarter-rug-'+ride.value);}catch(e){}
+   choice.value=['wool','fleece','rain','none'].includes(saved)?saved:defaults[ride.value];
+   updateQuarterRug();
+ }
+ ride.addEventListener('change',sync);sync();
+})();
+
 (function(){
  function markBlanket(){
   const rec=(document.getElementById('recommendation')?.textContent||'').toLowerCase();
@@ -2570,6 +2632,12 @@ try{ init(); }catch(e){
   else if(rec.includes('summer'))key='summer';
   else if(/intet dækken|uden dækken/.test(rec))key='none';
   document.querySelectorAll('.balina-look').forEach(el=>el.classList.toggle('current',!!key&&el.dataset.look===key));
+  const badge=document.getElementById('amecoLinerBadge');
+  if(badge){
+    const liner=key==='ameco' && rec.match(/(?:\+|·)\s*(\d+)\s*g\s*liner/i);
+    badge.hidden=!liner;
+    badge.textContent=liner?'Inkl. '+liner[1]+' g liner':'';
+  }
  }
  const rec=document.getElementById('recommendation');
  if(rec){new MutationObserver(markBlanket).observe(rec,{childList:true,subtree:true,characterData:true});markBlanket();}
