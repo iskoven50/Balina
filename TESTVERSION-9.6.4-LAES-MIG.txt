@@ -1,0 +1,8 @@
+BALINA v9.6.4-test – IKKE klar til produktion
+
+Rettet: '250 g' fortolkes ikke længere som '50 g'. Ukendte gramværdier udløser ingen konkret dækkenanbefaling.
+7/7 nye gram-tests består (node tests/gram-guard.mjs).
+Eksisterende regressionstests har forældede dækkennavne. Efter opdatering af disse navne fejler testen 'Koldt og vådt 200 g-trin': appen anbefaler 100 g, hvor testen forventer 200 g. Det er en uafklaret forskel, som IKKE må skjules ved blot at ændre testens forventning.
+Python v0.4 er fortsat en ikke-valideret forsøgsmodel og er ikke koblet til appen.
+Ingen ændringer i GitHub Pages. Brug ikke denne testversion til dækkenvalg uden selvstændig kontrol.
+Tag JSON-backup fra den aktive app før enhver fremtidig opdatering.

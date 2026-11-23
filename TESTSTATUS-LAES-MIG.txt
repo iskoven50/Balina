@@ -1,0 +1,11 @@
+Balina v9.6.4 – TESTPAKKE (ikke produktionsgodkendt)
+
+Kontrolleret lokalt:
+- 7/7 gramfortolkningstests bestået. Fejlen 250 g -> 50 g er rettet.
+- Alle eksisterende regressionstests består efter to rettelser af TESTOPSÆTNINGEN (ikke dækkenregler):
+  1) Scenariet 'Koldt og vådt 200 g-trin' var ved en fejl sat til sommerregime, selvom vinterregime er nødvendigt for den tilsigtede 200 g-regel.
+  2) Testen søgte en forældet tekst om våd pels; teksten i appen har en tilsvarende, men omformuleret advarsel.
+- Backend v0.4 er IKKE integreret; den er fortsat ikke valideret.
+- Disse tests validerer kodekonsistens, ikke dyrevelfærdsmæssig korrekthed. Ingen test med live vejr eller fysisk kontrol af Balina.
+
+VIGTIGT: Upload ikke denne testpakke til den aktive GitHub Pages-app endnu. Den er kun en sikkerhedskopi til yderligere afprøvning.
