@@ -522,13 +522,14 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 <section class="quarter-rug-panel" aria-label="Skridttæppe ved ridning">
  <h3>🐴 Skridttæppe ved ridning</h3>
- <p class="small muted">Forvalg til skovtur – kan ændres før hver tur. Dette er en praktisk huskeliste, ikke en automatisk vejrberegning.</p>
+ <p class="small muted">Vejledende forslag ud fra aktivitet og den seneste lokale vejrudsigt. Vurder også Balinas sved og komfort.</p>
  <label for="quarterRide">Aktivitet
- <select id="quarterRide" onchange="updateQuarterRug()"><option value="trail">Skovtur</option><option value="dressage">Dressur</option><option value="jumping">Spring</option></select></label>
- <label for="quarterChoice">Skridttæppe
- <select id="quarterChoice" onchange="updateQuarterRug()"><option value="wool">Uld – kun bagpart</option><option value="fleece">Fleece/refleks</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
- <div id="quarterRugResult" class="small" aria-live="polite"></div>
- <p class="small muted">Vurder sved, temperatur og vind under opvarmning og afskridtning. Undgå at Balina bliver for varm.</p>
+ <select id="quarterRide"><option value="trail">Skovtur</option><option value="dressage">Dressur</option><option value="jumping">Spring</option></select></label>
+ <div id="quarterRugResult" class="small" aria-live="polite">Beregner anbefaling…</div>
+ <label for="quarterOverride"><input type="checkbox" id="quarterOverride"> Vælg selv i stedet</label>
+ <label for="quarterChoice" id="quarterChoiceWrap" hidden>Mit valg
+ <select id="quarterChoice"><option value="wool">Uld – kun bagpart</option><option value="fleece">Fleece/refleks</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
+ <p class="small muted">Skridttæppe er især relevant ved skridt og afskridtning. Fjern det, hvis Balina bliver varm. Ved spring skal det ikke bruges under selve springningen.</p>
 </section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
@@ -786,7 +787,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.5-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.6-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -2603,23 +2604,60 @@ try{ init(); }catch(e){
 
 <script>
 /* Visual enhancement only. This does not alter the blanket algorithm. */
+function quarterWeatherSummary(){
+ try{
+  const cache=JSON.parse(localStorage.getItem('balinaWeatherDualModelV89')||'null');
+  if(!cache?.savedAt || Date.now()-cache.savedAt>60*60*1000)return null;
+  const rows=cache.primary?.length?cache.primary:cache.control;
+  if(!rows?.length)return null;
+  const now=Date.now(),upcoming=rows.filter(x=>{
+   const t=new Date(x.date).getTime();return t>=now-60*60*1000&&t<=now+5*60*60*1000;
+  });
+  if(!upcoming.length)return null;
+  return {
+   temp:Math.min(...upcoming.map(x=>Number(x.temp)).filter(Number.isFinite)),
+   rain:upcoming.some(x=>Number(x.p)>0.15||Number(x.rain)>0.15||Number(x.snow)>0.1),
+   wind:Math.max(...upcoming.map(x=>Number(x.gust)||0))
+  };
+ }catch(e){return null;}
+}
+function quarterSuggestion(activity,weather){
+ if(!weather)return {choice:null,why:'Opdater vejret for en vejrafhængig anbefaling. Indtil da skal tæppet vurderes manuelt.'};
+ const cold=weather.temp<=5,veryCold=weather.temp<=0,wet=weather.rain,windy=weather.wind>=8;
+ if(activity==='trail'){
+  if(wet||windy)return {choice:'rain',why:'Skovtur med nedbør eller kraftige vindstød: prioritér vejrbeskyttelse. Kontrollér, at ridedækkenet ikke gør Balina for varm.'};
+  if(cold)return {choice:'wool',why:'Kølig skovtur: uld over bagparten ved skridt og afskridtning; tag det af ved behov.'};
+  return {choice:'none',why:'Mildt og tørt vejr: intet skridttæppe som udgangspunkt.'};
+ }
+ if(activity==='dressage'){
+  if(veryCold||wet&&cold)return {choice:'wool',why:'Kold dressurdag: uld over bagparten under opvarmning og afskridtning, hvis Balina ikke er varm.'};
+  return {choice:'none',why:'Dressur: intet skridttæppe som udgangspunkt; vurder det ved lang afskridtning.'};
+ }
+ if(veryCold)return {choice:'wool',why:'Ved frost kan uld over bagparten være relevant under skridt før/efter springning. Fjern før selve springningen.'};
+ return {choice:'none',why:'Spring: intet skridttæppe under arbejdet. Overvej kun ved rolig afskridtning.'};
+}
 function updateQuarterRug(){
- const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),result=document.getElementById('quarterRugResult');
- if(!ride||!choice||!result)return;
- const labels={wool:'Uldskridttæppe kun over bagparten',fleece:'Fleece/refleksskridttæppe',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
- result.textContent='Valgt: '+labels[choice.value]+'. Kontrollér Balinas komfort ved opvarmning og afskridtning.';
- try{localStorage.setItem('balina-quarter-rug-'+ride.value,choice.value);}catch(e){}
+ const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),override=document.getElementById('quarterOverride');
+ const result=document.getElementById('quarterRugResult'),wrap=document.getElementById('quarterChoiceWrap');
+ if(!ride||!choice||!result||!override||!wrap)return;
+ const labels={wool:'Uld – kun bagpart',fleece:'Fleece/refleks',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
+ const weather=quarterWeatherSummary(),suggestion=quarterSuggestion(ride.value,weather);
+ wrap.hidden=!override.checked;
+ if(override.checked){
+  result.textContent='Dit valg: '+labels[choice.value]+'. '+(suggestion.choice?'Appens forslag: '+labels[suggestion.choice]+'. ':'')+suggestion.why;
+ }else{
+  result.textContent=suggestion.choice?'Anbefaling: '+labels[suggestion.choice]+'. '+suggestion.why:'Ingen automatisk anbefaling. '+suggestion.why;
+ }
 }
 (function initQuarterRug(){
- const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice');
- if(!ride||!choice)return;
- const defaults={trail:'wool',dressage:'none',jumping:'none'};
- function sync(){
-   let saved=null;try{saved=localStorage.getItem('balina-quarter-rug-'+ride.value);}catch(e){}
-   choice.value=['wool','fleece','rain','none'].includes(saved)?saved:defaults[ride.value];
-   updateQuarterRug();
- }
- ride.addEventListener('change',sync);sync();
+ const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),override=document.getElementById('quarterOverride');
+ if(!ride||!choice||!override)return;
+ ride.addEventListener('change',()=>{override.checked=false;updateQuarterRug();});
+ choice.addEventListener('change',updateQuarterRug);
+ override.addEventListener('change',updateQuarterRug);
+ updateQuarterRug();
+ const weatherStatus=document.getElementById('weatherStatus');
+ if(weatherStatus)new MutationObserver(updateQuarterRug).observe(weatherStatus,{childList:true,subtree:true,characterData:true});
 })();
 
 (function(){
