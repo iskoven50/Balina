@@ -447,14 +447,15 @@ footer{font-size:.7rem;padding:15px 4px}
 .quarter-recommendation strong{display:block;color:#69516f;font-size:1.2rem}
 .quarter-recommendation p{margin:7px 0 0}
 .quarter-gallery-title{font-size:.91rem;margin:15px 0 8px;color:#705a70}
-.quarter-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.quarter-card{min-width:0;border:1px solid #eadce5;background:#fff;border-radius:12px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
-.quarter-card-symbol{display:flex;align-items:center;justify-content:center;background:#f6eef5;border-radius:9px;width:100%;min-height:55px;font-size:1.6rem}
-.quarter-card-photo{display:block;width:100%;height:74px;object-fit:cover;border-radius:9px}.quarter-card strong{font-size:.74rem}.quarter-card small{font-size:.65rem;color:#827581}
-.quarter-card.current{border-color:#b67f9e;background:#fff4fa;box-shadow:0 2px 5px #e9d5e4}
-.quarter-card-tag{background:#f1ddea;border-radius:7px;padding:4px;width:100%;font-size:.65rem;font-weight:700;color:#794e70}
+.quarter-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.quarter-card{min-width:0;border:1px solid #eadce5;background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;gap:0;text-align:center}
+.quarter-card-photo{display:block;width:100%;height:clamp(145px,22vw,230px);object-fit:contain;object-position:center;background:#f7f3f5}
+.quarter-card strong{display:block;font-size:.75rem;line-height:1.3;padding:9px 6px 3px}
+.quarter-card small{display:block;font-size:.68rem;color:#827581;padding:0 6px 9px;line-height:1.35;flex:1}
+.quarter-card.current{border:2px solid #b67f9e;background:#fff4fa;box-shadow:0 2px 8px #e9d5e4}
+.quarter-card-tag{background:#f1ddea;border-radius:7px;margin:0 5px 6px;padding:5px;width:auto;font-size:.68rem;font-weight:700;color:#794e70}
 .quarter-card-tag[hidden]{display:none}
-@media(max-width:440px){.quarter-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.quarter-card-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:9px;padding-bottom:9px;-webkit-overflow-scrolling:touch}.quarter-card{flex:0 0 180px;scroll-snap-align:start}.quarter-card-photo{height:220px}}
 .balina-look.current{border:2px solid #a67b9b;box-shadow:0 2px 12px rgba(125,77,110,.13)}
 .balina-look.current:after{content:'Anbefalet';display:block;background:#f2e4ed;color:#70536c;font-size:.66rem;font-weight:700;padding:4px}
 @media(max-width:700px){.balina-look-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:7px}.balina-look{min-width:145px;max-width:145px;scroll-snap-align:start}.balina-looks{padding:12px}.app-nav a{padding:8px 2px}}
@@ -534,21 +535,22 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 <section class="quarter-rug-panel" aria-label="Skridttæppe ved ridning">
  <h3>Skridttæppe til rideturen ♡</h3>
- <p class="small muted">Vejledende forslag ud fra aktivitet og den seneste lokale vejrudsigt. Vurder også Balinas sved og komfort.</p>
+ <p class="small muted">Vælg rideturens aktivitet, så foreslår Dækkenvagten et skridttæppe ud fra vejret. Tjek altid, om Balina er varm eller svedig.</p>
  <label for="quarterRide">Aktivitet
  <select id="quarterRide"><option value="trail">Skovtur</option><option value="dressage">Dressur</option><option value="jumping">Spring</option></select></label>
  <div class="quarter-recommendation" aria-live="polite"><span class="quarter-eyebrow">ANBEFALING TIL RIDETUREN</span><strong id="quarterRugTitle">Afventer vejrdata</strong><p id="quarterRugResult" class="small">Beregner anbefaling…</p></div>
  <h4 class="quarter-gallery-title">Balinas skridttæpper</h4>
+ <p class="small muted">Se hele Balina med de forskellige skridttæpper. Det anbefalede valg er fremhævet. Billederne er illustrationer.</p>
  <div class="quarter-card-grid" id="quarterCards" aria-label="Mulige skridttæpper">
-  <div class="quarter-card" data-quarter="none"><span class="quarter-card-symbol">🐎</span><strong>Uden skridttæppe</strong><small>Ved mildt vejr</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+  <div class="quarter-card" data-quarter="none"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-uden.jpg" alt="Balina uden skridttæppe, med sadel og rideudstyr"><strong>Uden skridttæppe</strong><small>Ved mildt vejr</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
   <div class="quarter-card" data-quarter="wool"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-uld.jpg" alt="Mørkeblåt uldskridttæppe over bagparten bag sadlen"><strong>Uld</strong><small>Kun over bagparten</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
-  <div class="quarter-card" data-quarter="fleece"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-refleks-fleece.jpg" alt="Foto af fluorescerende refleksskridttæppe med bagpart og separat brystdel foran sadlen"><strong>Refleksskridttæppe</strong><small>Fleecefor · bagpart samt synlig brystdel på foto</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
+  <div class="quarter-card" data-quarter="fleece"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-refleks-fleece.jpg" alt="Balina med gult refleksskridttæppe over bagparten, uden brystdel eller lukning over manken"><strong>Refleksskridttæppe</strong><small>Fleecefor · kun bagparten</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
   <div class="quarter-card" data-quarter="rain"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-vandafvisende.jpg" alt="Mørkeblåt vandafvisende skridttæppe over bagparten bag sadlen"><strong>Vandafvisende</strong><small>Ved regn og blæst</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
  </div>
  <label for="quarterOverride"><input type="checkbox" id="quarterOverride"> Vælg selv i stedet</label>
  <label for="quarterChoice" id="quarterChoiceWrap" hidden>Mit valg
  <select id="quarterChoice"><option value="wool">Uld – kun bagpart</option><option value="fleece">Refleks med fleecefor – kun bagpart</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
- <p class="small muted">Skridttæppe er især relevant ved skridt og afskridtning. Fjern det, hvis Balina bliver varm. Ved spring skal det ikke bruges under selve springningen.</p>
+ <p class="small muted">Skridttæppet bruges efter behov ved skridt, opvarmning og afskridtning. Tag det af, hvis Balina bliver varm. Brug det ikke under selve springningen.</p>
 </section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
   <label>Næste mulige dækkenskift
@@ -806,7 +808,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.9-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.11-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
