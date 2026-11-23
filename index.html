@@ -823,7 +823,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.15-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.16-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -2420,7 +2420,37 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
   // Hals er en selvstændig præference, ikke et automatisk krav om flere gram.
   need.neckRequired=null;
   if(need.neckPreferred && !need.label.includes('hals')) need.label += ' · halsbeskyttelse foretrækkes';
-  const wardrobeMatch=matchWardrobeNeed(need);
+  // 250 g er et vejledende mellemtrin. Vis et konkret, konservativt
+  // garderobevalg med tydelig afvigelse, når et 200/300 g alternativ findes.
+  // Vælg aldrig automatisk 400 g som erstatning for 250 g.
+  let wardrobeMatch=matchWardrobeNeed(need);
+  let midpointExplanation='';
+  if(need.kind==='closed' && need.target===250 && !wardrobeMatch.ok){
+    const options=wardrobeConfigs().filter(c=>!c.rug.mesh && c.rug.waterproof==='yes' &&
+      c.rug.waterproofCondition!=='no' && c.rug.fit!=='caution' &&
+      [200,300].includes(c.grams));
+    // Den højere isolering er kun et forslag ved vedvarende frost og lav dagtemperatur.
+    // Ellers foretrækkes 200 g for at mindske risiko for overophedning.
+    const coldThroughout=feelsMin<=0 && warmMax<=5;
+    const preferred=coldThroughout?300:200;
+    const available=options.filter(c=>c.grams===preferred);
+    const candidates=available.length?available:options;
+    const neckStrength=c=>c.neckMode==='full'?2:c.neckMode==='half'?1:0;
+    candidates.sort((a,b)=>
+      (a.grams===preferred?0:1)-(b.grams===preferred?0:1) ||
+      (b.scoreBonus+(need.neckPreferred==='full'?neckStrength(b)*4:0))-
+      (a.scoreBonus+(need.neckPreferred==='full'?neckStrength(a)*4:0)));
+    const chosen=candidates[0];
+    if(chosen){
+      const linerText=chosen.liner?`${chosen.liner} g liner`:'uden liner';
+      const neckText=chosen.neckMode==='full'?'fuld hals på':chosen.neckMode==='half'?'halvhøj hals':'uden hals';
+      wardrobeMatch={ok:true,name:`Foreløbigt valg: ${chosen.rug.name} · ${linerText} · ${neckText} (${chosen.grams} g)`,
+        config:chosen,nearest:chosen,compromise:true,midpoint:true};
+      midpointExplanation=chosen.grams===300
+        ?'Beregnet mellembehov 250 g: 300 g er et varmere nabotrin. Vælg kun dette ved vedvarende kulde; kontrollér, at Balina ikke bliver for varm, især hvis vejret mildnes.'
+        :'Beregnet mellembehov 250 g: 200 g er et lettere nabotrin. Kontrollér, at Balina er behageligt lun og tør; øg ikke automatisk til 400 g.';
+    }
+  }
   const optimalEl=document.getElementById('optimalNeed'); if(optimalEl)optimalEl.textContent=need.label;
   const optimalReason=document.getElementById('optimalNeedReason'); if(optimalReason)optimalReason.textContent=need.detail;
   let displayedRec='';
@@ -2428,7 +2458,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     displayedRec=wardrobeMatch.name;
     document.getElementById('recommendation').textContent=displayedRec;
     if(wardrobeMatch.compromise){
-      reason+=` ${wardrobeMatch.config.rug.name} er det nærmeste forsvarlige match i garderoben. Kontrollér Balinas komfort, da isoleringen afviger fra idealet.`;
+      reason+=wardrobeMatch.midpoint?` ${midpointExplanation}`:` ${wardrobeMatch.config.rug.name} er det nærmeste tilgængelige match i garderoben. Kontrollér Balinas komfort, da isoleringen afviger fra idealet.`;
       confidence=Math.min(confidence,3);
     }
     if(wardrobeMatch.config?.rug?.waterproofCondition==='uncertain'&&rainTotal>=2){reason+=' Dækkenets aktuelle vandtæthed er registreret som usikker; kontrollér foringen efter længere regn.';confidence=Math.min(confidence,2)}
@@ -2473,7 +2503,7 @@ function analyseWeatherCore(rows,win,sourceLabel,modelMeta){
     confidence=Math.min(confidence,2);
   }
   document.getElementById('recommendationPeriod').textContent=`Gælder: ${periodFmt(win.start)} → ${periodFmt(win.end)}`;
-  document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}<div class="small muted">Skalaen viser både prognosernes sikkerhed og hvor tydeligt valget er mellem mere eller mindre dækken.</div>`;
+  document.getElementById('confidenceBox').innerHTML=`<div class="small muted">Hvor sikkert er valget?</div>${confidenceHtml(confidence)}<div class="small muted">Skalaen viser usikkerhed i vejr og isoleringsbehov. Ved et mellembehov er garderobevalget et vejledende kompromis.</div>`;
 
   let extra='';
   // Vejrbeskyttelse og isolering vises særskilt. Dette er en forklaring af
