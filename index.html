@@ -826,7 +826,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.13-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.14-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -866,7 +866,8 @@ function initHomeSummary(){
 const HILLEROED={lat:55.9279,lon:12.3008};
 const START_BAL=1197.53;
 const fmt=v=>new Intl.NumberFormat('da-DK',{style:'currency',currency:'DKK'}).format(v);
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const calendarDayDifference=(date,reference=today())=>Math.round((Date.parse(date+'T00:00:00Z')-Date.parse(reference+'T00:00:00Z'))/86400000);
 function getState(){return JSON.parse(localStorage.getItem('balinaHQ')||'{}')}
 function setState(s){localStorage.setItem('balinaHQ',JSON.stringify(s))}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -1737,9 +1738,8 @@ function renderAppointments(){
   }
 
   if(reminder){
-    const now=new Date(),base=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-    const due=items.filter(x=>{const d=new Date(x.date+'T12:00:00');const days=Math.round((d-base)/86400000);const r=x.reminder??'1';return r!=='none'&&days>=0&&days<=Number(r==='same'?0:r);});
-    reminder.innerHTML=due.map(x=>{const d=new Date(x.date+'T12:00:00');const days=Math.round((d-base)/86400000);const label=days===0?'I dag':days===1?'I morgen':`Om ${days} dage`;return `<div class="reminder"><strong>${label}</strong><span>${esc(x.type)}${x.time?' kl. '+x.time:''}${x.note?' · '+esc(x.note):''}</span></div>`;}).join('');
+    const due=items.filter(x=>{const days=calendarDayDifference(x.date);const r=x.reminder??'1';return r!=='none'&&days>=0&&days<=Number(r==='same'?0:r);});
+    reminder.innerHTML=due.map(x=>{const days=calendarDayDifference(x.date);const label=days===0?'I dag':days===1?'I morgen':`Om ${days} dage`;return `<div class="reminder"><strong>${label}</strong><span>${esc(x.type)}${x.time?' kl. '+x.time:''}${x.note?' · '+esc(x.note):''}</span></div>`;}).join('');
   }
 }
 
