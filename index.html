@@ -565,9 +565,6 @@ footer{font-size:.7rem;padding:15px 4px}
   <div class="quarter-card" data-quarter="fleece"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-refleks-fleece.jpg" alt="Balina med gult refleksskridttæppe over bagparten, med refleksbrystdel foran sadlen"><strong>Refleksskridttæppe</strong><small>Fleecefor · refleksbrystdel</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
   <div class="quarter-card" data-quarter="rain"><img class="quarter-card-photo" loading="lazy" src="balina-skridt-vandafvisende.jpg" alt="Mørkeblåt vandafvisende skridttæppe over bagparten bag sadlen"><strong>Vandafvisende</strong><small>Ved regn og blæst</small><span class="quarter-card-tag" hidden>Anbefalet</span></div>
  </div>
- <label for="quarterOverride"><input type="checkbox" id="quarterOverride"> Vælg selv i stedet</label>
- <label for="quarterChoice" id="quarterChoiceWrap" hidden>Mit valg
- <select id="quarterChoice"><option value="wool">Uld – kun bagpart</option><option value="fleece">Refleks med fleecefor – kun bagpart</option><option value="rain">Vandafvisende ridedækken</option><option value="none">Intet skridttæppe</option></select></label>
  <p class="small muted">Skridttæppet bruges efter behov ved skridt, opvarmning og afskridtning. Tag det af, hvis Balina bliver varm. Brug det ikke under selve springningen.</p>
 </section>
 <details class="period-settings"><summary>⚙️ Tidspunkt og pelsstatus <span class="fold-hint">Tilpas dækkenskiftet</span></summary><div class="period-controls">
@@ -826,7 +823,7 @@ footer{font-size:.7rem;padding:15px 4px}
 </section>
 
 </main>
-<footer>Balina v9.6.14-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
+<footer>Balina v9.6.15-test · Hestelogbog ♡ dækkenguide · foderplan · sundhed · kalender · størrelser.</footer>
 </div>
 
 <script>
@@ -2676,31 +2673,25 @@ function quarterSuggestion(activity,weather){
  return {choice:'none',why:'Spring: intet skridttæppe under arbejdet. Overvej kun ved rolig afskridtning.'};
 }
 function updateQuarterRug(){
- const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),override=document.getElementById('quarterOverride');
- const result=document.getElementById('quarterRugResult'),title=document.getElementById('quarterRugTitle'),wrap=document.getElementById('quarterChoiceWrap');
- if(!ride||!choice||!result||!title||!override||!wrap)return;
+ const ride=document.getElementById('quarterRide');
+ const result=document.getElementById('quarterRugResult'),title=document.getElementById('quarterRugTitle');
+ if(!ride||!result||!title)return;
  const labels={wool:'Uld – kun bagpart',fleece:'Refleksskridttæppe med fleecefor – kun bagparten',rain:'Vandafvisende ridedækken',none:'Intet skridttæppe'};
- const weather=quarterWeatherSummary(),suggestion=quarterSuggestion(ride.value,weather);
- wrap.hidden=!override.checked;
- const active=override.checked?choice.value:suggestion.choice;
- title.textContent=active?(override.checked?'Dit valg: ':'')+labels[active]:'Ingen sikker anbefaling endnu';
+ const suggestion=quarterSuggestion(ride.value,quarterWeatherSummary());
+ const active=suggestion.choice;
+ title.textContent=active?labels[active]:'Ingen sikker anbefaling endnu';
  document.querySelectorAll('.quarter-card').forEach(card=>{
-   const selected=!!active&&card.dataset.quarter===active;
-   card.classList.toggle('current',selected);
-   const tag=card.querySelector('.quarter-card-tag');if(tag){tag.hidden=!selected;tag.textContent=override.checked?'Dit valg':'Anbefalet';}
+  const selected=!!active&&card.dataset.quarter===active;
+  card.classList.toggle('current',selected);
+  const tag=card.querySelector('.quarter-card-tag');
+  if(tag){tag.hidden=!selected;tag.textContent='Anbefalet';}
  });
- if(override.checked){
-  result.textContent='Dit valg: '+labels[choice.value]+'. '+(suggestion.choice?'Appens forslag: '+labels[suggestion.choice]+'. ':'')+suggestion.why;
- }else{
-  result.textContent=suggestion.choice?'Anbefaling: '+labels[suggestion.choice]+'. '+suggestion.why:'Ingen automatisk anbefaling. '+suggestion.why;
- }
+ result.textContent=active?suggestion.why:'Ingen automatisk anbefaling. '+suggestion.why;
 }
 (function initQuarterRug(){
- const ride=document.getElementById('quarterRide'),choice=document.getElementById('quarterChoice'),override=document.getElementById('quarterOverride');
- if(!ride||!choice||!override)return;
- ride.addEventListener('change',()=>{override.checked=false;updateQuarterRug();});
- choice.addEventListener('change',updateQuarterRug);
- override.addEventListener('change',updateQuarterRug);
+ const ride=document.getElementById('quarterRide');
+ if(!ride)return;
+ ride.addEventListener('change',updateQuarterRug);
  updateQuarterRug();
  const weatherStatus=document.getElementById('weatherStatus');
  if(weatherStatus)new MutationObserver(updateQuarterRug).observe(weatherStatus,{childList:true,subtree:true,characterData:true});
